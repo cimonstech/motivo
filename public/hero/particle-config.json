@@ -1,0 +1,13 @@
+{
+  "particleCount": 2800,
+  "radius": 1.8,
+  "innerRadius": 1.4,
+  "whiteRatio": 0.88,
+  "redRatio": 0.12,
+  "rotationSpeed": 0.0008,
+  "mouseParallaxStrength": 0.12,
+  "particleSizeMin": 0.008,
+  "particleSizeMax": 0.022,
+  "explodeDuration": 1.2,
+  "explodeDistance": 6.0
+}
