@@ -137,7 +137,7 @@ export function WorkPageClient({ initialCategory }: Props) {
         }}
       >
         <img
-          src="/logo-dark.svg"
+          src="/logo.svg"
           alt=""
           aria-hidden="true"
           style={{
@@ -146,7 +146,7 @@ export function WorkPageClient({ initialCategory }: Props) {
             display:         "block",
             transform:       "rotate(-90deg)",
             filter:          "grayscale(100%) brightness(0)",
-            opacity:         0.1,
+            opacity:         0.08,
             userSelect:      "none",
             transformOrigin: "center center",
           }}
@@ -421,7 +421,7 @@ export function WorkPageClient({ initialCategory }: Props) {
           overflow:   "hidden",
         }}
       >
-        {/* Ghost text */}
+        {/* Ghost logo */}
         <div
           aria-hidden="true"
           style={{
@@ -434,19 +434,18 @@ export function WorkPageClient({ initialCategory }: Props) {
             zIndex:         0,
           }}
         >
-          <span
+          <img
+            src="/logo.svg"
+            alt=""
             style={{
-              fontFamily:    "var(--font-display)",
-              fontWeight:    700,
-              fontSize:      "clamp(60px, 10vw, 140px)",
-              color:         "rgba(8,8,8,0.04)",
-              letterSpacing: "-0.02em",
-              whiteSpace:    "nowrap",
-              userSelect:    "none",
+              width:      "clamp(240px, 35vw, 480px)",
+              height:     "auto",
+              display:    "block",
+              filter:     "grayscale(100%) brightness(0)",
+              opacity:    0.04,
+              userSelect: "none",
             }}
-          >
-            MOTIVO
-          </span>
+          />
         </div>
 
         {/* Content */}
