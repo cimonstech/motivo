@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useRouter }         from "next/navigation";
 import { gsap }              from "gsap";
 import { ScrollTrigger }     from "gsap/ScrollTrigger";
-import Link                  from "next/link";
+import { safeNavigate }      from "@/lib/safeNavigate";
 import { featuredProjects }  from "@/data/projects";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function FeaturedWork() {
+  const router = useRouter();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export function FeaturedWork() {
         scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
       });
     }, sectionRef);
-    return () => ctx.revert();
+    return () => { try { ctx.revert(); } catch { /* noop */ } };
   }, []);
 
   if (!featuredProjects.length) {
@@ -60,18 +62,21 @@ export function FeaturedWork() {
               <span style={{ color: "#ED1C24" }}>built properly.</span>
             </h2>
           </div>
-          <Link
-            href="/work"
+          <button
+            type="button"
+            onClick={() => safeNavigate("/work", router)}
             style={{
+              background: "none", border: "none", padding: 0,
               fontFamily: "var(--font-sans)", fontSize: "12px",
-              color: "rgba(8,8,8,0.35)", textDecoration: "none",
-              display: "flex", alignItems: "center", gap: "4px", flexShrink: 0,
+              color: "rgba(8,8,8,0.35)", display: "flex",
+              alignItems: "center", gap: "4px", flexShrink: 0,
+              cursor: "pointer",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "#080808")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(8,8,8,0.35)")}
           >
             View all work <span style={{ color: "#ED1C24" }}>→</span>
-          </Link>
+          </button>
         </div>
 
         {/* Grid */}
@@ -81,9 +86,10 @@ export function FeaturedWork() {
           gap: "10px",
         }}>
           {featuredProjects.map((project, i) => (
-            <Link
+            <button
               key={project.slug}
-              href={`/work/${project.slug}`}
+              type="button"
+              onClick={() => safeNavigate(`/work/${project.slug}`, router)}
               className="featured-card"
               style={{
                 position: "relative", display: "block",
@@ -92,7 +98,7 @@ export function FeaturedWork() {
                 background: "#111",
                 aspectRatio: i === 0 ? "16/9" : "4/3",
                 gridColumn: i === 0 ? "span 2" : "span 1",
-                textDecoration: "none",
+                cursor: "pointer",
               }}
               onMouseEnter={(e) => {
                 const bar = e.currentTarget.querySelector<HTMLDivElement>(".red-bar");
@@ -148,7 +154,7 @@ export function FeaturedWork() {
               }}>
                 <span style={{ fontSize: "11px", color: "#fff" }}>↗</span>
               </div>
-            </Link>
+            </button>
           ))}
         </div>
       </div>

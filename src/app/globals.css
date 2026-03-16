@@ -11,7 +11,7 @@
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Fonts are loaded via next/font/google in layout.tsx */
+/* Ranade (display/headings) and DIN (body/copy) loaded via next/font/local in layout.tsx */
 /* CSS variables --font-display and --font-sans are injected by Next.js */
 
 /* ─── Reset ──────────────────────────────────────────────── */

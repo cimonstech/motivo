@@ -63,7 +63,9 @@ export function ServicesDesktop({ data }: Props) {
         });
       });
 
-      return () => ctx.revert();
+      return () => {
+        try { ctx.revert(); } catch { /* pin spacer already removed */ }
+      };
     };
 
     const timer = setTimeout(init, 500);

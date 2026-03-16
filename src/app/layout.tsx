@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, DM_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { LenisProvider }   from "@/components/providers/LenisProvider";
 import { RouteCleanup }   from "@/components/providers/RouteCleanup";
@@ -7,16 +7,30 @@ import { CustomCursor } from "@/components/ui/CustomCursor";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+const ranade = localFont({
+  src: [
+    { path: "../../public/fonts/Renade/Ranade-Thin.otf",         weight: "100", style: "normal" },
+    { path: "../../public/fonts/Renade/Ranade-ThinItalic.ttf",   weight: "100", style: "italic" },
+    { path: "../../public/fonts/Renade/Ranade-Light.otf",        weight: "300", style: "normal" },
+    { path: "../../public/fonts/Renade/Ranade-LightItalic.otf",  weight: "300", style: "italic" },
+    { path: "../../public/fonts/Renade/Ranade-Regular.otf",      weight: "400", style: "normal" },
+    { path: "../../public/fonts/Renade/Ranade-Italic.otf",       weight: "400", style: "italic" },
+    { path: "../../public/fonts/Renade/Ranade-Medium.otf",       weight: "500", style: "normal" },
+    { path: "../../public/fonts/Renade/Ranade-MediumItalic.ttf", weight: "500", style: "italic" },
+    { path: "../../public/fonts/Renade/Ranade-Bold.otf",         weight: "700", style: "normal" },
+    { path: "../../public/fonts/Renade/Ranade-BoldItalic.ttf",   weight: "700", style: "italic" },
+  ],
   variable: "--font-display",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+const din = localFont({
+  src: [
+    { path: "../../public/fonts/DIN/DINLight.ttf",    weight: "300", style: "normal" },
+    { path: "../../public/fonts/DIN/DINRegularAlternate.ttf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/DIN/DIN-Medium.ttf",   weight: "500", style: "normal" },
+    { path: "../../public/fonts/DIN/DINBold.ttf",      weight: "700", style: "normal" },
+  ],
   variable: "--font-sans",
   display: "swap",
 });
@@ -82,7 +96,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} ${dmSans.variable}`}
+      className={`${ranade.variable} ${din.variable}`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>

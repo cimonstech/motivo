@@ -52,7 +52,7 @@ export function OriginSection() {
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => { try { ctx.revert(); } catch { /* noop */ } };
   }, []);
 
   // Split headline into word spans

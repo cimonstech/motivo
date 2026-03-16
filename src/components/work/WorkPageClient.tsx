@@ -104,7 +104,7 @@ export function WorkPageClient({ initialCategory }: Props) {
       });
     });
 
-    return () => ctx.revert();
+    return () => { try { ctx.revert(); } catch { /* noop */ } };
   }, [filteredProjects]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {

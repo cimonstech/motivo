@@ -4,8 +4,9 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { gsap }           from "gsap";
 import { ScrollTrigger }  from "gsap/ScrollTrigger";
+import { useRouter }      from "next/navigation";
 import { FloatingPills }  from "@/components/ui/FloatingPills";
-import { SafeLink }       from "@/components/ui/SafeLink";
+import { safeNavigate }   from "@/lib/safeNavigate";
 import { ThreeErrorBoundary } from "@/components/ui/ThreeErrorBoundary";
 
 const HeroCanvas = dynamic(
@@ -16,6 +17,7 @@ const HeroCanvas = dynamic(
 gsap.registerPlugin(ScrollTrigger);
 
 export function Hero() {
+  const router       = useRouter();
   const sectionRef   = useRef<HTMLElement>(null);
   const headlineRef  = useRef<HTMLDivElement>(null);
   const pillsRef     = useRef<HTMLDivElement>(null);
@@ -87,7 +89,9 @@ export function Hero() {
         .to(scrollCueRef.current,{ opacity: 0,          duration: 0.2 }, 0);
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      try { ctx.revert(); } catch { /* pin spacer already removed */ }
+    };
   }, []);
 
   return (
@@ -104,22 +108,32 @@ export function Hero() {
         overflow: "hidden",
       }}
     >
-      {/* Ghost text */}
+      {/* Ghost logo — greyscale, large, centered behind sphere */}
       <div
         ref={ghostRef}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
-        style={{ zIndex: 5 }}
+        style={{
+          position:       "absolute",
+          inset:          0,
+          display:        "flex",
+          alignItems:     "center",
+          justifyContent: "center",
+          pointerEvents:  "none",
+          zIndex:         5,
+        }}
         aria-hidden="true"
       >
-        <span
-          className="font-display font-bold whitespace-nowrap tracking-tighter"
+        <img
+          src="/logo.svg"
+          alt=""
           style={{
-            fontSize: "clamp(80px, 14vw, 200px)",
-            color: "rgba(245,245,240,0.06)",
+            width:      "clamp(280px, 40vw, 560px)",
+            height:     "auto",
+            display:    "block",
+            filter:     "grayscale(100%) brightness(2)",
+            opacity:    0.07,
+            userSelect: "none",
           }}
-        >
-          MOTIVO
-        </span>
+        />
       </div>
 
       {/* Hero particle sphere — centered */}
@@ -184,18 +198,20 @@ export function Hero() {
           </p>
         </div>
         <div className="line overflow-hidden mt-6 flex items-center gap-4">
-          <SafeLink
-            href="/work"
+          <button
+            type="button"
+            onClick={() => safeNavigate("/work", router)}
             className="text-xs font-medium text-white border border-white/20 rounded-full px-5 py-2.5 hover:border-red transition-all duration-300"
           >
             See our work
-          </SafeLink>
-          <SafeLink
-            href="/contact"
+          </button>
+          <button
+            type="button"
+            onClick={() => safeNavigate("/contact", router)}
             className="text-xs font-medium text-red hover:text-white transition-colors duration-200"
           >
             Start a project ↗
-          </SafeLink>
+          </button>
         </div>
       </div>
 
@@ -238,9 +254,11 @@ export function Hero() {
               0{s.suffix}
             </span>
             <span style={{
-              fontSize:   "10px",
-              color:      "rgba(245,245,240,0.3)",
-              lineHeight: 1.3,
+              fontFamily:    "var(--font-sans)",
+              fontSize:      "10px",
+              color:         "rgba(245,245,240,0.35)",
+              lineHeight:    1.3,
+              paddingBottom: "2px",
             }}>
               {s.label[0]}{s.label[1] ? <><br />{s.label[1]}</> : ""}
             </span>

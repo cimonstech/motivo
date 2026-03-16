@@ -4,19 +4,33 @@ import { usePathname } from "next/navigation";
 import { gsap }          from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-/**
- * Kills GSAP on every route change.
- * Mounted once in the root layout.
- */
 export function RouteCleanup() {
   const pathname = usePathname();
 
+  // Patch removeChild once to suppress GSAP pin-spacer errors
   useEffect(() => {
-    // On every route change, clean up previous page's GSAP state
+    if (typeof window === "undefined") return;
+    const original = Node.prototype.removeChild;
+    Node.prototype.removeChild = function <T extends Node>(child: T): T {
+      if (child.parentNode !== this) {
+        return child;
+      }
+      return original.call(this, child) as T;
+    };
     return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill(true));
-      ScrollTrigger.clearScrollMemory();
-      gsap.globalTimeline.clear();
+      Node.prototype.removeChild = original;
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      try {
+        ScrollTrigger.getAll().forEach((t) => t.kill(true));
+        ScrollTrigger.clearScrollMemory();
+        gsap.globalTimeline.clear();
+      } catch {
+        // pin spacer already removed
+      }
     };
   }, [pathname]);
 

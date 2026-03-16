@@ -58,7 +58,7 @@ export function NumbersSection() {
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => { try { ctx.revert(); } catch { /* noop */ } };
   }, []);
 
   return (

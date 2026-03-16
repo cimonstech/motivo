@@ -1,11 +1,12 @@
 "use client";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { NAV_LINKS } from "@/lib/constants";
-import { SafeLink } from "@/components/ui/SafeLink";
+import { safeNavigate } from "@/lib/safeNavigate";
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <nav
@@ -30,7 +31,14 @@ export function Navbar() {
         }}
       >
       {/* Logo */}
-      <SafeLink href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+      <button
+        type="button"
+        onClick={() => safeNavigate("/", router)}
+        style={{
+          background: "none", border: "none", padding: 0,
+          display: "flex", alignItems: "center", cursor: "pointer",
+        }}
+      >
         <Image
           src="/logo.svg"
           alt="Motivo"
@@ -39,20 +47,20 @@ export function Navbar() {
           priority
           style={{ height: "28px", width: "auto", display: "block" }}
         />
-      </SafeLink>
+      </button>
 
       {/* Nav links — centered */}
       <div style={{ display: "flex", alignItems: "center", gap: "40px" }}>
         {NAV_LINKS.map((link) => (
-          <SafeLink
+          <button
             key={link.href}
-            href={link.href}
+            type="button"
+            onClick={() => safeNavigate(link.href, router)}
             style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "13px",
+              background: "none", border: "none", padding: 0,
+              fontFamily: "var(--font-sans)", fontSize: "13px",
               color: pathname === link.href ? "#F5F5F0" : "rgba(245,245,240,0.45)",
-              textDecoration: "none",
-              transition: "color 0.2s ease",
+              cursor: "pointer", transition: "color 0.2s ease",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "#F5F5F0")}
             onMouseLeave={(e) => {
@@ -61,34 +69,27 @@ export function Navbar() {
             }}
           >
             {link.label}
-          </SafeLink>
+          </button>
         ))}
       </div>
 
       {/* CTA */}
-      <SafeLink
-        href="/contact"
+      <button
+        type="button"
+        onClick={() => safeNavigate("/contact", router)}
         style={{
-          fontFamily:     "var(--font-sans)",
-          fontSize:       "12px",
-          fontWeight:     500,
-          color:          "#ffffff",
-          textDecoration: "none",
-          padding:        "9px 20px",
-          background:     "#ED1C24",
-          border:         "none",
-          borderRadius:   "100px",
-          display:        "flex",
-          alignItems:     "center",
-          gap:            "6px",
-          transition:     "background 0.2s ease",
+          fontFamily: "var(--font-sans)", fontSize: "12px", fontWeight: 500,
+          color: "#ffffff", padding: "9px 20px", background: "#ED1C24",
+          border: "none", borderRadius: "100px", display: "flex",
+          alignItems: "center", gap: "6px", cursor: "pointer",
+          transition: "background 0.2s ease",
         }}
         onMouseEnter={(e) => (e.currentTarget.style.background = "#B5151B")}
         onMouseLeave={(e) => (e.currentTarget.style.background = "#ED1C24")}
       >
         Start a project
         <span style={{ fontSize: "13px" }}>↗</span>
-      </SafeLink>
+      </button>
       </div>
     </nav>
   );
