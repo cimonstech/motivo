@@ -8,7 +8,7 @@ try {
 } catch (e) {
   if (e.code === "ENOENT") return;
   if (e.code === "ENOTEMPTY" || e.code === "EBUSY") {
-    console.error("\nCould not delete .next — the dev server may still be running.");
+    console.error("\nCould not delete .next - the dev server may still be running.");
     console.error("Stop it with Ctrl+C, then run: npm run dev:clean\n");
     process.exit(1);
   }

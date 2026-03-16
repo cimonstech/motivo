@@ -10,10 +10,10 @@ const ORIGIN_PARAGRAPHS = [
   "I've spent more than a decade working as a designer, eventually growing into art direction and working with brands, printers, and fabricators on different kinds of projects. Over time, I began to see a pattern. The ideas were often strong, the designs thoughtful, but somewhere between the concept and the final outcome, something would get lost.",
   "Sometimes the design looked great on screen but didn't translate well when it was produced. Other times the production didn't reflect the quality of the idea that started it. The disconnect between design and execution was something I saw again and again. And it bothered me.",
   "Ghana has incredibly talented designers and skilled craftsmen. That was never the issue. What was missing was the connection between the people who imagine the ideas and the people who actually build them.",
-  "I've always enjoyed both sides of that process. I like the thinking that goes into a design, but I'm just as interested in how that design is made real — the materials, the structure, the details, and the process of bringing something from an idea into the physical world.",
+  "I've always enjoyed both sides of that process. I like the thinking that goes into a design, but I'm just as interested in how that design is made real - the materials, the structure, the details, and the process of bringing something from an idea into the physical world.",
   "That's how MOTIVO began. Not just as another design studio and not just as a fabrication workshop, but as a place where both sides of the process could live together. Where ideas are designed with production in mind, and where production respects the integrity of the idea.",
-  "The name MOTIVO comes from the idea that everything we create should have a motive — a clear reason for existing.",
-  "I want to build a place where good ideas are not only imagined — they are built properly.",
+  "The name MOTIVO comes from the idea that everything we create should have a motive - a clear reason for existing.",
+  "I want to build a place where good ideas are not only imagined - they are built properly.",
 ];
 
 export function OriginSection() {
@@ -128,7 +128,7 @@ export function OriginSection() {
             {/* Last para gets red accent */}
             {i === ORIGIN_PARAGRAPHS.length - 1 ? (
               <>
-                I want to build a place where good ideas are not only imagined —{" "}
+                I want to build a place where good ideas are not only imagined -{" "}
                 <span style={{ color: "#ED1C24" }}>they are built properly.</span>
               </>
             ) : para}
@@ -145,7 +145,7 @@ export function OriginSection() {
             marginTop:     "16px",
           }}
         >
-          — Gideon Kutsinya, Founder
+          - Gideon Kutsinyah, Founder
         </p>
       </div>
       </div>

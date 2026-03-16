@@ -15,11 +15,11 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    id:          "brand-identity",
+    id:          "branding",
     num:         "01",
-    name:        "Brand Identity",
+    name:        "Branding",
     tag:         "Most popular",
-    description: "Logos, visual systems, brand guidelines, print design, and campaign direction — built to be unmistakable.",
+    description: "Logos, visual systems, brand guidelines, print design, and campaign direction - built to be unmistakable.",
     tags:        ["Logos", "Systems", "Print"],
     items:       [
       "Logo & identity system",
@@ -27,7 +27,7 @@ export const services: Service[] = [
       "Print & collateral",
       "Campaign direction",
     ],
-    workSlug:    "brands",
+    workSlug:    "branding",
     accentColor: "#ED1C24",
     thumbnail:   r2("homepage/accralions.webp"),
   },
@@ -35,7 +35,7 @@ export const services: Service[] = [
     id:          "digital",
     num:         "02",
     name:        "Digital",
-    description: "Websites, web applications, portals, and custom digital experiences — engineered for performance.",
+    description: "Websites, web applications, portals, and custom digital experiences - engineered for performance.",
     tags:        ["Websites", "Web Apps", "Portals"],
     items:       [
       "Marketing websites",
@@ -49,9 +49,9 @@ export const services: Service[] = [
     thumbnail:   r2("homepage/CLGB.webp"),
   },
   {
-    id:          "campaigns",
+    id:          "ads-campaigns",
     num:         "03",
-    name:        "Campaigns",
+    name:        "Ads & Campaigns",
     description: "Creative campaign strategy, art direction, motion graphics, and launch assets that make people stop.",
     tags:        ["Creative", "Motion", "OOH"],
     items:       [
@@ -61,7 +61,7 @@ export const services: Service[] = [
       "OOH & print",
       "Social content",
     ],
-    workSlug:    "campaigns",
+    workSlug:    "ads-campaigns",
     accentColor: "#ED1C24",
     thumbnail:   r2("homepage/guiness.webp"),
   },

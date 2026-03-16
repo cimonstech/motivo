@@ -6,8 +6,9 @@ import {
 import { gsap }          from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRouter }     from "next/navigation";
-import { projects }     from "@/data/projects";
+import { projects }      from "@/data/projects";
 import type { Project }  from "@/data/projects";
+import { CATEGORY_LABELS, CATEGORIES } from "@/data/categories";
 
 const OrbCanvas = dynamic(
   () => import("@/components/three/OrbCanvas"),
@@ -19,13 +20,6 @@ gsap.registerPlugin(ScrollTrigger);
 interface Props {
   initialCategory: string | null;
 }
-
-const CATEGORY_LABELS: Record<string, string> = {
-  brands:       "Brand Identity",
-  digital:      "Digital",
-  campaigns:    "Campaigns",
-  fabrications: "Fabrications",
-};
 
 export function WorkPageClient({ initialCategory }: Props) {
   const [activeIdx,    setActiveIdx]    = useState(0);
@@ -80,7 +74,7 @@ export function WorkPageClient({ initialCategory }: Props) {
     return () => window.removeEventListener("scroll", onScroll);
   }, [filteredProjects]);
 
-  // Scroll-off animation — fixed elements exit upward as CTA rises
+  // Scroll-off animation - fixed elements exit upward as CTA rises
   useEffect(() => {
     if (!sentinelRef.current) return;
 
@@ -180,7 +174,7 @@ export function WorkPageClient({ initialCategory }: Props) {
         </span>
       </div>
 
-      {/* ── Fixed: project index — bottom-right ── */}
+      {/* ── Fixed: project index - bottom-right ── */}
       <div
         ref={indexRef}
         style={{
@@ -262,7 +256,7 @@ export function WorkPageClient({ initialCategory }: Props) {
         >
           All
         </button>
-        {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
+        {CATEGORIES.map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setActiveFilter(key)}
@@ -399,7 +393,7 @@ export function WorkPageClient({ initialCategory }: Props) {
                     textTransform: "uppercase" as const,
                     letterSpacing: "0.08em",
                   }}>
-                    {project.category} · {project.year}
+                    {CATEGORY_LABELS[project.category] ?? project.category} · {project.year}
                   </span>
                 </div>
               </div>
@@ -408,10 +402,10 @@ export function WorkPageClient({ initialCategory }: Props) {
         )}
       </div>
 
-      {/* ── Sentinel — triggers fixed element exit ── */}
+      {/* ── Sentinel - triggers fixed element exit ── */}
       <div ref={sentinelRef} style={{ height: "1px", margin: "40px 0 0" }} />
 
-      {/* ── CTA section — orb + quote ── */}
+      {/* ── CTA section - orb + quote ── */}
       <div
         style={{
           background: "#F5F5F0",
@@ -463,7 +457,7 @@ export function WorkPageClient({ initialCategory }: Props) {
             gap:            "60px",
           }}
         >
-          {/* Left — quote */}
+          {/* Left - quote */}
           <div
             style={{
               flex:          "1",
@@ -507,7 +501,7 @@ export function WorkPageClient({ initialCategory }: Props) {
                 Precise by instinct.{" "}
                 <span style={{ color: "rgba(8,8,8,0.4)" }}>
                   Client-focused by nature. We craft brands and digital products
-                  with restraint, rigour, and an obsessive attention to detail —
+                  with restraint, rigour, and an obsessive attention to detail -
                   delivering work that feels effortless and performs flawlessly.
                 </span>
               </p>
@@ -522,7 +516,7 @@ export function WorkPageClient({ initialCategory }: Props) {
                   letterSpacing: "0.04em",
                 }}
               >
-                — Batista Simons, Creative Developer
+                - Batista Simons, Creative Developer
               </cite>
             </blockquote>
 
@@ -550,7 +544,7 @@ export function WorkPageClient({ initialCategory }: Props) {
             </a>
           </div>
 
-          {/* Right — orb */}
+          {/* Right - orb */}
           <div style={{ flexShrink: 0 }}>
             <OrbCanvas width={260} height={260} />
           </div>

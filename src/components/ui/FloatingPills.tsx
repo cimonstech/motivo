@@ -51,7 +51,7 @@ export function FloatingPills() {
         pointerEvents:  "none",
       }}
     >
-      {/* Top left — client icons + count */}
+      {/* Top left - client icons + count */}
       <div
         ref={ref0}
         className="pill"
@@ -88,17 +88,17 @@ export function FloatingPills() {
         <span style={{ marginLeft: "8px" }}>40+ brands built</span>
       </div>
 
-      {/* Top right — rating */}
+      {/* Top right - rating */}
       <div
         ref={ref1}
         className="pill"
         style={{ ...pillStyle, top: "18%", right: "48px" }}
       >
         <span style={{ color: "#ED1C24", fontSize: "10px" }}>✦</span>
-        Top creative practice — Accra
+        Top creative practice - Accra
       </div>
 
-      {/* Middle left — live badge */}
+      {/* Middle left - live badge */}
       <div
         ref={ref2}
         className="pill"

@@ -11,19 +11,19 @@ Motivo has worked on these projects:
 - CLGB (Ghana Chamber of Licensed Gold Buyers): Brand identity + full-stack web portal
 - Coca-Cola Ghana: Creative campaign direction and brand activation
 - Guinness Ghana: Creative campaign direction and brand activation
-- Accralions: Brand identity system
+- Accra Lions: Brand identity system
 - Tesoro: Premium brand identity
 - Logofolio: Collection of logo marks for various clients
 - Motivo Chair: Custom furniture fabrication
 
 Services offered:
-1. Brand Identity — logos, visual systems, guidelines, print, campaign direction
-2. Digital — websites, web applications, portals, e-commerce, CMS
-3. Campaigns — creative strategy, art direction, motion, OOH, social content
-4. Fabrications — 3D signage, illuminated signs, reception branding, wayfinding, installations
+1. Brand Identity - logos, visual systems, guidelines, print, campaign direction
+2. Digital - websites, web applications, portals, e-commerce, CMS
+3. Campaigns - creative strategy, art direction, motion, OOH, social content
+4. Fabrications - 3D signage, illuminated signs, reception branding, wayfinding, installations
 `;
 
-const SYSTEM_PROMPT = `You are a calm, confident creative strategist at Motivo — a premium creative practice based in Accra, Ghana. 
+const SYSTEM_PROMPT = `You are a calm, confident creative strategist at Motivo - a premium creative practice based in Accra, Ghana. 
 
 Your role is to help potential clients understand which Motivo service fits their project best.
 
@@ -35,12 +35,12 @@ Rules:
 - Never quote prices or timelines.
 - Never mention competitors.
 - Ask only ONE follow-up question at a time.
-- Keep responses concise — 2-4 sentences maximum.
+- Keep responses concise - 2-4 sentences maximum.
 - After 3-4 exchanges, always suggest sending the brief to the team.
 - When recommending a service, reference a relevant past project naturally.
 - If asked something off-topic, redirect warmly back to their project.
 - End recommendations with: "Ready to go further? I can prepare your brief for the team."
-- Never use em dashes (—) as punctuation. Use commas or full stops instead.
+- Use hyphens (-) or commas instead of em dashes for punctuation.
 - Tone: thoughtful, direct, confident. Like a senior creative you trust.`;
 
 export async function POST(req: Request) {
@@ -60,30 +60,29 @@ export async function POST(req: Request) {
     messages,
   });
 
-  // Return as a ReadableStream for SSE
+  // Return as a ReadableStream for SSE - use .on("text") for reliable text capture
   const readable = new ReadableStream({
     async start(controller) {
+      const encoder = new TextEncoder();
+      const send = (data: { text?: string }) =>
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`));
+
+      stream.on("text", (text: string) => {
+        if (text) send({ text });
+      });
+
+      stream.on("error", () => {
+        send({ text: "Sorry, something went wrong. Please try again or reach out on WhatsApp." });
+      });
+
       try {
-        for await (const event of stream) {
-          if (
-            event.type === "content_block_delta" &&
-            (event as { delta?: { type?: string; text?: string } }).delta?.type === "text_delta"
-          ) {
-            const text = (event as { delta?: { text?: string } }).delta?.text;
-            if (text) {
-              controller.enqueue(
-                new TextEncoder().encode(`data: ${JSON.stringify({ text })}\n\n`)
-              );
-            }
-          }
-        }
+        await stream.finalMessage();
       } catch {
-        controller.enqueue(
-          new TextEncoder().encode(`data: ${JSON.stringify({ text: "Sorry, something went wrong. Please try again or reach out on WhatsApp." })}\n\n`)
-        );
+        send({ text: "Sorry, something went wrong. Please try again or reach out on WhatsApp." });
+      } finally {
+        controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+        controller.close();
       }
-      controller.enqueue(new TextEncoder().encode("data: [DONE]\n\n"));
-      controller.close();
     },
   });
 

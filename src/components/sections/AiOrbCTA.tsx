@@ -107,7 +107,7 @@ export function AiOrbCTA() {
         overflow:   "hidden",
       }}
     >
-      {/* Ghost text — START NOW */}
+      {/* Ghost text - START NOW */}
       <div
         aria-hidden="true"
         style={{
@@ -150,7 +150,7 @@ export function AiOrbCTA() {
         </span>
       </div>
 
-      {/* Content row — max-width container */}
+      {/* Content row - max-width container */}
       <div
         style={{
           position:       "relative",
@@ -165,7 +165,7 @@ export function AiOrbCTA() {
           padding:        "0 48px",
         }}
       >
-        {/* Left — text */}
+        {/* Left - text */}
         <div
           className="cta-content"
           style={{
@@ -215,7 +215,7 @@ export function AiOrbCTA() {
               margin:     0,
             }}
           >
-            Describe your project — our AI will listen, ask one smart
+            Describe your project - our AI will listen, ask one smart
             question, and point you to exactly the right service. No
             forms. No back-and-forth. Just a conversation.
           </p>
@@ -280,7 +280,7 @@ export function AiOrbCTA() {
               }}
             >
               &ldquo;I didn&apos;t get into design to be an artist. Being a designer
-              goes a step further — not only trying to evoke emotion but
+              goes a step further - not only trying to evoke emotion but
               trying to make a reaction.&rdquo;
             </p>
             <cite
@@ -293,12 +293,12 @@ export function AiOrbCTA() {
                 marginTop:  "8px",
               }}
             >
-              — Gideon Kutsinya, Founder
+              - Gideon Kutsinyah, Founder
             </cite>
           </blockquote>
         </div>
 
-        {/* Right — orb + clock */}
+        {/* Right - orb + clock */}
         <div
           className="cta-content"
           style={{
@@ -316,7 +316,7 @@ export function AiOrbCTA() {
             <OrbCanvas width={320} height={320} />
           </div>
 
-          {/* Live clock — sits directly below orb */}
+          {/* Live clock - sits directly below orb */}
           <LiveClock />
         </div>
       </div>

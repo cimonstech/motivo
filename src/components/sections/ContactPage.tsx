@@ -25,7 +25,7 @@ export function ContactPage() {
           flex:     1,
         }}
       >
-        {/* Left — header + AI chat */}
+        {/* Left - header + AI chat */}
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ marginBottom: "28px" }}>
             <span style={{
@@ -47,7 +47,7 @@ export function ContactPage() {
           <AiChatWidget />
         </div>
 
-        {/* Right — contact details */}
+        {/* Right - contact details */}
         <ContactSidebar />
       </div>
     </div>

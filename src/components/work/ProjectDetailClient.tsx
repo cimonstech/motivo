@@ -137,7 +137,7 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
         }}
       >
 
-        {/* ── LEFT — active image (sized so strip lands at horizontal center) ── */}
+        {/* ── LEFT - active image (sized so strip lands at horizontal center) ── */}
         <div
           style={{
             flex:       "0 0 calc(50vw - 94px)",
@@ -176,7 +176,7 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
           </div>
         </div>
 
-        {/* ── CENTER — thumbnail strip ── */}
+        {/* ── CENTER - thumbnail strip ── */}
         <div
           ref={stripRef}
           style={{
@@ -219,7 +219,7 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
           ))}
         </div>
 
-        {/* ── RIGHT — project details ── */}
+        {/* ── RIGHT - project details ── */}
         <div
           style={{
             flex:          "1",
@@ -244,7 +244,7 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
             ← Work
           </Link>
 
-          {/* Project name — top, right aligned */}
+          {/* Project name - top, right aligned */}
           <h1
             ref={titleRef}
             className="detail-content"
@@ -268,14 +268,14 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
             }}>{project.year}</span>
           </div>
 
-          {/* Meta — Year + Category only */}
+          {/* Meta - Year + Disciplines */}
           <div className="detail-content" style={{
             display: "flex", flexDirection: "column",
             gap: "16px", marginBottom: "24px",
           }}>
             {[
-              { label: "Year",     value: project.year },
-              { label: "Category", value: project.category },
+              { label: "Year",        value: project.year },
+              { label: "Disciplines", value: project.tags.join(", ") },
             ].map((m) => (
               <div key={m.label} style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
                 <span style={{
@@ -304,6 +304,48 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
           }}>
             {project.summary}
           </p>
+
+          {/* Case study sections */}
+          {[
+            { label: "The Challenge", text: project.challenge },
+            { label: "The Insight",   text: project.insight   },
+            { label: "The Solution",  text: project.solution  },
+            { label: "The Impact",    text: project.impact    },
+          ].filter((s) => s.text).map((section) => (
+            <div
+              key={section.label}
+              className="detail-content"
+              style={{ marginBottom: "16px", maxWidth: "320px" }}
+            >
+              <p style={{
+                fontFamily:    "var(--font-sans)",
+                fontSize:      "9px",
+                fontWeight:    600,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase" as const,
+                color:         "rgba(8,8,8,0.3)",
+                margin:        "0 0 5px 0",
+              }}>
+                {section.label}
+              </p>
+              <p style={{
+                fontFamily: "var(--font-sans)",
+                fontSize:   "12px",
+                color:      "rgba(8,8,8,0.6)",
+                lineHeight: 1.65,
+                margin:     0,
+              }}>
+                {section.text}
+              </p>
+            </div>
+          ))}
+
+          {/* Divider before rating */}
+          <div style={{
+            height:     "0.5px",
+            background: "rgba(8,8,8,0.08)",
+            margin:     "8px 0 20px",
+          }} />
 
           {/* Rating */}
           <div className="detail-content" style={{

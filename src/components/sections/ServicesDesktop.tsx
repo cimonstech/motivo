@@ -84,7 +84,7 @@ export function ServicesDesktop({ data }: Props) {
         zIndex: 10,
       }}
     >
-      {/* Vertical Motivo logo — left third anchor */}
+      {/* Vertical Motivo logo - left third anchor */}
       <div
         style={{
           position:       "absolute",
@@ -118,7 +118,7 @@ export function ServicesDesktop({ data }: Props) {
         />
       </div>
 
-      {/* Left gradient mask — cards vanish as they enter the sphere zone */}
+      {/* Left gradient mask - cards vanish as they enter the sphere zone */}
       <div
         style={{
           position:      "absolute",
@@ -132,7 +132,7 @@ export function ServicesDesktop({ data }: Props) {
         }}
       />
 
-      {/* Scrolling card track — starts from right of sphere zone */}
+      {/* Scrolling card track - starts from right of sphere zone */}
       <div
         ref={trackRef}
         style={{
@@ -149,7 +149,7 @@ export function ServicesDesktop({ data }: Props) {
           <ServiceCard key={svc.id} service={svc} isActive={activeIdx === i} />
         ))}
 
-        {/* Trailing text — last scroll item, stops centered */}
+        {/* Trailing text - last scroll item, stops centered */}
         <div
           style={{
             flexShrink:     0,
@@ -181,7 +181,7 @@ export function ServicesDesktop({ data }: Props) {
               in mind.
             </p>
 
-            {/* Button — width fits content only */}
+            {/* Button - width fits content only */}
             <button
               onClick={() => safeNavigate("/work", router)}
               style={{
@@ -274,7 +274,7 @@ function ServiceCard({ service, isActive }: { service: Service; isActive: boolea
         <span style={{ fontSize: "13px", color: isActive ? "#ED1C24" : "rgba(8,8,8,0.2)" }}>↗</span>
       </div>
 
-      {/* Thumbnail — real image */}
+      {/* Thumbnail - real image */}
       <div
         style={{
           margin:       "0 16px",
@@ -299,7 +299,7 @@ function ServiceCard({ service, isActive }: { service: Service; isActive: boolea
             transform:  isActive ? "scale(1.03)" : "scale(1)",
           }}
         />
-        {/* Subtle overlay — lightens inactive cards */}
+        {/* Subtle overlay - lightens inactive cards */}
         <div
           style={{
             position:      "absolute",

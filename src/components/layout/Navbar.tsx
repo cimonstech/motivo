@@ -49,7 +49,7 @@ export function Navbar() {
         />
       </button>
 
-      {/* Nav links — centered */}
+      {/* Nav links - centered */}
       <div style={{ display: "flex", alignItems: "center", gap: "40px" }}>
         {NAV_LINKS.map((link) => (
           <button

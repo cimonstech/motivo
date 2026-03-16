@@ -19,11 +19,16 @@ const QUICK_PROMPTS = [
 ];
 
 export function AiChatWidget() {
-  const [messages,   setMessages]   = useState<Message[]>([INITIAL_MESSAGE]);
-  const [input,      setInput]      = useState("");
-  const [loading,    setLoading]    = useState(false);
-  const [showSend,   setShowSend]   = useState(false);
-  const [showPrompts, setShowPrompts] = useState(true);
+  const [messages,     setMessages]     = useState<Message[]>([INITIAL_MESSAGE]);
+  const [input,        setInput]        = useState("");
+  const [loading,      setLoading]      = useState(false);
+  const [showSend,     setShowSend]     = useState(false);
+  const [showPrompts,  setShowPrompts]  = useState(true);
+  const [userEmail,    setUserEmail]    = useState("");
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [emailError,   setEmailError]   = useState("");
+  const [sending,      setSending]      = useState(false);
+  const [sent,         setSent]         = useState(false);
   const scrollRef  = useRef<HTMLDivElement>(null);
   const inputRef   = useRef<HTMLTextAreaElement>(null);
 
@@ -60,6 +65,10 @@ export function AiChatWidget() {
         }),
       });
 
+      if (!res.ok) {
+        throw new Error(`Chat API returned ${res.status}`);
+      }
+
       const reader = res.body?.getReader();
       const decoder = new TextDecoder();
       if (!reader) return;
@@ -78,14 +87,16 @@ export function AiChatWidget() {
             if (data === "[DONE]") continue;
             try {
               const { text: t } = JSON.parse(data);
-              setMessages((prev) => {
-                const updated = [...prev];
-                updated[updated.length - 1] = {
-                  role: "assistant",
-                  content: updated[updated.length - 1].content + t,
-                };
-                return updated;
-              });
+              if (typeof t === "string") {
+                setMessages((prev) => {
+                  const updated = [...prev];
+                  updated[updated.length - 1] = {
+                    role: "assistant",
+                    content: updated[updated.length - 1].content + t,
+                  };
+                  return updated;
+                });
+              }
             } catch { /* ignore */ }
           }
         }
@@ -109,6 +120,52 @@ export function AiChatWidget() {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       send();
+    }
+  };
+
+  const handleEmailSubmit = async () => {
+    const trimmed = userEmail.trim();
+    if (!trimmed.includes("@")) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
+    setEmailError("");
+    setEmailSubmitted(true);
+
+    // Fire and forget — notify Motivo of new email immediately
+    fetch("/api/notify-email", {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ email: trimmed }),
+    }).catch(() => {}); // silent fail — never block the user
+  };
+
+  const handleSendBrief = async () => {
+    setSending(true);
+    try {
+      const sumRes = await fetch("/api/summarize", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ messages }),
+      });
+      const { summary } = await sumRes.json();
+
+      await fetch("/api/send-brief", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({
+          userEmail: userEmail.trim(),
+          messages,
+          summary: summary ?? "Client project brief submitted via Motivo AI intake.",
+        }),
+      });
+
+      setSent(true);
+    } catch {
+      // Silent fail - WhatsApp still opens
+    } finally {
+      setSending(false);
+      window.open(buildWhatsAppMessage(), "_blank");
     }
   };
 
@@ -325,48 +382,133 @@ export function AiChatWidget() {
           </div>
         )}
 
-        {/* Send brief banner */}
+        {/* Send brief - email + WhatsApp flow */}
         {showSend && !loading && (
           <div style={{
             margin: "8px 0 0 36px",
-            padding: "12px 16px",
-            background: "rgba(237,28,36,0.06)",
-            border: "1px solid rgba(237,28,36,0.15)",
-            borderRadius: "12px",
-            display: "flex", alignItems: "center", justifyContent: "space-between",
+            padding: "16px",
+            background: "rgba(8,8,8,0.03)",
+            border: "0.5px solid rgba(8,8,8,0.1)",
+            borderRadius: "10px",
+            display: "flex", flexDirection: "column", gap: "10px",
           }}>
-            <div>
-              <div style={{
-                fontFamily: "var(--font-sans)", fontSize: "12px",
-                fontWeight: 500, color: "#080808", marginBottom: "2px",
-              }}>
-                Ready to go further?
+            {!sent ? (
+              <>
+                <p style={{
+                  fontFamily: "var(--font-sans)", fontSize: "12px",
+                  color: "rgba(8,8,8,0.6)", margin: 0, lineHeight: 1.5,
+                }}>
+                  Ready to send your brief to the team?
+                </p>
+
+                {!emailSubmitted ? (
+                  <>
+                    <p style={{
+                      fontFamily: "var(--font-sans)", fontSize: "11px",
+                      color: "rgba(8,8,8,0.45)", margin: 0,
+                    }}>
+                      Where should we send your brief summary?
+                    </p>
+                    <div style={{ display: "flex", gap: "8px" }}>
+                      <input
+                        type="email"
+                        value={userEmail}
+                        onChange={(e) => setUserEmail(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && handleEmailSubmit()}
+                        placeholder="your@email.com"
+                        style={{
+                          flex: 1,
+                          background: "rgba(8,8,8,0.04)",
+                          border: emailError
+                            ? "0.5px solid #ED1C24"
+                            : "0.5px solid rgba(8,8,8,0.15)",
+                          borderRadius: "8px",
+                          padding: "9px 12px",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "12px",
+                          color: "#080808",
+                          outline: "none",
+                        }}
+                        onFocus={(e) => (e.currentTarget.style.borderColor = "#ED1C24")}
+                        onBlur={(e) => {
+                          e.currentTarget.style.borderColor =
+                            emailError ? "#ED1C24" : "rgba(8,8,8,0.15)";
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleEmailSubmit}
+                        style={{
+                          background: "#080808",
+                          border: "none",
+                          borderRadius: "8px",
+                          padding: "9px 16px",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "12px",
+                          fontWeight: 500,
+                          color: "#fff",
+                          cursor: "pointer",
+                          flexShrink: 0,
+                        }}
+                      >
+                        Continue
+                      </button>
+                    </div>
+                    {emailError && (
+                      <p style={{
+                        fontFamily: "var(--font-sans)", fontSize: "11px",
+                        color: "#ED1C24", margin: 0,
+                      }}>
+                        {emailError}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleSendBrief}
+                    disabled={sending}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "12px 16px",
+                      background: "rgba(237,28,36,0.08)",
+                      border: "0.5px solid rgba(237,28,36,0.3)",
+                      borderRadius: "10px",
+                      cursor: sending ? "wait" : "pointer",
+                      transition: "background 0.2s ease",
+                      width: "100%",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!sending) e.currentTarget.style.background = "rgba(237,28,36,0.15)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(237,28,36,0.08)";
+                    }}
+                  >
+                    <span style={{
+                      fontFamily: "var(--font-sans)", fontSize: "12px",
+                      fontWeight: 500, color: "#ED1C24",
+                    }}>
+                      {sending ? "Sending brief..." : "Send brief to team via WhatsApp →"}
+                    </span>
+                    {!sending && <span style={{ color: "#ED1C24", fontSize: "14px" }}>→</span>}
+                  </button>
+                )}
+              </>
+            ) : (
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <span style={{ fontSize: "16px" }}>✓</span>
+                <p style={{
+                  fontFamily: "var(--font-sans)", fontSize: "12px",
+                  color: "rgba(8,8,8,0.6)", margin: 0, lineHeight: 1.5,
+                }}>
+                  Brief sent! Check <strong>{userEmail}</strong> for your copy.
+                  The team will be in touch within 24-48 hours.
+                </p>
               </div>
-              <div style={{
-                fontFamily: "var(--font-sans)", fontSize: "10px",
-                color: "rgba(8,8,8,0.4)",
-              }}>
-                Send this conversation as a brief to the team
-              </div>
-            </div>
-            <a
-              href={buildWhatsAppMessage()}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                background: "#ED1C24", border: "none", borderRadius: "100px",
-                padding: "8px 16px", fontFamily: "var(--font-sans)",
-                fontSize: "11px", fontWeight: 500, color: "#fff",
-                cursor: "pointer", textDecoration: "none",
-                display: "flex", alignItems: "center", gap: "4px",
-                transition: "background 0.2s ease", flexShrink: 0,
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#B5151B")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#ED1C24")}
-            >
-              Send via WhatsApp
-              <span style={{ fontSize: "12px" }}>→</span>
-            </a>
+            )}
           </div>
         )}
       </div>

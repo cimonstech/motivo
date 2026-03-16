@@ -214,12 +214,12 @@ h1, h2, h3, h4, h5, h6 {
   color: #ED1C24;
 }
 
-/* Muted label — dark bg */
+/* Muted label - dark bg */
 .label-muted-light {
   color: rgba(245, 245, 240, 0.3);
 }
 
-/* Muted label — light bg */
+/* Muted label - light bg */
 .label-muted-dark {
   color: rgba(8, 8, 8, 0.3);
 }

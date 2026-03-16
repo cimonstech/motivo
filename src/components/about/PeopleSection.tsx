@@ -76,7 +76,7 @@ export function PeopleSection() {
               cursor:     "default",
             }}
           >
-            {/* Single photo — grayscale at rest, color on hover */}
+            {/* Single photo - grayscale at rest, color on hover */}
             <div
               style={{
                 position:     "relative",
@@ -100,7 +100,7 @@ export function PeopleSection() {
                 }}
               />
 
-              {/* Quote overlay — slides up on hover */}
+              {/* Quote overlay - slides up on hover */}
               <div
                 style={{
                   position:   "absolute",

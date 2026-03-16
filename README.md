@@ -1,6 +1,6 @@
 # Motivo Studio
 
-Accra's leading creative studio — brand identity, digital products, and physical fabrications.
+Accra's leading creative studio - brand identity, digital products, and physical fabrications.
 
 ## Setup
 
@@ -27,10 +27,10 @@ Place these `.woff2` files in `public/fonts/` (download from [Fontshare](https:/
 
 Add these to `public/` when ready:
 
-- `noise.png` — grain texture for `.noise` overlay
-- `placeholder.jpg` — dark project placeholder
-- `og-image.jpg` — 1200×630 social image
-- `favicon.ico` / `apple-touch-icon.png` — or keep the SVG favicon
+- `noise.png` - grain texture for `.noise` overlay
+- `placeholder.jpg` - dark project placeholder
+- `og-image.jpg` - 1200×630 social image
+- `favicon.ico` / `apple-touch-icon.png` - or keep the SVG favicon
 
 ### 4. Environment
 
@@ -56,14 +56,14 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Project structure
 
-- `src/components/` — UI components, layout, providers
-- `src/app/` — App Router pages
-- `src/data/` — Services, projects data
-- `src/hooks/` — useMediaQuery, useLenis, useGSAP
-- `src/lib/` — utils, constants, r2 helper
+- `src/components/` - UI components, layout, providers
+- `src/app/` - App Router pages
+- `src/data/` - Services, projects data
+- `src/hooks/` - useMediaQuery, useLenis, useGSAP
+- `src/lib/` - utils, constants, r2 helper
 
 ## Notes
 
 - Use `r2("path/to/asset")` for all Cloudflare R2 asset URLs
 - Register ScrollTrigger: `gsap.registerPlugin(ScrollTrigger)` before use
-- Use `getLenis().scrollTo()` for scrolling — never `window.scrollTo` directly
+- Use `getLenis().scrollTo()` for scrolling - never `window.scrollTo` directly

@@ -6,6 +6,7 @@ import { gsap }              from "gsap";
 import { ScrollTrigger }     from "gsap/ScrollTrigger";
 import { safeNavigate }      from "@/lib/safeNavigate";
 import { featuredProjects }  from "@/data/projects";
+import { CATEGORY_LABELS }   from "@/data/categories";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,7 +59,7 @@ export function FeaturedWork() {
               fontSize: "clamp(28px, 3.5vw, 52px)", color: "#080808",
               letterSpacing: "-0.02em", lineHeight: 1.05, margin: 0,
             }}>
-              Not only imagined —<br />
+              Not only imagined -<br />
               <span style={{ color: "#ED1C24" }}>built properly.</span>
             </h2>
           </div>
@@ -136,7 +137,7 @@ export function FeaturedWork() {
                   color: "rgba(255,255,255,0.45)", textTransform: "uppercase" as const,
                   letterSpacing: "0.1em", display: "block", marginBottom: "5px",
                 }}>
-                  {project.category} · {project.year}
+                  {CATEGORY_LABELS[project.category] ?? project.category} · {project.year}
                 </span>
                 <h3 style={{
                   fontFamily: "var(--font-display)", fontWeight: 500,

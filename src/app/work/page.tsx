@@ -3,7 +3,14 @@ import type { Metadata }  from "next";
 
 export const metadata: Metadata = {
   title:       "Our Work",
-  description: "Brand identity, digital products, campaigns and fabrications — built properly in Accra, Ghana.",
+  description: "Branding, digital products, ads and campaigns, and fabrications for clients across Ghana. See how Motivo builds ideas properly.",
+  alternates:  { canonical: "https://thisismotivo.com/work" },
+  openGraph: {
+    title:       "Our Work | Motivo Studio",
+    description: "Branding, digital products, ads and campaigns, and fabrications for clients across Ghana. See how Motivo builds ideas properly.",
+    url:         "https://thisismotivo.com/work",
+    images:      [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+  },
 };
 
 interface Props {

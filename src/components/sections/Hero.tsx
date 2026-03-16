@@ -69,7 +69,7 @@ export function Hero() {
         });
       });
 
-      // Scroll animation — fade hero out
+      // Scroll animation - fade hero out
       gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -108,7 +108,7 @@ export function Hero() {
         overflow: "hidden",
       }}
     >
-      {/* Ghost logo — greyscale, large, centered behind sphere */}
+      {/* Ghost logo - greyscale, large, centered behind sphere */}
       <div
         ref={ghostRef}
         style={{
@@ -136,7 +136,7 @@ export function Hero() {
         />
       </div>
 
-      {/* Hero particle sphere — centered */}
+      {/* Hero particle sphere - centered */}
       <div
         ref={sphereRef}
         suppressHydrationWarning
@@ -160,7 +160,7 @@ export function Hero() {
         <FloatingPills />
       </div>
 
-      {/* Headline — constrained */}
+      {/* Headline - constrained */}
       <div
         ref={headlineRef}
         style={{

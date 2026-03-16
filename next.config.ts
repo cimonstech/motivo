@@ -6,6 +6,16 @@ const nextConfig: NextConfig = {
     if (dev) config.cache = false;
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source:      "/:path*",
+        has:         [{ type: "host", value: "www.thisismotivo.com" }],
+        destination: "https://thisismotivo.com/:path*",
+        permanent:   true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

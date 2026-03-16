@@ -1,0 +1,13 @@
+{
+  "name": "Motivo Studio",
+  "short_name": "Motivo",
+  "description": "Brand identity, digital products, campaigns and fabrications - built properly in Accra, Ghana.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#ED1C24",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

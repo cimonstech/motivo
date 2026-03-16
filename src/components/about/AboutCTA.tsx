@@ -71,7 +71,7 @@ export function AboutCTA() {
               if (line)  line.style.width   = "0%";
             }}
           >
-            {/* Red underline — animates left to right */}
+            {/* Red underline - animates left to right */}
             <div
               className="cta-line"
               style={{

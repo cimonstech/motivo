@@ -14,7 +14,7 @@ export function safeNavigate(
     ScrollTrigger.clearScrollMemory();
     gsap.globalTimeline.clear();
   } catch {
-    // pin spacer already removed — safe to ignore
+    // pin spacer already removed - safe to ignore
   }
 
   requestAnimationFrame(() => {

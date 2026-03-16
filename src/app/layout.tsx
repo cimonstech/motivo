@@ -35,52 +35,197 @@ const din = localFont({
   display: "swap",
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://thisismotivo.com";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://thisismotivo.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Motivo — Brand Identity, Digital & Fabrications",
-    template: "%s | Motivo",
+    default:  "Motivo Studio - Brand Identity, Digital & Fabrications in Accra, Ghana",
+    template: "%s | Motivo Studio",
   },
   description:
-    "A creative practice built at the intersection of design, fabrication, and production. Based in Accra, Ghana.",
+    "Motivo is a premium creative practice based in Accra, Ghana. We design brand identities, build digital products, direct campaigns, and fabricate physical installations - built properly.",
   keywords: [
     "creative agency Accra",
     "brand identity Ghana",
+    "graphic design Accra",
     "web design Ghana",
-    "3D signage Accra",
-    "Motivo",
+    "branding agency Ghana",
+    "digital agency Accra",
+    "logo design Ghana",
+    "creative studio Accra Ghana",
+    "brand design West Africa",
+    "fabrication signage Ghana",
   ],
-  authors: [{ name: "Motivo" }],
-  creator: "Motivo",
+  authors: [{ name: "Motivo Studio", url: SITE_URL }],
+  creator:  "Motivo Studio",
+  publisher: "Motivo Studio",
+  formatDetection: {
+    email:     false,
+    address:   false,
+    telephone: false,
+  },
   openGraph: {
-    type: "website",
-    locale: "en_GH",
-    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://thisismotivo.com",
-    siteName: "Motivo",
-    title: "Motivo — Brand Identity, Digital & Fabrications",
-    description:
-      "A creative practice built at the intersection of design, fabrication, and production. Based in Accra, Ghana.",
+    type:        "website",
+    locale:      "en_GH",
+    url:         SITE_URL,
+    siteName:    "Motivo Studio",
+    title:       "Motivo Studio - Brand Identity, Digital & Fabrications in Accra, Ghana",
+    description: "A premium creative practice built at the intersection of design, fabrication, and production. Based in Accra, Ghana.",
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1200,
+        url:    "/og-image.jpg",
+        width:  1200,
         height: 630,
-        alt: "Motivo",
+        alt:    "Motivo Studio - Creative Practice, Accra Ghana",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Motivo",
-    description: "Built where thinking meets making.",
-    images: ["/og-image.jpg"],
+    card:        "summary_large_image",
+    title:       "Motivo Studio - Brand Identity, Digital & Fabrications in Accra",
+    description: "A premium creative practice built at the intersection of design, fabrication, and production. Based in Accra, Ghana.",
+    images:      ["/og-image.jpg"],
+    creator:     "@thisismotivo",
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index:             true,
+      follow:            true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet":     -1,
+    },
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon:   "/favicon.ico",
+    apple:  "/apple-touch-icon.png",
   },
+  manifest: "/site.webmanifest",
 };
+
+function JsonLd() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type":       ["LocalBusiness", "ProfessionalService", "DesignCompany"],
+        "@id":         "https://thisismotivo.com/#organization",
+        "name":        "Motivo Studio",
+        "alternateName": "MOTIVO",
+        "url":         "https://thisismotivo.com",
+        "logo":        "https://thisismotivo.com/logo.svg",
+        "image":       "https://thisismotivo.com/og-image.jpg",
+        "description": "A premium creative practice built at the intersection of design, fabrication, and production. Based in Accra, Ghana.",
+        "foundingDate": "2018",
+        "founder": {
+          "@type": "Person",
+          "name":  "Gideon Kutsinyah",
+          "jobTitle": "Founder & Creative Director",
+        },
+        "address": {
+          "@type":           "PostalAddress",
+          "addressLocality": "Accra",
+          "addressCountry":  "GH",
+          "addressRegion":   "Greater Accra",
+        },
+        "geo": {
+          "@type":     "GeoCoordinates",
+          "latitude":  5.6037,
+          "longitude": -0.1870,
+        },
+        "contactPoint": [
+          {
+            "@type":       "ContactPoint",
+            "contactType": "customer service",
+            "email":       "hello@thisismotivo.com",
+            "availableLanguage": "English",
+          },
+          {
+            "@type":          "ContactPoint",
+            "contactType":    "sales",
+            "telephone":      "+233549467175",
+            "contactOption":  "TollFree",
+            "availableLanguage": "English",
+          },
+        ],
+        "sameAs": [
+          "https://instagram.com/thisismotivo",
+          "https://linkedin.com/company/thisismotivo",
+          "https://behance.net/thisismotivo",
+          "https://wa.me/233549467175",
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name":  "Creative Services",
+          "itemListElement": [
+            {
+              "@type":       "Offer",
+              "itemOffered": {
+                "@type":       "Service",
+                "name":        "Brand Identity",
+                "description": "Logos, visual systems, brand guidelines, print design, and campaign direction.",
+              },
+            },
+            {
+              "@type":       "Offer",
+              "itemOffered": {
+                "@type":       "Service",
+                "name":        "Digital Products",
+                "description": "Websites, web applications, portals, and custom digital experiences.",
+              },
+            },
+            {
+              "@type":       "Offer",
+              "itemOffered": {
+                "@type":       "Service",
+                "name":        "Campaigns",
+                "description": "Creative campaign strategy, art direction, motion graphics, and launch assets.",
+              },
+            },
+            {
+              "@type":       "Offer",
+              "itemOffered": {
+                "@type":       "Service",
+                "name":        "Fabrications",
+                "description": "3D signage, environmental branding, reception walls, and physical installations.",
+              },
+            },
+          ],
+        },
+        "areaServed": [
+          { "@type": "City",    "name": "Accra" },
+          { "@type": "Country", "name": "Ghana" },
+          { "@type": "Place",   "name": "West Africa" },
+        ],
+        "priceRange": "$$",
+        "numberOfEmployees": { "@type": "QuantitativeValue", "value": 2 },
+      },
+      {
+        "@type":           "WebSite",
+        "@id":             "https://thisismotivo.com/#website",
+        "url":             "https://thisismotivo.com",
+        "name":            "Motivo Studio",
+        "description":     "Brand identity, digital products, campaigns and fabrications - built properly in Accra, Ghana.",
+        "publisher":       { "@id": "https://thisismotivo.com/#organization" },
+        "inLanguage":      "en-GH",
+      },
+    ],
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}
 
 export const viewport: Viewport = {
   themeColor: "#080808",
@@ -100,6 +245,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>
+        <JsonLd />
         <RouteCleanup />
         <LenisProvider>
           <CustomCursor />
