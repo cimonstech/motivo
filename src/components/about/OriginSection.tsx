@@ -13,7 +13,7 @@ const ORIGIN_PARAGRAPHS = [
   "I've always enjoyed both sides of that process. I like the thinking that goes into a design, but I'm just as interested in how that design is made real — the materials, the structure, the details, and the process of bringing something from an idea into the physical world.",
   "That's how MOTIVO began. Not just as another design studio and not just as a fabrication workshop, but as a place where both sides of the process could live together. Where ideas are designed with production in mind, and where production respects the integrity of the idea.",
   "The name MOTIVO comes from the idea that everything we create should have a motive — a clear reason for existing.",
-  "I wanted to build a place where good ideas are not only imagined — they are built properly.",
+  "I want to build a place where good ideas are not only imagined — they are built properly.",
 ];
 
 export function OriginSection() {
@@ -128,7 +128,7 @@ export function OriginSection() {
             {/* Last para gets red accent */}
             {i === ORIGIN_PARAGRAPHS.length - 1 ? (
               <>
-                I wanted to build a place where good ideas are not only imagined —{" "}
+                I want to build a place where good ideas are not only imagined —{" "}
                 <span style={{ color: "#ED1C24" }}>they are built properly.</span>
               </>
             ) : para}

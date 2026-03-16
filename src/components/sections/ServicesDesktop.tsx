@@ -41,7 +41,7 @@ export function ServicesDesktop({ data }: Props) {
             end:     () => `+=${scrollDistance}`,
             scrub:   1,
             pin:     true,
-            pinSpacing: false,
+            pinSpacing: true,
             anticipatePin: 1,
             onUpdate: () => {
               const cards = track.querySelectorAll<HTMLElement>(".service-card");
