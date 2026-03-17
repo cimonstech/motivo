@@ -14,9 +14,9 @@ export function PeopleSection() {
         overflow:   "hidden",
       }}
     >
-      <div className="container">
+      <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       {/* Header */}
-      <div style={{ marginBottom: "48px" }}>
+      <div style={{ marginBottom: "48px", textAlign: "center" }}>
         <span
           style={{
             fontFamily:    "var(--font-sans)",
@@ -31,18 +31,22 @@ export function PeopleSection() {
         </span>
       </div>
 
-      {/* Horizontal scroll track */}
+      {/* Horizontal scroll track — centered */}
       <div
         ref={trackRef}
         style={{
           display:        "flex",
           gap:            "16px",
-          paddingLeft:    "0",
+          paddingLeft:    "48px",
           paddingRight:   "48px",
           overflowX:      "auto",
           scrollbarWidth: "none",
           scrollBehavior: "smooth",
           cursor:         "grab",
+          width:          "100%",
+          maxWidth:       "1440px",
+          margin:         "0 auto",
+          justifyContent: "center",
         }}
         onMouseDown={(e) => {
           const el    = trackRef.current;

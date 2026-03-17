@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { gsap }           from "gsap";
 import { ScrollTrigger }  from "gsap/ScrollTrigger";
 import { useRouter }      from "next/navigation";
-import { FloatingPills }  from "@/components/ui/FloatingPills";
+import { FloatingPills }      from "@/components/ui/FloatingPills";
+import { AvailabilityCard }  from "@/components/ui/AvailabilityCard";
 import { safeNavigate }   from "@/lib/safeNavigate";
 import { ThreeErrorBoundary } from "@/components/ui/ThreeErrorBoundary";
 
@@ -23,8 +24,9 @@ export function Hero() {
   const pillsRef     = useRef<HTMLDivElement>(null);
   const statsRef     = useRef<HTMLDivElement>(null);
   const ghostRef     = useRef<HTMLDivElement>(null);
-  const scrollCueRef = useRef<HTMLDivElement>(null);
-  const sphereRef    = useRef<HTMLDivElement>(null);
+  const scrollCueRef   = useRef<HTMLDivElement>(null);
+  const sphereRef     = useRef<HTMLDivElement>(null);
+  const availabilityRef  = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
@@ -86,7 +88,8 @@ export function Hero() {
         .to(pillsRef.current,    { opacity: 0, y: -16, duration: 0.4 }, 0)
         .to(headlineRef.current, { opacity: 0, y: -30, duration: 0.5 }, 0.05)
         .to(statsRef.current,    { opacity: 0, y: 16,  duration: 0.4 }, 0.05)
-        .to(scrollCueRef.current,{ opacity: 0,          duration: 0.2 }, 0);
+        .to(scrollCueRef.current,{ opacity: 0,          duration: 0.2 }, 0)
+        .to(availabilityRef.current, { opacity: 0, y: -16, duration: 0.4 }, 0)
     }, sectionRef);
 
     return () => {
@@ -158,6 +161,11 @@ export function Hero() {
         style={{ zIndex: 30 }}
       >
         <FloatingPills />
+      </div>
+
+      {/* Availability card - top right */}
+      <div ref={availabilityRef} style={{ position: "absolute", inset: 0, zIndex: 30, pointerEvents: "none" }}>
+        <AvailabilityCard />
       </div>
 
       {/* Headline - constrained */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter }         from "next/navigation";
 import { gsap }              from "gsap";
 import { ScrollTrigger }     from "gsap/ScrollTrigger";
@@ -9,6 +9,32 @@ import { featuredProjects }  from "@/data/projects";
 import { CATEGORY_LABELS }   from "@/data/categories";
 
 gsap.registerPlugin(ScrollTrigger);
+
+function FeaturedSlideshow({ images, alt }: { images: string[]; alt: string }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % images.length), 3500);
+    return () => clearInterval(id);
+  }, [images.length]);
+  return (
+    <>
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={i === idx ? alt : ""}
+          loading="lazy"
+          style={{
+            position: "absolute", inset: 0,
+            width: "100%", height: "100%", objectFit: "cover",
+            opacity: i === idx ? 1 : 0,
+            transition: "opacity 0.6s ease",
+          }}
+        />
+      ))}
+    </>
+  );
+}
 
 export function FeaturedWork() {
   const router = useRouter();
@@ -110,15 +136,32 @@ export function FeaturedWork() {
                 if (bar) bar.style.transform = "scaleY(0)";
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={project.stripMedia.src}
-                alt={project.name}
-                style={{
-                  position: "absolute", inset: 0,
-                  width: "100%", height: "100%", objectFit: "cover",
-                }}
-              />
+              {project.worksPageSlideshow && project.worksPageSlideshow.length > 0 ? (
+                <FeaturedSlideshow images={project.worksPageSlideshow} alt={project.name} />
+              ) : (project.worksPageMedia ?? project.stripMedia).type === "video" ? (
+                <video
+                  src={(project.worksPageMedia ?? project.stripMedia).src}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-label={project.name}
+                  style={{
+                    position: "absolute", inset: 0,
+                    width: "100%", height: "100%", objectFit: "cover",
+                  }}
+                />
+              ) : (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={(project.worksPageMedia ?? project.stripMedia).src}
+                  alt={project.name}
+                  style={{
+                    position: "absolute", inset: 0,
+                    width: "100%", height: "100%", objectFit: "cover",
+                  }}
+                />
+              )}
               <div style={{
                 position: "absolute", inset: 0,
                 background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%)",

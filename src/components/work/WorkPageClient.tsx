@@ -17,6 +17,36 @@ const OrbCanvas = dynamic(
 
 gsap.registerPlugin(ScrollTrigger);
 
+function CardSlideshow({ images, alt }: { images: string[]; alt: string }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % images.length), 3500);
+    return () => clearInterval(id);
+  }, [images.length]);
+  return (
+    <div style={{ position: "relative", width: "100%" }}>
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={i === idx ? alt : ""}
+          loading="lazy"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: i === idx ? 1 : 0,
+            transition: "opacity 0.6s ease",
+          }}
+        />
+      ))}
+      <div style={{ paddingBottom: "75%" }} />
+    </div>
+  );
+}
+
 interface Props {
   initialCategory: string | null;
 }
@@ -363,11 +393,25 @@ export function WorkPageClient({ initialCategory }: Props) {
                   opacity:      isActive ? 1 : 0.45,
                   transition:   "opacity 0.4s ease",
                 }}>
-                  <img
-                    src={project.stripMedia.src}
-                    alt={project.name}
-                    style={{ width: "100%", height: "auto", display: "block" }}
-                  />
+                  {project.worksPageSlideshow && project.worksPageSlideshow.length > 0 ? (
+                    <CardSlideshow images={project.worksPageSlideshow} alt={project.name} />
+                  ) : (project.worksPageMedia ?? project.stripMedia).type === "video" ? (
+                    <video
+                      src={(project.worksPageMedia ?? project.stripMedia).src}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      aria-label={project.name}
+                      style={{ width: "100%", height: "auto", display: "block" }}
+                    />
+                  ) : (
+                    <img
+                      src={(project.worksPageMedia ?? project.stripMedia).src}
+                      alt={project.name}
+                      style={{ width: "100%", height: "auto", display: "block" }}
+                    />
+                  )}
                 </div>
                 <div style={{
                   display:        "flex",

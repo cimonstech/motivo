@@ -127,7 +127,7 @@ export function AiOrbCTA() {
             fontFamily:    "var(--font-display)",
             fontWeight:    700,
             fontSize:      "clamp(48px, 9vw, 130px)",
-            color:         "rgba(245,245,240,0.025)",
+            color:         "rgba(245,245,240,0.11)",
             letterSpacing: "-0.02em",
             whiteSpace:    "nowrap" as const,
             userSelect:    "none",
@@ -140,7 +140,7 @@ export function AiOrbCTA() {
           style={{
             fontFamily:    "var(--font-sans)",
             fontSize:      "clamp(10px, 1.2vw, 16px)",
-            color:         "rgba(245,245,240,0.06)",
+            color:         "rgba(245,245,240,0.14)",
             letterSpacing: "0.2em",
             textTransform: "uppercase" as const,
             userSelect:    "none",

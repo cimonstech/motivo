@@ -6,7 +6,7 @@ import { AboutCTA }        from "@/components/about/AboutCTA";
 
 export function AboutPage() {
   return (
-    <div style={{ overflowX: "hidden" }}>
+    <div style={{ overflowX: "clip" }}>
       <OriginSection />
       <PeopleSection />
       <NumbersSection />

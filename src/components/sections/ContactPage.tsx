@@ -1,6 +1,7 @@
 "use client";
 import { AiChatWidget }   from "@/components/contact/AiChatWidget";
 import { ContactSidebar }  from "@/components/contact/ContactSidebar";
+import { ClientStrip }    from "@/components/sections/ClientStrip";
 
 export function ContactPage() {
   return (
@@ -50,6 +51,9 @@ export function ContactPage() {
         {/* Right - contact details */}
         <ContactSidebar />
       </div>
+
+      {/* Client strip — just before footer */}
+      <ClientStrip />
     </div>
   );
 }

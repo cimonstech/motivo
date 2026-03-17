@@ -285,11 +285,13 @@ export function AiChatWidget() {
                     background: "#080808", flexShrink: 0,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     marginBottom: "2px",
+                    overflow: "hidden",
                   }}>
-                    <span style={{
-                      fontFamily: "var(--font-display)", fontWeight: 700,
-                      fontSize: "10px", color: "#F5F5F0",
-                    }}>M</span>
+                    <img
+                      src="/favicon.png"
+                      alt="Motivo"
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
                   </div>
                 )}
 

@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { gsap }              from "gsap";
 import { ScrollTrigger }     from "gsap/ScrollTrigger";
+import { IllustratorUI }     from "@/components/ui/IllustratorUI";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,7 +68,6 @@ export function OriginSection() {
         background: "#080808",
         minHeight:  "100vh",
         padding:    "120px 0 100px",
-        overflow:   "hidden",
       }}
     >
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
@@ -100,6 +100,10 @@ export function OriginSection() {
         ))}
       </h1>
 
+      {/* Two columns: Origin text | Illustrator UI */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "48px" }}>
+      {/* Left column — paragraphs */}
+      <div style={{ flex: "1 1 auto", maxWidth: "640px" }}>
       {/* Body paragraphs */}
       <div
         ref={parasRef}
@@ -107,7 +111,6 @@ export function OriginSection() {
           display:       "flex",
           flexDirection: "column",
           gap:           "28px",
-          maxWidth:      "640px",
         }}
       >
         {ORIGIN_PARAGRAPHS.map((para, i) => (
@@ -147,6 +150,20 @@ export function OriginSection() {
         >
           - Gideon Kutsinyah, Founder
         </p>
+      </div>
+      </div>
+
+      {/* Right column — Illustrator UI (sticky until Origin ends) */}
+      <div style={{
+        flexShrink: 0,
+        width:      "clamp(280px, 36%, 420px)",
+        position:   "sticky",
+        top:        "96px",
+        alignSelf:  "flex-start",
+        minHeight:  "400px",
+      }}>
+        <IllustratorUI fillContainer />
+      </div>
       </div>
       </div>
 

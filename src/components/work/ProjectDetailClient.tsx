@@ -4,46 +4,46 @@ import { gsap }  from "gsap";
 import Link      from "next/link";
 import { type Project } from "@/data/projects";
 
-const PEOPLE_AVATARS = [
-  "/people/person1.webp",
-  "/people/person2.webp",
-  "/people/person3.webp",
-  "/people/person4.webp",
-];
-
 interface Props { project: Project; nextProject: Project; }
 
 export function ProjectDetailClient({ project, nextProject }: Props) {
-  const titleRef  = useRef<HTMLHeadingElement>(null);
-  const cloneRef  = useRef<HTMLDivElement>(null);
-  const stripRef  = useRef<HTMLDivElement>(null);
+  const titleRef   = useRef<HTMLHeadingElement>(null);
+  const cloneRef   = useRef<HTMLDivElement>(null);
+  const stripRef   = useRef<HTMLDivElement>(null);
+  const rightRef   = useRef<HTMLDivElement>(null);
   const [activeImg, setActiveImg] = useState(0);
 
-  const allImages = [
-    project.stripMedia.src,
-    ...(project.caseImages ?? []),
-  ];
+  const NAVBAR_H = 72;
+  const PAGE_H   = `calc(100vh - ${NAVBAR_H}px)`;
 
-  // GSAP name transition on mount
+  const isVideoUrl = (s: string) => /\.(mp4|webm|mov)(\?|$)/i.test(s);
+
+  const allImages = (() => {
+    const base = [project.stripMedia.src, ...(project.caseImages ?? [])];
+    const seen = new Set<string>();
+    return base.filter((src) => {
+      if (!src || typeof src !== "string" || !src.trim()) return false;
+      if (seen.has(src)) return false;
+      seen.add(src);
+      return true;
+    });
+  })();
+
+  // GSAP name transition
   useEffect(() => {
     const stored = sessionStorage.getItem("projectNameTransition");
     sessionStorage.removeItem("projectNameTransition");
 
     if (!stored || !titleRef.current || !cloneRef.current) {
-      gsap.from(titleRef.current, {
-        y: 20, opacity: 0, duration: 0.6, ease: "power2.out", delay: 0.2,
-      });
+      gsap.from(titleRef.current, { y: 20, opacity: 0, duration: 0.7, ease: "power3.out", delay: 0.15 });
       return;
     }
-
     const from      = JSON.parse(stored);
     const titleRect = titleRef.current.getBoundingClientRect();
     gsap.set(titleRef.current, { opacity: 0 });
-
     const clone = cloneRef.current;
     clone.textContent   = project.name;
     clone.style.display = "block";
-
     gsap.set(clone, {
       position: "fixed", top: from.top, left: from.left,
       fontSize: from.fontSize, fontWeight: 700, color: "#080808",
@@ -51,192 +51,174 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
       pointerEvents: "none", fontFamily: "var(--font-display)",
       letterSpacing: "-0.02em", lineHeight: 1, whiteSpace: "nowrap",
     });
-
     gsap.to(clone, {
       top: titleRect.top, left: titleRect.left,
       fontSize: window.getComputedStyle(titleRef.current).fontSize,
-      duration: 0.7, ease: "power3.inOut",
+      duration: 0.75, ease: "power3.inOut",
       onComplete: () => {
         gsap.to(titleRef.current, { opacity: 1, duration: 0.15 });
-        gsap.to(clone, {
-          opacity: 0, duration: 0.15,
-          onComplete: () => { clone.style.display = "none"; },
-        });
+        gsap.to(clone, { opacity: 0, duration: 0.15,
+          onComplete: () => { clone.style.display = "none"; } });
       },
     });
   }, [project.name]);
 
-  // Content entrance animation
+  // Content entrance — scoped to right panel, delayed so DOM is ready on client nav
+  const slug = project.slug;
   useEffect(() => {
-    gsap.from(".detail-content", {
-      y: 16, opacity: 0, duration: 0.5,
-      stagger: 0.07, ease: "power2.out", delay: 0.2,
-    });
-  }, []);
+    const run = () => {
+      const el = rightRef.current;
+      if (!el) return;
+      const targets = el.querySelectorAll<HTMLElement>(".detail-content");
+      if (targets.length === 0) return;
+      gsap.fromTo(targets, { y: 14, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.5, stagger: 0.06, ease: "power2.out", delay: 0.2,
+      });
+    };
+    const id = requestAnimationFrame(() => requestAnimationFrame(run));
+    return () => cancelAnimationFrame(id);
+  }, [slug ?? ""]);
 
-  // Scroll active thumb into view
-  useEffect(() => {
-    const strip = stripRef.current;
-    if (!strip) return;
-    const thumbs = strip.querySelectorAll<HTMLDivElement>(".thumb");
-    thumbs[activeImg]?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [activeImg]);
-
-  // Strip scroll → active image (identical pattern to work page)
+  // Strip scroll → active image
   useEffect(() => {
     const strip = stripRef.current;
     if (!strip) return;
 
     const onScroll = () => {
-      const thumbs     = strip.querySelectorAll<HTMLElement>(".thumb");
-      const stripRect  = strip.getBoundingClientRect();
-      const stripMid   = stripRect.top + stripRect.height / 2;
-
-      let closest     = 0;
+      const thumbs   = strip.querySelectorAll<HTMLElement>(".thumb");
+      const stripMid = strip.scrollTop + strip.clientHeight / 2;
+      let closest    = 0;
       let closestDist = Infinity;
-
       thumbs.forEach((thumb, i) => {
-        const rect     = thumb.getBoundingClientRect();
-        const thumbMid = rect.top + rect.height / 2;
-        const dist     = Math.abs(thumbMid - stripMid);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closest     = i;
-        }
+        const mid  = thumb.offsetTop + thumb.offsetHeight / 2;
+        const dist = Math.abs(mid - stripMid);
+        if (dist < closestDist) { closestDist = dist; closest = i; }
       });
-
       setActiveImg(closest);
     };
 
     strip.addEventListener("scroll", onScroll, { passive: true });
-    onScroll(); // set correct active on mount
+    onScroll();
     return () => strip.removeEventListener("scroll", onScroll);
   }, [allImages.length]);
 
+  // Click → scroll thumb to center
+  const handleThumbClick = (i: number) => {
+    const strip  = stripRef.current;
+    if (!strip) return;
+    const thumbs = strip.querySelectorAll<HTMLElement>(".thumb");
+    const thumb  = thumbs[i];
+    if (!thumb) return;
+    const targetScroll = thumb.offsetTop - strip.clientHeight / 2 + thumb.offsetHeight / 2;
+    strip.scrollTo({ top: targetScroll, behavior: "smooth" });
+  };
+
+  const STRIP_W = 140;
+
   return (
-    <div
-      style={{
-        background:    "#F5F5F0",
-        height:        "100vh",
-        overflow:      "hidden",
-        display:       "flex",
-        flexDirection: "column",
-        paddingTop:    "72px",
-      }}
-    >
-      {/* Clone for name transition */}
+    <div style={{ background: "#F5F5F0", height: "100vh", overflow: "hidden", paddingTop: `${NAVBAR_H}px` }}>
       <div ref={cloneRef} style={{ display: "none" }} />
 
-      {/* Main layout */}
-      <div
-        style={{
-          display:  "flex",
-          flex:     1,
-          overflow: "hidden",
-          padding:  "0 0 0 0",
-        }}
-      >
+      {/* 3-col layout — using absolute positioning for reliability */}
+      <div style={{ position: "relative", height: PAGE_H, overflow: "hidden" }}>
 
-        {/* ── LEFT - active image (sized so strip lands at horizontal center) ── */}
+        {/* ── STRIP — absolute center, explicit height ── */}
         <div
           style={{
-            flex:       "0 0 calc(50vw - 94px)",
-            position:   "relative",
-            overflow:   "hidden",
-            background: "#111",
+            position: "absolute",
+            top:      0,
+            left:     `calc(50vw - ${STRIP_W / 2}px)`,
+            width:    `${STRIP_W}px`,
+            height:   PAGE_H,
+            zIndex:   10,
           }}
         >
-          <img
-            key={activeImg}
-            src={allImages[activeImg]}
-            alt={`${project.name} ${activeImg + 1}`}
-            style={{
-              width:     "100%",
-              height:    "100%",
-              objectFit: "cover",
-              display:   "block",
-              animation: "detailFade 0.3s ease",
-            }}
-          />
-          <style>{`
-            @keyframes detailFade {
-              from { opacity: 0; }
-              to   { opacity: 1; }
-            }
-          `}</style>
-          {/* Counter */}
+          {/* Top fade */}
           <div style={{
-            position:     "absolute", bottom: "16px", right: "16px",
-            fontFamily:   "var(--font-sans)", fontSize: "11px",
-            color:        "rgba(255,255,255,0.55)",
-            background:   "rgba(0,0,0,0.3)", padding: "3px 10px",
-            borderRadius: "100px", backdropFilter: "blur(4px)",
-          }}>
-            {activeImg + 1} / {allImages.length}
+            position: "absolute", top: 0, left: 0, right: 0, height: "30%",
+            background: "linear-gradient(to bottom, #F5F5F0, transparent)",
+            zIndex: 2, pointerEvents: "none",
+          }} />
+          {/* Bottom fade */}
+          <div style={{
+            position: "absolute", bottom: 0, left: 0, right: 0, height: "30%",
+            background: "linear-gradient(to top, #F5F5F0, transparent)",
+            zIndex: 2, pointerEvents: "none",
+          }} />
+
+          {/* SCROLL CONTAINER — explicit vh height, guaranteed to scroll */}
+          <div
+            ref={stripRef}
+            style={{
+              position:       "absolute",
+              top:            0,
+              left:           0,
+              right:          0,
+              bottom:         0,
+              overflowY:      "scroll",
+              overflowX:      "hidden",
+              scrollbarWidth: "none",
+              WebkitOverflowScrolling: "touch",
+              padding:        "0 10px",
+            }}
+          >
+            {/* Top spacer — fixed px so first thumb can reach center */}
+            <div style={{ minHeight: "calc(50vh - 100px)", flexShrink: 0 }} />
+
+            {allImages.map((src, i) => (
+              <div
+                key={i}
+                className="thumb"
+                onClick={() => handleThumbClick(i)}
+                style={{
+                  marginBottom: "8px",
+                  borderRadius: "4px",
+                  overflow:     "hidden",
+                  cursor:       "pointer",
+                  opacity:      activeImg === i ? 1 : 0.35,
+                  transition:   "opacity 0.25s ease",
+                }}
+              >
+                {isVideoUrl(src) ? (
+                  <video
+                    src={src}
+                    muted
+                    playsInline
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  />
+                ) : (
+                  <img
+                    src={src}
+                    alt={`${project.name} ${i + 1}`}
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  />
+                )}
+              </div>
+            ))}
+
+            {/* Bottom spacer — fixed px so last thumb can reach center */}
+            <div style={{ minHeight: "calc(50vh - 100px)" }} />
           </div>
         </div>
 
-        {/* ── CENTER - thumbnail strip ── */}
-        <div
-          ref={stripRef}
-          style={{
-            width:          "140px",
-            flexShrink:     0,
-            display:        "flex",
-            flexDirection:  "column",
-            gap:            "4px",
-            overflowY:      "auto",
-            scrollbarWidth: "none",
-            padding:        "16px 24px",
-          }}
-        >
-          {allImages.map((src, i) => (
-            <div
-              key={i}
-              className="thumb"
-              onClick={() => setActiveImg(i)}
-              style={{
-                flexShrink:    0,
-                borderRadius:  "4px",
-                overflow:      "hidden",
-                cursor:        "pointer",
-                width:         activeImg === i ? "100%" : "75%",
-                alignSelf:     "center",
-                opacity:       activeImg === i ? 1 : 0.38,
-                outline:       activeImg === i
-                  ? "2px solid #ED1C24"
-                  : "2px solid transparent",
-                outlineOffset: "2px",
-                transition:    "width 0.3s ease, opacity 0.3s ease, outline 0.2s ease",
-              }}
-            >
-              <img
-                src={src}
-                alt={`${project.name} ${i + 1}`}
-                style={{ width: "100%", height: "auto", display: "block" }}
-              />
-            </div>
-          ))}
-        </div>
-
-        {/* ── RIGHT - project details ── */}
+        {/* ── LEFT — image anchored bottom, left of strip ── */}
         <div
           style={{
-            flex:          "1",
-            display:       "flex",
+            position: "absolute",
+            top:      0,
+            left:     0,
+            width:    `calc(50vw - ${STRIP_W / 2}px)`,
+            height:   "100%",
+            display:  "flex",
             flexDirection: "column",
-            overflowY:     "auto",
-            scrollbarWidth:"none",
-            padding:       "24px 40px",
-            minWidth:      0,
+            padding:  "20px 0 20px 24px",
           }}
         >
-          {/* Back */}
-          <Link href="/work" className="detail-content" style={{
+          <Link href="/work" style={{
+            display: "inline-flex", alignItems: "center", gap: "6px",
             fontFamily: "var(--font-sans)", fontSize: "11px",
             color: "rgba(8,8,8,0.4)", textDecoration: "none",
-            display: "inline-flex", alignItems: "center", gap: "4px",
-            marginBottom: "28px", width: "fit-content",
+            marginBottom: "auto", width: "fit-content",
           }}
           onMouseEnter={(e) => (e.currentTarget.style.color = "#080808")}
           onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(8,8,8,0.4)")}
@@ -244,42 +226,85 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
             ← Work
           </Link>
 
-          {/* Project name - top, right aligned */}
-          <h1
-            ref={titleRef}
-            className="detail-content"
-            style={{
-              fontFamily:    "var(--font-display)",
-              fontWeight:    700,
-              fontSize:      "clamp(28px, 4vw, 60px)",
-              color:         "#080808",
-              letterSpacing: "-0.03em",
-              lineHeight:    1.0,
-              margin:        "0 0 4px 0",
-              textAlign:     "right",
-            }}
-          >
+          <div style={{
+            display: "flex", alignItems: "flex-end",
+            flex: 1, paddingRight: "16px", position: "relative",
+          }}>
+            {isVideoUrl(allImages[activeImg]) ? (
+              <video
+                key={activeImg}
+                src={allImages[activeImg]}
+                autoPlay
+                loop
+                muted
+                playsInline
+                aria-label={`${project.name} ${activeImg + 1}`}
+                style={{
+                  maxWidth: "88%", maxHeight: "78vh",
+                  width: "auto", height: "auto",
+                  objectFit: "contain", display: "block",
+                  animation: "detailFade 0.3s ease",
+                }}
+              />
+            ) : (
+              <img
+                key={activeImg}
+                src={allImages[activeImg]}
+                alt={`${project.name} ${activeImg + 1}`}
+                style={{
+                  maxWidth: "88%", maxHeight: "78vh",
+                  width: "auto", height: "auto",
+                  objectFit: "contain", display: "block",
+                  animation: "detailFade 0.3s ease",
+                }}
+              />
+            )}
+            <div style={{
+              position: "absolute", bottom: 0, right: "20px",
+              fontFamily: "var(--font-sans)", fontSize: "11px",
+              color: "rgba(8,8,8,0.35)",
+              background: "rgba(8,8,8,0.06)",
+              padding: "3px 10px", borderRadius: "100px",
+            }}>
+              {activeImg + 1} / {allImages.length}
+            </div>
+          </div>
+        </div>
+
+        {/* ── RIGHT — project info, right of strip ── */}
+        <div
+          ref={rightRef}
+          style={{
+            position:  "absolute",
+            top:       0,
+            left:      `calc(50vw + ${STRIP_W / 2}px)`,
+            right:     0,
+            height:    "100%",
+            overflowY: "auto",
+            scrollbarWidth: "none",
+            padding:   "24px 40px 24px 28px",
+            display:   "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* Project name */}
+          <h1 ref={titleRef} className="detail-content" style={{
+            fontFamily: "var(--font-display)", fontWeight: 700,
+            fontSize: "clamp(28px, 4vw, 56px)", color: "#080808",
+            letterSpacing: "-0.03em", lineHeight: 1.0, margin: "0 0 24px 0",
+          }}>
             {project.name}
           </h1>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "28px" }}>
-            <span style={{
-              fontFamily: "var(--font-sans)", fontSize: "10px",
-              color:      "rgba(8,8,8,0.3)",
-            }}>{project.year}</span>
-          </div>
 
-          {/* Meta - Year + Disciplines */}
-          <div className="detail-content" style={{
-            display: "flex", flexDirection: "column",
-            gap: "16px", marginBottom: "24px",
-          }}>
+          {/* Year + Disciplines row */}
+          <div className="detail-content" style={{ display: "flex", gap: "32px", marginBottom: "20px" }}>
             {[
               { label: "Year",        value: project.year },
-              { label: "Disciplines", value: project.tags.join(", ") },
+              { label: "Disciplines", value: project.tags?.join(", ") ?? project.category },
             ].map((m) => (
               <div key={m.label} style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
                 <span style={{
-                  fontFamily: "var(--font-sans)", fontSize: "9px", fontWeight: 500,
+                  fontFamily: "var(--font-sans)", fontSize: "9px", fontWeight: 600,
                   letterSpacing: "0.12em", textTransform: "uppercase" as const,
                   color: "rgba(8,8,8,0.3)",
                 }}>{m.label}</span>
@@ -291,110 +316,35 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
             ))}
           </div>
 
-          {/* Divider */}
           <div className="detail-content" style={{
             height: "0.5px", background: "rgba(8,8,8,0.08)", marginBottom: "18px",
           }} />
 
-          {/* Summary */}
           <p className="detail-content" style={{
             fontFamily: "var(--font-sans)", fontSize: "13px",
-            color: "rgba(8,8,8,0.5)", lineHeight: 1.7,
-            margin: "0 0 24px 0", maxWidth: "320px",
+            color: "rgba(8,8,8,0.5)", lineHeight: 1.7, margin: "0 0 20px 0",
           }}>
             {project.summary}
           </p>
 
-          {/* Case study sections */}
           {[
             { label: "The Challenge", text: project.challenge },
             { label: "The Insight",   text: project.insight   },
             { label: "The Solution",  text: project.solution  },
-            { label: "The Impact",    text: project.impact    },
           ].filter((s) => s.text).map((section) => (
-            <div
-              key={section.label}
-              className="detail-content"
-              style={{ marginBottom: "16px", maxWidth: "320px" }}
-            >
+            <div key={section.label} className="detail-content" style={{ marginBottom: "16px" }}>
               <p style={{
-                fontFamily:    "var(--font-sans)",
-                fontSize:      "9px",
-                fontWeight:    600,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase" as const,
-                color:         "rgba(8,8,8,0.3)",
-                margin:        "0 0 5px 0",
-              }}>
-                {section.label}
-              </p>
+                fontFamily: "var(--font-sans)", fontSize: "9px", fontWeight: 600,
+                letterSpacing: "0.12em", textTransform: "uppercase" as const,
+                color: "rgba(8,8,8,0.3)", margin: "0 0 5px 0",
+              }}>{section.label}</p>
               <p style={{
-                fontFamily: "var(--font-sans)",
-                fontSize:   "12px",
-                color:      "rgba(8,8,8,0.6)",
-                lineHeight: 1.65,
-                margin:     0,
-              }}>
-                {section.text}
-              </p>
+                fontFamily: "var(--font-sans)", fontSize: "12px",
+                color: "rgba(8,8,8,0.6)", lineHeight: 1.65, margin: 0,
+              }}>{section.text}</p>
             </div>
           ))}
 
-          {/* Divider before rating */}
-          <div style={{
-            height:     "0.5px",
-            background: "rgba(8,8,8,0.08)",
-            margin:     "8px 0 20px",
-          }} />
-
-          {/* Rating */}
-          <div className="detail-content" style={{
-            padding: "14px", background: "rgba(8,8,8,0.03)",
-            borderRadius: "10px", border: "0.5px solid rgba(8,8,8,0.07)",
-            marginBottom: "20px", display: "flex",
-            flexDirection: "column", gap: "10px",
-            maxWidth: "280px",
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-              {[1,2,3,4,5].map((s) => (
-                <svg key={s} width="12" height="12" viewBox="0 0 14 14"
-                  fill="#ED1C24" stroke="#ED1C24" strokeWidth="0.5">
-                  <polygon points="7,1 8.8,5.2 13.4,5.5 10,8.5 11.1,13 7,10.5 2.9,13 4,8.5 0.6,5.5 5.2,5.2" />
-                </svg>
-              ))}
-              <span style={{
-                fontFamily: "var(--font-sans)", fontSize: "11px",
-                color: "rgba(8,8,8,0.4)", marginLeft: "5px",
-              }}>5.0</span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <div style={{ display: "flex" }}>
-                {PEOPLE_AVATARS.map((src, i) => (
-                  <div key={i} style={{
-                    width: "22px", height: "22px", borderRadius: "50%",
-                    overflow: "hidden", border: "2px solid #F5F5F0",
-                    marginLeft: i === 0 ? "0" : "-6px",
-                    background: "#ddd", flexShrink: 0,
-                  }}>
-                    <img src={src} alt="client"
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).style.display = "none";
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-              <span style={{
-                fontFamily: "var(--font-sans)", fontSize: "11px",
-                color: "rgba(8,8,8,0.45)", lineHeight: 1.3,
-              }}>
-                Trusted by 40+<br />brands across Ghana
-              </span>
-            </div>
-          </div>
-
-          {/* Visit */}
           {project.liveUrl && (
             <a className="detail-content" href={project.liveUrl}
               target="_blank" rel="noopener noreferrer"
@@ -403,30 +353,25 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
                 color: "#ED1C24", textDecoration: "none",
                 display: "inline-flex", alignItems: "center", gap: "4px",
                 borderBottom: "0.5px solid #ED1C24", paddingBottom: "2px",
-                width: "fit-content", marginBottom: "20px",
+                width: "fit-content", marginBottom: "16px",
               }}
-            >
-              Visit →
-            </a>
+            >Visit →</a>
           )}
 
-          {/* Spacer pushes next to bottom */}
           <div style={{ flex: 1 }} />
 
-          {/* Next project */}
           <div className="detail-content" style={{
-            borderTop: "0.5px solid rgba(8,8,8,0.08)",
-            paddingTop: "14px", marginBottom: "16px",
+            borderTop: "0.5px solid rgba(8,8,8,0.08)", paddingTop: "16px",
           }}>
             <span style={{
-              fontFamily: "var(--font-sans)", fontSize: "9px", fontWeight: 500,
+              fontFamily: "var(--font-sans)", fontSize: "9px", fontWeight: 600,
               letterSpacing: "0.12em", textTransform: "uppercase" as const,
               color: "rgba(8,8,8,0.3)", display: "block", marginBottom: "6px",
             }}>Next</span>
             <Link href={`/work/${nextProject.slug}`}
               style={{
                 fontFamily: "var(--font-display)", fontWeight: 700,
-                fontSize: "clamp(14px, 1.8vw, 22px)", color: "#080808",
+                fontSize: "clamp(16px, 2vw, 26px)", color: "#080808",
                 textDecoration: "none", letterSpacing: "-0.02em",
                 display: "flex", alignItems: "center", gap: "6px",
               }}
@@ -440,6 +385,14 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
         </div>
 
       </div>
+
+      <style>{`
+        @keyframes detailFade {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        div::-webkit-scrollbar { display: none; }
+      `}</style>
     </div>
   );
 }
