@@ -20,7 +20,7 @@ export function AvailabilityCard() {
       style={{
         position:      "absolute",
         top:           "34%",
-        right:         "48px",
+        right:         0,
         width:         "clamp(200px, 18vw, 260px)",
         background:    "#F5F5F0",
         borderRadius:  "16px",

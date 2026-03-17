@@ -163,9 +163,22 @@ export function Hero() {
         <FloatingPills />
       </div>
 
-      {/* Availability card - top right */}
-      <div ref={availabilityRef} style={{ position: "absolute", inset: 0, zIndex: 30, pointerEvents: "none" }}>
-        <AvailabilityCard />
+      {/* Availability card — within max-width */}
+      <div
+        ref={availabilityRef}
+        style={{
+          position: "absolute", inset: 0, zIndex: 30, pointerEvents: "none",
+          display: "flex", justifyContent: "center",
+        }}
+      >
+        <div style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: "1440px",
+          padding: "0 48px",
+        }}>
+          <AvailabilityCard />
+        </div>
       </div>
 
       {/* Headline - constrained */}
@@ -223,7 +236,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Stats */}
+      {/* Stats — right-aligned within 1440px, no right margin */}
       <div
         ref={statsRef}
         className="stats-row"
@@ -234,7 +247,7 @@ export function Hero() {
           transform:       "translateX(-50%)",
           width:           "100%",
           maxWidth:        "1440px",
-          padding:         "0 48px",
+          padding:         "0 0 0 48px",
           display:         "flex",
           justifyContent:  "flex-end",
           alignItems:      "flex-end",
