@@ -19,7 +19,9 @@ const CONFIG = {
 const HERO_WHITE = new THREE.Color("#DCDCD6");
 const HERO_RED   = new THREE.Color("#ED1C24");
 
-export function HeroSphere({ isHovered = false }: { isHovered?: boolean }) {
+const SIZE_SCALE_MOBILE = 0.36; // 40% smaller, then another 40% = 0.6 * 0.6
+
+export function HeroSphere({ isHovered = false, isMobile = false }: { isHovered?: boolean; isMobile?: boolean }) {
   const meshRef = useRef<THREE.Points>(null);
   const mouse   = useRef({ x: 0, y: 0 });
 
@@ -84,7 +86,7 @@ export function HeroSphere({ isHovered = false }: { isHovered?: boolean }) {
         <bufferAttribute attach="attributes-size"     args={[sizes,     1]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.015}
+        size={isMobile ? 0.015 * SIZE_SCALE_MOBILE : 0.015}
         vertexColors
         transparent
         opacity={0.9}

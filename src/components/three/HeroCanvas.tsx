@@ -2,7 +2,7 @@
 import { Canvas }     from "@react-three/fiber";
 import { HeroSphere } from "./HeroSphere";
 
-export default function HeroCanvas({ isHovered = false }: { isHovered?: boolean }) {
+export default function HeroCanvas({ isHovered = false, isMobile = false }: { isHovered?: boolean; isMobile?: boolean }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 4.5], fov: 55 }}
@@ -14,7 +14,7 @@ export default function HeroCanvas({ isHovered = false }: { isHovered?: boolean 
         display:    "block",
       }}
     >
-      <HeroSphere isHovered={isHovered} />
+      <HeroSphere isHovered={isHovered} isMobile={isMobile} />
     </Canvas>
   );
 }

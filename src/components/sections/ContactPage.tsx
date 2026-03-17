@@ -2,8 +2,11 @@
 import { AiChatWidget }   from "@/components/contact/AiChatWidget";
 import { ContactSidebar }  from "@/components/contact/ContactSidebar";
 import { ClientStrip }    from "@/components/sections/ClientStrip";
+import { useMediaQuery }  from "@/hooks/useMediaQuery";
 
 export function ContactPage() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
     <div
       style={{
@@ -19,10 +22,10 @@ export function ContactPage() {
           maxWidth: "1440px",
           margin:   "0 auto",
           width:    "100%",
-          padding:  "32px 48px 48px",
+          padding:  isMobile ? "32px 20px 48px" : "32px 48px 48px",
           display:  "grid",
-          gridTemplateColumns: "1fr 340px",
-          gap:      "48px",
+          gridTemplateColumns: isMobile ? "1fr" : "1fr 340px",
+          gap:      isMobile ? "32px" : "48px",
           flex:     1,
         }}
       >

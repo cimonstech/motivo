@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { gsap }              from "gsap";
 import { ScrollTrigger }     from "gsap/ScrollTrigger";
+import { useMediaQuery }     from "@/hooks/useMediaQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +16,7 @@ const STATS = [
 export function NumbersSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const triggered  = useRef(false);
+  const isMobile   = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -87,12 +89,12 @@ export function NumbersSection() {
         </span>
       </div>
 
-      {/* Stats grid */}
+      {/* Stats grid — 2 columns on mobile, 4 on desktop */}
       <div
         style={{
           display:             "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap:                 "0",
+          gridTemplateColumns:  isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+          gap:                 isMobile ? "24px 16px" : "0",
           maxWidth:            "1000px",
         }}
       >
@@ -101,9 +103,9 @@ export function NumbersSection() {
             key={stat.id}
             className="stat-card"
             style={{
-              borderLeft:   i === 0 ? "none" : "0.5px solid rgba(8,8,8,0.1)",
-              paddingLeft:  i === 0 ? "0"    : "40px",
-              paddingRight: "40px",
+              borderLeft:   !isMobile && i > 0 ? "0.5px solid rgba(8,8,8,0.1)" : "none",
+              paddingLeft:  isMobile ? "0" : (i === 0 ? "0" : "40px"),
+              paddingRight: isMobile ? "0" : "40px",
             }}
           >
             {/* Number */}

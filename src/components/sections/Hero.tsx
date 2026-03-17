@@ -8,6 +8,7 @@ import { useRouter }      from "next/navigation";
 import { FloatingPills }      from "@/components/ui/FloatingPills";
 import { AvailabilityCard }  from "@/components/ui/AvailabilityCard";
 import { safeNavigate }   from "@/lib/safeNavigate";
+import { useMediaQuery }  from "@/hooks/useMediaQuery";
 import { ThreeErrorBoundary } from "@/components/ui/ThreeErrorBoundary";
 
 const HeroCanvas = dynamic(
@@ -28,6 +29,7 @@ export function Hero() {
   const sphereRef     = useRef<HTMLDivElement>(null);
   const availabilityRef  = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -71,16 +73,17 @@ export function Hero() {
         });
       });
 
-      // Scroll animation - fade hero out
+      // Scroll animation - fade hero out (no pin on mobile for normal scroll)
+      const pinHero = !isMobile;
       gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=50%",
+          end: pinHero ? "+=50%" : "bottom top",
           scrub: 1,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
+          pin: pinHero,
+          pinSpacing: pinHero,
+          anticipatePin: pinHero ? 1 : 0,
         },
       })
         .to(ghostRef.current,    { opacity: 0, y: -20, duration: 0.4 }, 0)
@@ -95,7 +98,7 @@ export function Hero() {
     return () => {
       try { ctx.revert(); } catch { /* pin spacer already removed */ }
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <section
@@ -106,6 +109,7 @@ export function Hero() {
       style={{
         position: "relative",
         width: "100%",
+        maxWidth: "100vw",
         height: "100vh",
         background: "#080808",
         overflow: "hidden",
@@ -150,7 +154,7 @@ export function Hero() {
         }}
       >
         <ThreeErrorBoundary>
-          <HeroCanvas isHovered={isHovered} />
+          <HeroCanvas isHovered={isHovered} isMobile={isMobile} />
         </ThreeErrorBoundary>
       </div>
 
@@ -163,35 +167,37 @@ export function Hero() {
         <FloatingPills />
       </div>
 
-      {/* Availability card — within max-width */}
-      <div
-        ref={availabilityRef}
-        style={{
-          position: "absolute", inset: 0, zIndex: 30, pointerEvents: "none",
-          display: "flex", justifyContent: "center",
-        }}
-      >
-        <div style={{
-          position: "relative",
-          width: "100%",
-          maxWidth: "1440px",
-          padding: "0 48px",
-        }}>
-          <AvailabilityCard />
+      {/* Availability card — within max-width (hidden on mobile) */}
+      {!isMobile && (
+        <div
+          ref={availabilityRef}
+          style={{
+            position: "absolute", inset: 0, zIndex: 30, pointerEvents: "none",
+            display: "flex", justifyContent: "center",
+          }}
+        >
+          <div style={{
+            position: "relative",
+            width: "100%",
+            maxWidth: "1440px",
+            padding: "0 48px",
+          }}>
+            <AvailabilityCard />
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Headline - constrained */}
+      {/* Headline - constrained (moved up 15% on mobile) */}
       <div
         ref={headlineRef}
         style={{
           position:  "absolute",
-          bottom:    "96px",
+          bottom:    isMobile ? "calc(80px + 15vh)" : "96px",
           left:      "50%",
           transform: "translateX(-50%)",
           width:     "100%",
           maxWidth:  "1440px",
-          padding:   "0 48px",
+          padding:   isMobile ? "0 20px" : "0 48px",
           zIndex:    40,
         }}
       >
@@ -236,22 +242,22 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Stats — right-aligned within 1440px, no right margin */}
+      {/* Stats — left on mobile, right-aligned on desktop (moved up 15% on mobile) */}
       <div
         ref={statsRef}
         className="stats-row"
         style={{
           position:        "absolute",
-          bottom:          "32px",
+          bottom:          isMobile ? "calc(24px + 15vh)" : "32px",
           left:            "50%",
           transform:       "translateX(-50%)",
           width:           "100%",
           maxWidth:        "1440px",
-          padding:         "0 0 0 48px",
+          padding:         isMobile ? "0 20px" : "0 0 0 48px",
           display:         "flex",
-          justifyContent:  "flex-end",
+          justifyContent:  isMobile ? "flex-start" : "flex-end",
           alignItems:      "flex-end",
-          gap:             "48px",
+          gap:             isMobile ? "24px" : "48px",
           zIndex:          40,
         }}
       >
@@ -287,11 +293,14 @@ export function Hero() {
         ))}
       </div>
 
-      {/* Scroll cue */}
+      {/* Scroll cue (moved up 15% on mobile) */}
       <div
         ref={scrollCueRef}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        style={{ zIndex: 40, opacity: 0.4 }}
+        className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        style={{
+          zIndex: 40, opacity: 0.4,
+          bottom: isMobile ? "calc(32px + 15vh)" : "32px",
+        }}
       >
         <span className="text-[9px] text-white/50 tracking-[0.14em] uppercase">Scroll</span>
         <div className="w-px h-10 bg-gradient-to-b from-white/40 to-transparent" />

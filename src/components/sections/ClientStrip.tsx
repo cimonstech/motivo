@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const CLIENTS = [
   { name: "Accra Lions",    logo: "/clients/accralions_logo.png" },
@@ -22,13 +23,15 @@ const CLIENTS = [
 const REPEATED = [...CLIENTS, ...CLIENTS, ...CLIENTS, ...CLIENTS];
 
 export function ClientStrip() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   return (
     <section
       style={{
         background:   "#ffffff",
         borderTop:    "0.5px solid rgba(0,0,0,0.08)",
         borderBottom: "0.5px solid rgba(0,0,0,0.08)",
-        padding:      "32px 0",
+        padding:      isMobile ? "24px 0" : "32px 0",
         overflow:     "hidden",
       }}
     >
@@ -36,9 +39,11 @@ export function ClientStrip() {
         style={{
           maxWidth: "1440px",
           margin:   "0 auto",
-          padding:  "0 48px",
+          padding:  isMobile ? "0 20px" : "0 48px",
           display:  "flex",
           alignItems: "center",
+          flexDirection: isMobile ? "column" : "row",
+          gap:      isMobile ? "16px" : 0,
         }}
       >
 
@@ -46,9 +51,11 @@ export function ClientStrip() {
         <div
           style={{
             flexShrink:    0,
-            padding:       "0 40px",
-            borderRight:   "0.5px solid rgba(0,0,0,0.08)",
+            padding:       isMobile ? "0" : "0 40px",
+            borderRight:   isMobile ? "none" : "0.5px solid rgba(0,0,0,0.08)",
+            borderBottom:  isMobile ? "0.5px solid rgba(0,0,0,0.08)" : "none",
             marginRight:   "0",
+            paddingBottom: isMobile ? "16px" : 0,
           }}
         >
           <span
@@ -67,7 +74,7 @@ export function ClientStrip() {
         </div>
 
         {/* Scrolling marquee */}
-        <div style={{ overflow: "hidden", flex: 1 }}>
+        <div style={{ overflow: "hidden", flex: 1, width: isMobile ? "100%" : undefined }}>
           <div
             style={{
               display:   "flex",

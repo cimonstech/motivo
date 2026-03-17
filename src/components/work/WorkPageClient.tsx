@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import {
   useEffect, useRef, useState, useCallback,
 } from "react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { gsap }          from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRouter }     from "next/navigation";
@@ -52,6 +53,7 @@ interface Props {
 }
 
 export function WorkPageClient({ initialCategory }: Props) {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [activeIdx,    setActiveIdx]    = useState(0);
   const [mousePos,     setMousePos]     = useState({ x: -200, y: -200 });
   const [overStrip,    setOverStrip]    = useState(false);
@@ -142,12 +144,13 @@ export function WorkPageClient({ initialCategory }: Props) {
         minHeight:      "100vh",
         overflowX:      "hidden",
         scrollbarWidth: "none",
-        paddingTop:     "80px",
-        paddingBottom:  "140px",
+        paddingTop:     isMobile ? "72px" : "80px",
+        paddingBottom:  isMobile ? "100px" : "140px",
       }}
       onMouseMove={handleMouseMove}
     >
       {/* ── Fixed: Motivo logo ── */}
+      {!isMobile && (
       <div
         ref={logoRef}
         style={{
@@ -176,14 +179,15 @@ export function WorkPageClient({ initialCategory }: Props) {
           }}
         />
       </div>
+      )}
 
       {/* ── Fixed: "Our Work" title ── */}
       <div
         ref={titleRef}
         style={{
           position:      "fixed",
-          bottom:        "28px",
-          left:          "max(40px, calc(50vw - 720px + 40px))",
+          bottom:        isMobile ? "20px" : "28px",
+          left:          isMobile ? "20px" : "max(40px, calc(50vw - 720px + 40px))",
           zIndex:        40,
           pointerEvents: "none",
           willChange:    "transform",
@@ -209,8 +213,8 @@ export function WorkPageClient({ initialCategory }: Props) {
         ref={indexRef}
         style={{
           position:      "fixed",
-          bottom:        "32px",
-          right:         "max(40px, calc(50vw - 720px + 40px))",
+          bottom:        isMobile ? "20px" : "32px",
+          right:         isMobile ? "20px" : "max(40px, calc(50vw - 720px + 40px))",
           zIndex:        40,
           display:       "flex",
           flexDirection: "column",
@@ -261,8 +265,10 @@ export function WorkPageClient({ initialCategory }: Props) {
           display:         "flex",
           justifyContent:  "center",
           gap:             "0",
-          marginBottom:    "40px",
+          marginBottom:    isMobile ? "24px" : "40px",
           borderBottom:    "0.5px solid rgba(8,8,8,0.1)",
+          overflowX:       isMobile ? "auto" : "visible",
+          padding:         isMobile ? "0 20px" : 0,
         }}
       >
         {/* All */}
@@ -344,10 +350,12 @@ export function WorkPageClient({ initialCategory }: Props) {
           display:       "flex",
           flexDirection: "column",
           alignItems:    "center",
-          paddingLeft:   "8vw",
+          paddingLeft:   isMobile ? "20px" : "8vw",
+          paddingRight:  isMobile ? "20px" : 0,
           marginLeft:    "auto",
           marginRight:   "auto",
-          width:         "fit-content",
+          width:         isMobile ? "100%" : "fit-content",
+          maxWidth:      isMobile ? "100%" : undefined,
           gap:           "8px",
         }}
         onMouseEnter={() => setOverStrip(true)}
@@ -378,8 +386,8 @@ export function WorkPageClient({ initialCategory }: Props) {
                   router.push(`/work/${project.slug}`);
                 }}
                 style={{
-                  width:      isActive ? "44vw"  : "26vw",
-                  maxWidth:   isActive ? "660px" : "390px",
+                  width:      isMobile ? "100%" : (isActive ? "44vw"  : "26vw"),
+                  maxWidth:   isMobile ? "100%" : (isActive ? "660px" : "390px"),
                   cursor:     "pointer",
                   transition: [
                     "width 0.55s cubic-bezier(0.34,1.1,0.64,1)",
@@ -454,7 +462,7 @@ export function WorkPageClient({ initialCategory }: Props) {
         style={{
           background: "#F5F5F0",
           borderTop:  "0.5px solid rgba(8,8,8,0.08)",
-          padding:    "80px 0 100px",
+          padding:    isMobile ? "60px 0 80px" : "80px 0 100px",
           position:   "relative",
           overflow:   "hidden",
         }}
@@ -493,12 +501,12 @@ export function WorkPageClient({ initialCategory }: Props) {
             zIndex:         1,
             maxWidth:       "1440px",
             margin:         "0 auto",
-            padding:        "0 48px",
+            padding:        isMobile ? "0 20px" : "0 48px",
             display:        "flex",
-            flexDirection:  "row",
+            flexDirection:  isMobile ? "column" : "row",
             alignItems:     "center",
             justifyContent: "space-between",
-            gap:            "60px",
+            gap:            isMobile ? "40px" : "60px",
           }}
         >
           {/* Left - quote */}

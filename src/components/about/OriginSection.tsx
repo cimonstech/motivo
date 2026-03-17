@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { gsap }              from "gsap";
 import { ScrollTrigger }     from "gsap/ScrollTrigger";
 import { IllustratorUI }     from "@/components/ui/IllustratorUI";
+import { useMediaQuery }     from "@/hooks/useMediaQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,8 +22,12 @@ export function OriginSection() {
   const sectionRef  = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const parasRef    = useRef<HTMLDivElement>(null);
+  const isMobile   = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
+    // On mobile: no animations, all text shows immediately
+    if (isMobile) return;
+
     const ctx = gsap.context(() => {
       // Headline word-by-word reveal
       if (headlineRef.current) {
@@ -54,7 +59,7 @@ export function OriginSection() {
     }, sectionRef);
 
     return () => { try { ctx.revert(); } catch { /* noop */ } };
-  }, []);
+  }, [isMobile]);
 
   // Split headline into word spans
   const headline = "The Origin of MOTIVO";
@@ -70,9 +75,9 @@ export function OriginSection() {
         padding:    "120px 0 100px",
       }}
     >
-      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+      <div className="container" style={{ position: "relative", zIndex: 1, paddingLeft: isMobile ? "20px" : undefined, paddingRight: isMobile ? "20px" : undefined }}>
       {/* Red top rule */}
-      <div style={{ width: "48px", height: "2px", background: "#ED1C24", marginBottom: "48px" }} />
+      <div style={{ width: "48px", height: "2px", background: "#ED1C24", marginBottom: isMobile ? "32px" : "48px" }} />
 
       {/* Headline */}
       <h1
@@ -93,15 +98,25 @@ export function OriginSection() {
           <span
             key={i}
             className="word"
-            style={{ display: "inline-block", marginRight: "0.25em" }}
+            style={{
+              display: "inline-block",
+              marginRight: "0.25em",
+              ...(isMobile && { opacity: 1, transform: "none" }),
+            }}
           >
             {word}
           </span>
         ))}
       </h1>
 
-      {/* Two columns: Origin text | Illustrator UI */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "48px" }}>
+      {/* Two columns: Origin text | Illustrator UI (stack on mobile) */}
+      <div style={{
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        gap: isMobile ? "40px" : "48px",
+      }}>
       {/* Left column — paragraphs */}
       <div style={{ flex: "1 1 auto", maxWidth: "640px" }}>
       {/* Body paragraphs */}
@@ -118,6 +133,7 @@ export function OriginSection() {
             key={i}
             className="para"
             style={{
+              ...(isMobile && { opacity: 1, transform: "none" }),
               fontFamily: "var(--font-sans)",
               fontSize:   "clamp(15px, 1.4vw, 18px)",
               color:      i === 0
@@ -153,14 +169,14 @@ export function OriginSection() {
       </div>
       </div>
 
-      {/* Right column — Illustrator UI (sticky until Origin ends) */}
+      {/* Right column — Illustrator UI (sticky until Origin ends, full width on mobile) */}
       <div style={{
         flexShrink: 0,
-        width:      "clamp(280px, 36%, 420px)",
+        width:      isMobile ? "100%" : "clamp(280px, 36%, 420px)",
         position:   "sticky",
         top:        "96px",
         alignSelf:  "flex-start",
-        minHeight:  "400px",
+        minHeight:  isMobile ? "320px" : "400px",
       }}>
         <IllustratorUI fillContainer />
       </div>

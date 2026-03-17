@@ -7,6 +7,7 @@ import { ScrollTrigger }     from "gsap/ScrollTrigger";
 import { safeNavigate }      from "@/lib/safeNavigate";
 import { featuredProjects }  from "@/data/projects";
 import { CATEGORY_LABELS }   from "@/data/categories";
+import { useMediaQuery }     from "@/hooks/useMediaQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,6 +40,7 @@ function FeaturedSlideshow({ images, alt }: { images: string[]; alt: string }) {
 export function FeaturedWork() {
   const router = useRouter();
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     if (!featuredProjects.length) return;
@@ -62,14 +64,17 @@ export function FeaturedWork() {
   return (
     <section
       ref={sectionRef}
-      style={{ background: "#F5F5F0", padding: "80px 0 96px" }}
+      style={{ background: "#F5F5F0", padding: isMobile ? "60px 0 80px" : "80px 0 96px" }}
     >
-      <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 48px" }}>
+      <div style={{ maxWidth: "1440px", margin: "0 auto", padding: isMobile ? "0 20px" : "0 48px" }}>
 
         {/* Header */}
         <div style={{
-          display: "flex", alignItems: "flex-end",
-          justifyContent: "space-between", marginBottom: "40px",
+          display: "flex", alignItems: isMobile ? "flex-start" : "flex-end",
+          justifyContent: isMobile ? "flex-start" : "space-between",
+          marginBottom: isMobile ? "28px" : "40px",
+          flexDirection: isMobile ? "column" : "row",
+          gap: isMobile ? "16px" : 0,
         }}>
           <div>
             <span style={{
@@ -93,23 +98,24 @@ export function FeaturedWork() {
             type="button"
             onClick={() => safeNavigate("/work", router)}
             style={{
-              background: "none", border: "none", padding: 0,
-              fontFamily: "var(--font-sans)", fontSize: "12px",
+              background: "none", border: "none",
+              padding: "12px 20px",
+              fontFamily: "var(--font-sans)", fontSize: "16px", fontWeight: 600,
               color: "rgba(8,8,8,0.35)", display: "flex",
-              alignItems: "center", gap: "4px", flexShrink: 0,
+              alignItems: "center", gap: "6px", flexShrink: 0,
               cursor: "pointer",
             }}
             onMouseEnter={(e) => (e.currentTarget.style.color = "#080808")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(8,8,8,0.35)")}
           >
-            View all work <span style={{ color: "#ED1C24" }}>→</span>
+            View all works <span style={{ color: "#ED1C24" }}>→</span>
           </button>
         </div>
 
         {/* Grid */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
           gap: "10px",
         }}>
           {featuredProjects.map((project, i) => (
@@ -124,7 +130,7 @@ export function FeaturedWork() {
                 border: "0.5px solid rgba(8,8,8,0.08)",
                 background: "#111",
                 aspectRatio: i === 0 ? "16/9" : "4/3",
-                gridColumn: i === 0 ? "span 2" : "span 1",
+                gridColumn: isMobile ? "span 1" : (i === 0 ? "span 2" : "span 1"),
                 cursor: "pointer",
               }}
               onMouseEnter={(e) => {

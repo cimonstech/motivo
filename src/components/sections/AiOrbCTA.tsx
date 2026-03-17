@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useRef, useEffect, useState } from "react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { gsap }           from "gsap";
 import { ScrollTrigger }  from "gsap/ScrollTrigger";
 import { useGSAP }        from "@gsap/react";
@@ -80,6 +81,7 @@ function LiveClock() {
 }
 
 export function AiOrbCTA() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const sectionRef = useRef<HTMLElement>(null);
   const router     = useRouter();
 
@@ -103,7 +105,7 @@ export function AiOrbCTA() {
       style={{
         position:   "relative",
         background: "#080808",
-        padding:    "80px 0",
+        padding:    isMobile ? "60px 0" : "80px 0",
         overflow:   "hidden",
       }}
     >
@@ -156,13 +158,13 @@ export function AiOrbCTA() {
           position:       "relative",
           zIndex:         10,
           display:        "flex",
-          flexDirection:  "row",
+          flexDirection:  isMobile ? "column" : "row",
           alignItems:     "center",
           justifyContent: "space-between",
-          gap:            "60px",
+          gap:            isMobile ? "40px" : "60px",
           maxWidth:       "1440px",
           margin:         "0 auto",
-          padding:        "0 48px",
+          padding:        isMobile ? "0 20px" : "0 48px",
         }}
       >
         {/* Left - text */}

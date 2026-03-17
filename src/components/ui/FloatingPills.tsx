@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const pillStyle: React.CSSProperties = {
   position:       "absolute",
@@ -21,6 +22,7 @@ const pillStyle: React.CSSProperties = {
 };
 
 export function FloatingPills() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const ref0 = useRef<HTMLDivElement>(null);
   const ref1 = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
@@ -43,11 +45,11 @@ export function FloatingPills() {
       style={{
         position:      "absolute",
         inset:          0,
-        maxWidth:       "1440px",
-        margin:         "0 auto",
-        left:           "50%",
-        transform:      "translateX(-50%)",
-        width:          "100%",
+        width:         "100%",
+        maxWidth:      "min(1440px, 100vw)",
+        margin:        "0 auto",
+        left:          "50%",
+        transform:     "translateX(-50%)",
         pointerEvents:  "none",
       }}
     >
@@ -55,7 +57,7 @@ export function FloatingPills() {
       <div
         ref={ref0}
         className="pill"
-        style={{ ...pillStyle, top: "22%", left: "48px" }}
+        style={{ ...pillStyle, top: isMobile ? "16%" : "22%", left: isMobile ? "20px" : "48px", right: isMobile ? "auto" : undefined }}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
           {[
@@ -88,11 +90,16 @@ export function FloatingPills() {
         <span style={{ marginLeft: "8px" }}>40+ brands built</span>
       </div>
 
-      {/* Top right - rating */}
+      {/* Top right - rating (left on mobile) */}
       <div
         ref={ref1}
         className="pill"
-        style={{ ...pillStyle, top: "18%", right: "48px" }}
+        style={{
+          ...pillStyle,
+          top: isMobile ? "24%" : "18%",
+          left: isMobile ? "20px" : undefined,
+          right: isMobile ? "auto" : "48px",
+        }}
       >
         <span style={{ color: "#ED1C24", fontSize: "10px" }}>✦</span>
         Top creative practice - Accra
@@ -102,7 +109,7 @@ export function FloatingPills() {
       <div
         ref={ref2}
         className="pill"
-        style={{ ...pillStyle, top: "55%", left: "48px" }}
+        style={{ ...pillStyle, top: isMobile ? "32%" : "55%", left: isMobile ? "20px" : "48px" }}
       >
         <span style={{ position: "relative", display: "flex", width: "6px", height: "6px" }}>
           <span style={{

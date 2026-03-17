@@ -2,11 +2,13 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap }  from "gsap";
 import Link      from "next/link";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { type Project } from "@/data/projects";
 
 interface Props { project: Project; nextProject: Project; }
 
 export function ProjectDetailClient({ project, nextProject }: Props) {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const titleRef   = useRef<HTMLHeadingElement>(null);
   const cloneRef   = useRef<HTMLDivElement>(null);
   const stripRef   = useRef<HTMLDivElement>(null);
@@ -114,6 +116,162 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
   };
 
   const STRIP_W = 140;
+
+  // Mobile: stacked layout with horizontal thumb strip
+  if (isMobile) {
+    return (
+      <div style={{ background: "#F5F5F0", minHeight: "100vh", paddingTop: `${NAVBAR_H}px`, overflowX: "hidden" }}>
+        <div ref={cloneRef} style={{ display: "none" }} />
+        <div style={{ padding: "20px 20px 40px" }}>
+          <Link href="/work" style={{
+            display: "inline-flex", alignItems: "center", gap: "6px",
+            fontFamily: "var(--font-sans)", fontSize: "11px",
+            color: "rgba(8,8,8,0.4)", textDecoration: "none",
+            marginBottom: "16px", width: "fit-content",
+          }}>
+            ← Work
+          </Link>
+
+          {/* Main image */}
+          <div style={{ marginBottom: "16px", borderRadius: "6px", overflow: "hidden" }}>
+            {isVideoUrl(allImages[activeImg]) ? (
+              <video
+                key={activeImg}
+                src={allImages[activeImg]}
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{ width: "100%", height: "auto", display: "block" }}
+              />
+            ) : (
+              <img
+                key={activeImg}
+                src={allImages[activeImg]}
+                alt={`${project.name} ${activeImg + 1}`}
+                style={{ width: "100%", height: "auto", display: "block" }}
+              />
+            )}
+            <div style={{
+              fontFamily: "var(--font-sans)", fontSize: "11px",
+              color: "rgba(8,8,8,0.35)", padding: "8px 0 0",
+            }}>
+              {activeImg + 1} / {allImages.length}
+            </div>
+          </div>
+
+          {/* Horizontal thumb strip */}
+          <div style={{
+            display: "flex", gap: "8px", overflowX: "auto",
+            paddingBottom: "8px", marginBottom: "24px",
+            scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
+          }}>
+            {allImages.map((src, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setActiveImg(i)}
+                style={{
+                  flexShrink: 0, width: "72px", borderRadius: "4px",
+                  overflow: "hidden", border: "none", padding: 0,
+                  cursor: "pointer", opacity: activeImg === i ? 1 : 0.4,
+                  transition: "opacity 0.2s ease",
+                }}
+              >
+                {isVideoUrl(src) ? (
+                  <video src={src} muted playsInline style={{ width: "100%", height: "auto", display: "block" }} />
+                ) : (
+                  <img src={src} alt="" style={{ width: "100%", height: "auto", display: "block" }} />
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Content */}
+          <div ref={rightRef}>
+            <h1 ref={titleRef} className="detail-content" style={{
+              fontFamily: "var(--font-display)", fontWeight: 700,
+              fontSize: "28px", color: "#080808",
+              letterSpacing: "-0.03em", lineHeight: 1.0, margin: "0 0 20px 0",
+            }}>
+              {project.name}
+            </h1>
+            <div className="detail-content" style={{ display: "flex", gap: "24px", marginBottom: "16px" }}>
+              {[
+                { label: "Year", value: project.year },
+                { label: "Disciplines", value: project.tags?.join(", ") ?? project.category },
+              ].map((m) => (
+                <div key={m.label} style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+                  <span style={{
+                    fontFamily: "var(--font-sans)", fontSize: "9px", fontWeight: 600,
+                    letterSpacing: "0.12em", textTransform: "uppercase" as const,
+                    color: "rgba(8,8,8,0.3)",
+                  }}>{m.label}</span>
+                  <span style={{ fontFamily: "var(--font-sans)", fontSize: "13px", color: "#080808", fontWeight: 500 }}>{m.value}</span>
+                </div>
+              ))}
+            </div>
+            <div className="detail-content" style={{ height: "0.5px", background: "rgba(8,8,8,0.08)", marginBottom: "16px" }} />
+            <p className="detail-content" style={{
+              fontFamily: "var(--font-sans)", fontSize: "13px",
+              color: "rgba(8,8,8,0.5)", lineHeight: 1.7, margin: "0 0 16px 0",
+            }}>
+              {project.summary}
+            </p>
+            {[
+              { label: "The Challenge", text: project.challenge },
+              { label: "The Insight", text: project.insight },
+              { label: "The Solution", text: project.solution },
+            ].filter((s) => s.text).map((section) => (
+              <div key={section.label} className="detail-content" style={{ marginBottom: "14px" }}>
+                <p style={{
+                  fontFamily: "var(--font-sans)", fontSize: "9px", fontWeight: 600,
+                  letterSpacing: "0.12em", textTransform: "uppercase" as const,
+                  color: "rgba(8,8,8,0.3)", margin: "0 0 5px 0",
+                }}>{section.label}</p>
+                <p style={{
+                  fontFamily: "var(--font-sans)", fontSize: "12px",
+                  color: "rgba(8,8,8,0.6)", lineHeight: 1.65, margin: 0,
+                }}>{section.text}</p>
+              </div>
+            ))}
+            {project.liveUrl && (
+              <a className="detail-content" href={project.liveUrl} target="_blank" rel="noopener noreferrer"
+                style={{
+                  fontFamily: "var(--font-sans)", fontSize: "12px", fontWeight: 500,
+                  color: "#ED1C24", textDecoration: "none",
+                  display: "inline-flex", alignItems: "center", gap: "4px",
+                  borderBottom: "0.5px solid #ED1C24", paddingBottom: "2px",
+                  width: "fit-content", marginBottom: "16px",
+                }}
+              >Visit →</a>
+            )}
+            <div className="detail-content" style={{
+              borderTop: "0.5px solid rgba(8,8,8,0.08)", paddingTop: "16px", marginTop: "20px",
+            }}>
+              <span style={{
+                fontFamily: "var(--font-sans)", fontSize: "9px", fontWeight: 600,
+                letterSpacing: "0.12em", textTransform: "uppercase" as const,
+                color: "rgba(8,8,8,0.3)", display: "block", marginBottom: "6px",
+              }}>Next</span>
+              <Link href={`/work/${nextProject.slug}`}
+                style={{
+                  fontFamily: "var(--font-display)", fontWeight: 700,
+                  fontSize: "20px", color: "#080808",
+                  textDecoration: "none", letterSpacing: "-0.02em",
+                  display: "flex", alignItems: "center", gap: "6px",
+                }}
+              >
+                {nextProject.name}
+                <span style={{ color: "#ED1C24" }}>→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <style>{`div::-webkit-scrollbar { display: none; }`}</style>
+      </div>
+    );
+  }
 
   return (
     <div style={{ background: "#F5F5F0", height: "100vh", overflow: "hidden", paddingTop: `${NAVBAR_H}px` }}>

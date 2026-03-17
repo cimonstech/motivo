@@ -8,12 +8,19 @@ export function ServicesSection() {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
-    <section id="services-section" style={{ position: "relative", background: "#F5F5F0" }}>
+    <section
+      id="services-section"
+      style={{
+        position:   "relative",
+        background: "#F5F5F0",
+        overflowX:  isMobile ? "hidden" : undefined,
+      }}
+    >
       <div
         style={{
           maxWidth: "1440px",
           margin:   "0 auto",
-          padding:  "20px 48px 0",
+          padding:  isMobile ? "20px 20px 0" : "20px 48px 0",
         }}
       >
         <span
