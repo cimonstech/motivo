@@ -150,7 +150,7 @@ function JsonLd() {
           {
             "@type":          "ContactPoint",
             "contactType":    "sales",
-            "telephone":      "+233549467175",
+            "telephone":      "+233240639403",
             "contactOption":  "TollFree",
             "availableLanguage": "English",
           },
@@ -159,7 +159,7 @@ function JsonLd() {
           "https://instagram.com/thisismotivo",
           "https://linkedin.com/company/thisismotivo",
           "https://behance.net/thisismotivo",
-          "https://wa.me/233549467175",
+          "https://wa.me/233240639403",
         ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",

@@ -211,7 +211,7 @@ export function Hero() {
             className="font-display font-bold text-white tracking-tight leading-none"
             style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
           >
-            Built where thinking
+            Where thinking
           </h1>
         </div>
         <div className="line overflow-hidden">

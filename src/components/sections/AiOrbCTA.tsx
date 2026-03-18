@@ -247,7 +247,7 @@ export function AiOrbCTA() {
               Start a project →
             </button>
             <a
-              href="https://wa.me/233549467175"
+              href="https://wa.me/233240639403"
               target="_blank"
               rel="noopener noreferrer"
               style={{

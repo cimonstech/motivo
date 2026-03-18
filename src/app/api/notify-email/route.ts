@@ -62,7 +62,7 @@ export async function POST(req: Request) {
                   </td>
                   <td width="10"></td>
                   <td style="border-radius:100px;border:1px solid rgba(8,8,8,0.15);">
-                    <a href="https://wa.me/233549467175"
+                    <a href="https://wa.me/233240639403"
                       style="display:inline-block;padding:10px 24px;font-size:13px;
                              font-weight:500;color:#080808;text-decoration:none;">
                       Open WhatsApp

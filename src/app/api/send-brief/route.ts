@@ -219,7 +219,7 @@ function userEmailHtml(summary: string, clientMessages: string[]): string {
                 <tr>
                   <td style="border-radius:100px;background:#ED1C24;">
                     <a
-                      href="https://wa.me/233549467175"
+                      href="https://wa.me/233240639403"
                       style="display:inline-block;padding:12px 28px;font-size:13px;font-weight:600;
                              color:#ffffff;text-decoration:none;letter-spacing:0.2px;
                              font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;"

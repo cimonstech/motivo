@@ -177,7 +177,7 @@ export function AiChatWidget() {
     const text = encodeURIComponent(
       `Hello Motivo,\n\nI'd like to discuss a project.\n\n--- Brief ---\n${conversation}\n\nLooking forward to hearing from you.`
     );
-    return `https://wa.me/233549467175?text=${text}`;
+    return `https://wa.me/233240639403?text=${text}`;
   };
 
   const now = new Date();
