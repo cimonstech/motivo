@@ -1,14 +1,33 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { sanitizeString } from "@/lib/security";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-export async function POST(req: Request) {
-  const { messages } = await req.json();
+const MAX_MESSAGES = 50;
+const MAX_MESSAGE_LEN = 1500;
+const MAX_SUMMARY_INPUT = 6000; // total chars sent to summarizer
 
-  const userMessages = messages
-    .filter((m: { role: string }) => m.role === "user")
-    .map((m: { content: string }) => m.content)
-    .join(" | ");
+export async function POST(req: Request) {
+  const body = await req.json().catch(() => ({}));
+  const rawMessages = body?.messages;
+
+  if (!Array.isArray(rawMessages) || rawMessages.length > MAX_MESSAGES) {
+    return Response.json({ summary: "Client project brief submitted via Motivo AI intake." }, { status: 200 });
+  }
+
+  const userMessages = rawMessages
+    .filter((m: unknown): m is { role: string; content: string } => {
+      if (!m || typeof m !== "object") return false;
+      const o = m as { role?: string; content?: unknown };
+      return o.role === "user" && typeof o.content === "string";
+    })
+    .map((m) => sanitizeString(m.content, MAX_MESSAGE_LEN))
+    .join(" | ")
+    .slice(0, MAX_SUMMARY_INPUT);
+
+  if (!userMessages.trim()) {
+    return Response.json({ summary: "Client project brief submitted via Motivo AI intake." }, { status: 200 });
+  }
 
   try {
     const response = await client.messages.create({

@@ -75,7 +75,7 @@ export function Hero() {
 
       // Scroll animation - fade hero out (no pin on mobile for normal scroll)
       const pinHero = !isMobile;
-      gsap.timeline({
+      const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
@@ -85,14 +85,18 @@ export function Hero() {
           pinSpacing: pinHero,
           anticipatePin: pinHero ? 1 : 0,
         },
-      })
+      });
+      scrollTl
         .to(ghostRef.current,    { opacity: 0, y: -20, duration: 0.4 }, 0)
         .to(sphereRef.current,   { opacity: 0, y: -20, duration: 0.4 }, 0)
         .to(pillsRef.current,    { opacity: 0, y: -16, duration: 0.4 }, 0)
         .to(headlineRef.current, { opacity: 0, y: -30, duration: 0.5 }, 0.05)
         .to(statsRef.current,    { opacity: 0, y: 16,  duration: 0.4 }, 0.05)
-        .to(scrollCueRef.current,{ opacity: 0,          duration: 0.2 }, 0)
-        .to(availabilityRef.current, { opacity: 0, y: -16, duration: 0.4 }, 0)
+        .to(scrollCueRef.current,{ opacity: 0,          duration: 0.2 }, 0);
+      // Use selector so GSAP finds the element when timeline runs (ref can be null during setup)
+      if (!isMobile && sectionRef.current?.querySelector("[data-availability-wrapper]")) {
+        scrollTl.to("[data-availability-wrapper]", { opacity: 0, y: -16, duration: 0.4 }, 0);
+      }
     }, sectionRef);
 
     return () => {
@@ -171,6 +175,7 @@ export function Hero() {
       {!isMobile && (
         <div
           ref={availabilityRef}
+          data-availability-wrapper
           style={{
             position: "absolute", inset: 0, zIndex: 30, pointerEvents: "none",
             display: "flex", justifyContent: "center",
@@ -242,7 +247,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Stats — left on mobile, right-aligned on desktop (moved up 15% on mobile) */}
+      {/* Stats — left on mobile, right-aligned on desktop; right edge aligns with nav/availability (moved up 15% on mobile) */}
       <div
         ref={statsRef}
         className="stats-row"
@@ -253,7 +258,7 @@ export function Hero() {
           transform:       "translateX(-50%)",
           width:           "100%",
           maxWidth:        "1440px",
-          padding:         isMobile ? "0 20px" : "0 0 0 48px",
+          padding:         isMobile ? "0 20px" : "0 48px",
           display:         "flex",
           justifyContent:  isMobile ? "flex-start" : "flex-end",
           alignItems:      "flex-end",

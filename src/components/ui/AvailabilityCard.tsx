@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { safeNavigate } from "@/lib/safeNavigate";
 
 // Update these values manually when availability changes
 const AVAILABILITY = {
@@ -20,7 +21,7 @@ export function AvailabilityCard() {
       style={{
         position:      "absolute",
         top:           "34%",
-        right:         0,
+        right:         "48px",
         width:         "clamp(200px, 18vw, 260px)",
         background:    "#F5F5F0",
         borderRadius:  "16px",
@@ -117,7 +118,7 @@ export function AvailabilityCard() {
 
       {/* CTA */}
       <button
-        onClick={() => router.push("/contact")}
+        onClick={() => safeNavigate("/contact", router)}
         style={{
           width:        "100%",
           padding:      "10px 0",

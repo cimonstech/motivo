@@ -1,10 +1,15 @@
 import { Resend } from "resend";
+import { escapeHtml, isValidEmail, sanitizeString } from "@/lib/security";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const R2_BASE   = (process.env.NEXT_PUBLIC_R2_BASE_URL ?? "").replace(/\/+$/, "");
-const LOGO_WHITE = R2_BASE ? `${R2_BASE}/email/logo-white.png` : "https://thisismotivo.com/logo.svg";
+const LOGO_WHITE = R2_BASE ? `${R2_BASE}/email/logo-white.svg` : "https://thisismotivo.com/logo.svg";
 const LOGO_DARK  = R2_BASE ? `${R2_BASE}/email/logo-dark.png` : "https://thisismotivo.com/logo-dark.svg";
+
+const MAX_MESSAGES = 50;
+const MAX_MESSAGE_LEN = 2000;
+const MAX_SUMMARY_LEN = 2000;
 
 interface BriefRequest {
   userEmail: string;
@@ -12,39 +17,48 @@ interface BriefRequest {
   summary:   string;
 }
 
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
 export async function POST(req: Request) {
   if (!process.env.RESEND_API_KEY) {
     return Response.json(
-      { success: false, error: "RESEND_API_KEY is not configured" },
+      { success: false, error: "Service temporarily unavailable" },
       { status: 500 },
     );
   }
 
-  const { userEmail, messages, summary }: BriefRequest = await req.json();
+  const body = await req.json().catch(() => ({}));
+  const { userEmail, messages, summary }: BriefRequest = body;
 
-  if (!userEmail?.includes("@")) {
+  if (!isValidEmail(userEmail)) {
     return Response.json(
       { success: false, error: "Valid email required" },
       { status: 400 },
     );
   }
 
-  const transcript = messages
+  if (!Array.isArray(messages) || messages.length > MAX_MESSAGES) {
+    return Response.json(
+      { success: false, error: "Invalid messages" },
+      { status: 400 },
+    );
+  }
+
+  const sanitizedMessages = messages
+    .filter((m): m is { role: "user" | "assistant"; content: string } =>
+      m && typeof m === "object" && (m.role === "user" || m.role === "assistant") && typeof m.content === "string"
+    )
+    .map((m) => ({ role: m.role, content: sanitizeString(m.content, MAX_MESSAGE_LEN) }));
+
+  const sanitizedSummary = sanitizeString(summary, MAX_SUMMARY_LEN) || "Client project brief submitted via Motivo AI intake.";
+
+  const transcript = sanitizedMessages
     .map((m) => `${m.role === "user" ? "Client" : "Motivo AI"}: ${m.content}`)
     .join("\n\n");
 
-  const clientMessages = messages
+  const clientMessages = sanitizedMessages
     .filter((m) => m.role === "user")
     .map((m) => m.content);
+
+  const safeEmail = escapeHtml(userEmail.trim());
 
   try {
     await Promise.all([
@@ -53,7 +67,7 @@ export async function POST(req: Request) {
         to:      [userEmail],
         subject: "Your project brief - Motivo Studio",
         html:    userEmailHtml(
-          escapeHtml(summary),
+          escapeHtml(sanitizedSummary),
           clientMessages.map((m) => escapeHtml(m)),
         ),
       }),
@@ -63,9 +77,9 @@ export async function POST(req: Request) {
         replyTo: userEmail,
         subject: `New brief from ${userEmail}`,
         html:    motivoEmailHtml(
-          userEmail,
+          safeEmail,
           escapeHtml(transcript),
-          escapeHtml(summary),
+          escapeHtml(sanitizedSummary),
         ),
       }),
     ]);
@@ -265,7 +279,7 @@ function userEmailHtml(summary: string, clientMessages: string[]): string {
 // ── MOTIVO INTERNAL EMAIL ────────────────────────────────────────
 
 function motivoEmailHtml(
-  userEmail:  string,
+  safeEmail:  string,
   transcript: string,
   summary:    string,
 ): string {
@@ -274,8 +288,6 @@ function motivoEmailHtml(
     .replace(/</g,  "&lt;")
     .replace(/>/g,  "&gt;")
     .replace(/\n/g, "<br />");
-
-  const safeEmail = escapeHtml(userEmail);
 
   return `
 <!DOCTYPE html>
@@ -342,7 +354,7 @@ function motivoEmailHtml(
                       <tr>
                         <td style="border-radius:100px;background:#ED1C24;">
                           <a
-                            href="mailto:${userEmail}"
+                            href="mailto:${safeEmail}"
                             style="display:inline-block;padding:10px 22px;font-size:12px;
                                    font-weight:600;color:#ffffff;text-decoration:none;
                                    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;"

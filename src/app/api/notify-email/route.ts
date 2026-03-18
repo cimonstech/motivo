@@ -1,13 +1,16 @@
 import { Resend } from "resend";
+import { escapeHtml, isValidEmail } from "@/lib/security";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   const { email } = await req.json();
 
-  if (!email || !email.includes("@")) {
+  if (!isValidEmail(email)) {
     return Response.json({ success: false }, { status: 400 });
   }
+
+  const safeEmail = escapeHtml(email.trim());
 
   try {
     await resend.emails.send({
@@ -38,7 +41,7 @@ export async function POST(req: Request) {
                 Email Address
               </p>
               <p style="margin:0 0 24px;font-size:20px;font-weight:600;color:#080808;letter-spacing:-0.3px;">
-                ${email}
+                ${safeEmail}
               </p>
 
               <p style="margin:0 0 20px;font-size:13px;color:rgba(8,8,8,0.5);line-height:1.6;">
@@ -51,7 +54,7 @@ export async function POST(req: Request) {
               <table cellspacing="0" cellpadding="0">
                 <tr>
                   <td style="border-radius:100px;background:#ED1C24;">
-                    <a href="mailto:${email}"
+                    <a href="mailto:${safeEmail}"
                       style="display:inline-block;padding:10px 24px;font-size:13px;
                              font-weight:600;color:#ffffff;text-decoration:none;">
                       Email them →
@@ -87,3 +90,4 @@ export async function POST(req: Request) {
     return Response.json({ success: false }, { status: 500 });
   }
 }
+

@@ -1,8 +1,12 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { sanitizeString } from "@/lib/security";
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
+
+const MAX_MESSAGES = 30;
+const MAX_MESSAGE_LEN = 2000;
 
 // Motivo's project portfolio for context
 const PORTFOLIO_CONTEXT = `
@@ -46,12 +50,32 @@ Rules:
 export async function POST(req: Request) {
   if (!process.env.ANTHROPIC_API_KEY) {
     return new Response(
-      JSON.stringify({ error: "ANTHROPIC_API_KEY is not configured" }),
+      JSON.stringify({ error: "Service temporarily unavailable" }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 
-  const { messages } = await req.json();
+  const body = await req.json().catch(() => ({}));
+  const rawMessages = body?.messages;
+
+  if (!Array.isArray(rawMessages) || rawMessages.length > MAX_MESSAGES) {
+    return new Response(
+      JSON.stringify({ error: "Invalid request" }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  const messages = rawMessages
+    .filter((m: unknown): m is { role: "user" | "assistant"; content: string } => {
+      if (!m || typeof m !== "object") return false;
+      const o = m as { role?: string; content?: unknown };
+      return (o.role === "user" || o.role === "assistant") && typeof o.content === "string";
+    })
+    .map((m: { role: "user" | "assistant"; content: string }) => ({
+      role: m.role,
+      content: sanitizeString(m.content, MAX_MESSAGE_LEN),
+    }))
+    .filter((m) => m.content.length > 0);
 
   const stream = await client.messages.stream({
     model:      "claude-sonnet-4-20250514",
