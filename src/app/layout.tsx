@@ -6,6 +6,7 @@ import { RouteCleanup }   from "@/components/providers/RouteCleanup";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 
 const ranade = localFont({
   src: [
@@ -245,6 +246,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body suppressHydrationWarning>
+        <GoogleAnalytics />
         <JsonLd />
         <RouteCleanup />
         <LenisProvider>
