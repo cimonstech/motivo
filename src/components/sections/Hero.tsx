@@ -208,41 +208,51 @@ export function Hero() {
       >
         <div className="line overflow-hidden">
           <h1
-            className="font-display font-bold text-white tracking-tight leading-none"
-            style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
+            className="font-display font-bold tracking-tight leading-none"
+            style={{ fontSize: "clamp(28px, 4.23vw, 62px)" }}
           >
-            Where thinking
+            <span className="text-white">We </span>
+            <span className="text-red italic">build brands</span>
+          </h1>
+        </div>
+        <div className="line overflow-hidden">
+          <h1
+            className="font-display font-bold text-white tracking-tight leading-none"
+            style={{ fontSize: "clamp(28px, 4.23vw, 62px)" }}
+          >
+            that look expensive
           </h1>
         </div>
         <div className="line overflow-hidden">
           <h1
             className="font-display font-bold tracking-tight leading-none"
-            style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
+            style={{ fontSize: "clamp(28px, 4.23vw, 62px)" }}
           >
-            <span className="text-white">meets </span>
-            <span className="text-red italic">making.</span>
+            <span className="text-white">and perform like </span>
+            <span className="text-red italic">assets.</span>
           </h1>
         </div>
         <div className="line overflow-hidden mt-4">
           <p className="text-sm text-white/40 max-w-sm leading-relaxed">
-            A creative practice built at the intersection of design,
-            fabrication, and production. Based in Accra, Ghana.
+          Motivo is a design and production studio helping ambitious companies turn ideas into brands, digital platforms, and physical experiences that command attention, build trust, and drive real business growth.
           </p>
         </div>
-        <div className="line overflow-hidden mt-6 flex items-center gap-4">
-          <button
-            type="button"
-            onClick={() => safeNavigate("/work", router)}
-            className="text-xs font-medium text-white border border-white/20 rounded-full px-5 py-2.5 hover:border-red transition-all duration-300"
-          >
-            See our work
-          </button>
+        
+        <div className="line overflow-hidden mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
           <button
             type="button"
             onClick={() => safeNavigate("/contact", router)}
-            className="text-xs font-medium text-red hover:text-white transition-colors duration-200"
+            className="text-xs font-medium text-white bg-red border border-red rounded-full px-[calc(1.25rem+7px)] py-[calc(0.625rem+7px)] hover:bg-[#B5151B] hover:border-[#B5151B] transition-colors duration-200 inline-flex items-center gap-1.5"
           >
-            Start a project ↗
+            Book a Project Slot
+            <span className="text-[13px] leading-none">↗</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => safeNavigate("/work", router)}
+            className="text-xs font-medium text-white border border-white/20 rounded-full px-[calc(1.25rem+7px)] py-[calc(0.625rem+7px)] hover:border-red transition-all duration-300"
+          >
+            View Selected Work
           </button>
         </div>
       </div>

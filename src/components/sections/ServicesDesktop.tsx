@@ -176,9 +176,19 @@ export function ServicesDesktop({ data }: Props) {
                 textAlign:     "left",
               }}
             >
-              Ideas designed<br />
-              with production<br />
-              in mind.
+              Not just design. We build complete brand experiences.
+            </p>
+
+            <p
+              style={{
+                marginTop:  "14px",
+                fontFamily: "var(--font-sans)",
+                fontSize:   "14px",
+                lineHeight: 1.65,
+                color:      "rgba(8,8,8,0.55)",
+              }}
+            >
+              Most studios stop at visuals. We go further into execution, production, and real-world impact.
             </p>
 
             {/* Button - width fits content only */}

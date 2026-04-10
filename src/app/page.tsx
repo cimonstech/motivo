@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Hero }            from "@/components/sections/Hero";
+import { PositioningStatement } from "@/components/sections/PositioningStatement";
+import { WhyMotivo } from "@/components/sections/WhyMotivo";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { FeaturedWork }    from "@/components/sections/FeaturedWork";
 import { ClientStrip }     from "@/components/sections/ClientStrip";
@@ -21,6 +23,8 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <PositioningStatement />
+      <WhyMotivo />
       <ServicesSection />
       <FeaturedWork />
       <ClientStrip />
