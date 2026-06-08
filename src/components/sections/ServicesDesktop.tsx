@@ -214,7 +214,7 @@ export function ServicesDesktop({ data }: Props) {
               onMouseEnter={(e) => (e.currentTarget.style.background = "#B5151B")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "#ED1C24")}
             >
-              See all our work →
+              See all our work {'>'}
             </button>
           </div>
         </div>
@@ -396,7 +396,7 @@ function ServiceCard({ service, isActive }: { service: Service; isActive: boolea
           onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(237,28,36,0.06)")}
         >
           See {service.name.toLowerCase()} work
-          <span>→</span>
+          <span>&gt;</span>
         </button>
       </div>
     </div>

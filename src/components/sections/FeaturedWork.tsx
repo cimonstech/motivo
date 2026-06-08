@@ -108,7 +108,7 @@ export function FeaturedWork() {
             onMouseEnter={(e) => (e.currentTarget.style.color = "#080808")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(8,8,8,0.35)")}
           >
-            View all works <span style={{ color: "#ED1C24" }}>→</span>
+            View all works <span style={{ color: "#ED1C24" }}>&gt;</span>
           </button>
         </div>
 

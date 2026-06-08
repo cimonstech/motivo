@@ -11,7 +11,7 @@ export const STUDIO_LOCATION = "Accra, Ghana";
 
 export const NAV_LINKS = [
   { label: "Home",    href: "/" },
-  { label: "Work",    href: "/work" },
+  { label: "Our works", href: "/work" },
   { label: "About",   href: "/about" },
   { label: "Contact", href: "/contact" },
 ];

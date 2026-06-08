@@ -493,9 +493,9 @@ export function AiChatWidget() {
                       fontFamily: "var(--font-sans)", fontSize: "12px",
                       fontWeight: 500, color: "#ED1C24",
                     }}>
-                      {sending ? "Sending brief..." : "Send brief to team via WhatsApp →"}
+                      {sending ? "Sending brief..." : "Send brief to team via WhatsApp >"}
                     </span>
-                    {!sending && <span style={{ color: "#ED1C24", fontSize: "14px" }}>→</span>}
+                    {!sending && <span style={{ color: "#ED1C24", fontSize: "14px" }}>&gt;</span>}
                   </button>
                 )}
               </>

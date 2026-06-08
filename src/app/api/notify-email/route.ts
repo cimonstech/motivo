@@ -57,7 +57,7 @@ export async function POST(req: Request) {
                     <a href="mailto:${safeEmail}"
                       style="display:inline-block;padding:10px 24px;font-size:13px;
                              font-weight:600;color:#ffffff;text-decoration:none;">
-                      Email them →
+                      Email them >
                     </a>
                   </td>
                   <td width="10"></td>

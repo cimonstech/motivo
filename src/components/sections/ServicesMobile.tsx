@@ -178,7 +178,7 @@ export function ServicesMobile({ data }: Props) {
                 }}
               >
                 <span>See {svc.name.toLowerCase()} work</span>
-                <span>→</span>
+                <span>&gt;</span>
               </SafeLink>
             </div>
           </div>

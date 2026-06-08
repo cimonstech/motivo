@@ -244,7 +244,7 @@ export function AiOrbCTA() {
               onMouseEnter={(e) => (e.currentTarget.style.background = "#B5151B")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "#ED1C24")}
             >
-              Start a project →
+              Start a project {'>'}
             </button>
             <a
               href="https://wa.me/233240639403"

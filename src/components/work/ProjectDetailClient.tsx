@@ -244,7 +244,7 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
                   borderBottom: "0.5px solid #ED1C24", paddingBottom: "2px",
                   width: "fit-content", marginBottom: "16px",
                 }}
-              >Visit →</a>
+              >Visit {'>'}</a>
             )}
             <div className="detail-content" style={{
               borderTop: "0.5px solid rgba(8,8,8,0.08)", paddingTop: "16px", marginTop: "20px",
@@ -263,7 +263,7 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
                 }}
               >
                 {nextProject.name}
-                <span style={{ color: "#ED1C24" }}>→</span>
+                <span style={{ color: "#ED1C24" }}>&gt;</span>
               </Link>
             </div>
           </div>
@@ -513,7 +513,7 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
                 borderBottom: "0.5px solid #ED1C24", paddingBottom: "2px",
                 width: "fit-content", marginBottom: "16px",
               }}
-            >Visit →</a>
+            >Visit {'>'}</a>
           )}
 
           <div style={{ flex: 1 }} />
@@ -537,7 +537,7 @@ export function ProjectDetailClient({ project, nextProject }: Props) {
               onMouseLeave={(e) => (e.currentTarget.style.color = "#080808")}
             >
               {nextProject.name}
-              <span style={{ color: "#ED1C24" }}>→</span>
+              <span style={{ color: "#ED1C24" }}>&gt;</span>
             </Link>
           </div>
         </div>

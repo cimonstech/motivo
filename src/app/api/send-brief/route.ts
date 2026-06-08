@@ -224,7 +224,7 @@ function userEmailHtml(summary: string, clientMessages: string[]): string {
                              color:#ffffff;text-decoration:none;letter-spacing:0.2px;
                              font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;"
                     >
-                      WhatsApp us directly →
+                      WhatsApp us directly >
                     </a>
                   </td>
                   <td width="12">&nbsp;</td>
@@ -359,7 +359,7 @@ function motivoEmailHtml(
                                    font-weight:600;color:#ffffff;text-decoration:none;
                                    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;"
                           >
-                            Reply →
+                            Reply >
                           </a>
                         </td>
                       </tr>

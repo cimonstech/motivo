@@ -13,8 +13,8 @@ const M_ANCHORS = [
 const M_PATH = `M 60 200 L 60 60 L 130 130 L 200 60 L 200 200`;
 
 const LAYERS = [
-  { name: "M — Letterform",   color: "#ED1C24", visible: true,  locked: false },
-  { name: "Grid — baseline",  color: "#4A9EFF", visible: true,  locked: true  },
+  { name: "M Letterform",   color: "#ED1C24", visible: true,  locked: false },
+  { name: "Grid baseline",  color: "#4A9EFF", visible: true,  locked: true  },
   { name: "Guides",           color: "#FF6B35", visible: false, locked: false },
   { name: "Background",       color: "#8B5CF6", visible: true,  locked: true  },
 ];
@@ -428,7 +428,7 @@ export function IllustratorUI({ fillContainer = false }: IllustratorUIProps = {}
           </span>
           <div style={{ flex: 1 }} />
           <span style={{ fontSize: "9px", color: "#666" }}>
-            Pen Tool active — click to add anchor point
+            Pen Tool active, click to add anchor point
           </span>
         </div>
       </div>

@@ -141,7 +141,7 @@ export function AvailabilityCard() {
           if (!isFull) (e.currentTarget.style.background = "#ED1C24");
         }}
       >
-        {isFull ? "Currently full" : "Secure your spot →"}
+        {isFull ? "Currently full" : "Secure your spot >"}
       </button>
     </div>
   );

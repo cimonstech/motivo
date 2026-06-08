@@ -592,7 +592,7 @@ export function WorkPageClient({ initialCategory }: Props) {
               onMouseEnter={(e) => (e.currentTarget.style.background = "#B5151B")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "#ED1C24")}
             >
-              Start a project →
+              Start a project {'>'}
             </a>
           </div>
 

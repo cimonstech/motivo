@@ -120,7 +120,7 @@ export function AboutCTA() {
                 transition: "color 0.2s ease",
               }}
             >
-              →
+              &gt;
             </span>
           </Link>
         ))}
