@@ -257,3 +257,106 @@ h1, h2, h3, h4, h5, h6 {
     padding-right: 20px;
   }
 }
+
+/* ─── Responsive visibility (CSS-first, avoids mobile FOUC) ─ */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* ─── Hero layout ─────────────────────────────────────────── */
+.hero-headline {
+  bottom: 96px;
+  padding: 0 48px;
+}
+
+.hero-stats {
+  bottom: 32px;
+  padding: 0 48px;
+  justify-content: flex-end;
+  gap: 48px;
+}
+
+.hero-scroll-cue {
+  bottom: 32px;
+}
+
+@media (max-width: 768px) {
+  .hero-headline {
+    bottom: calc(80px + 15vh);
+    padding: 0 20px;
+  }
+
+  .hero-stats {
+    bottom: calc(24px + 15vh);
+    padding: 0 20px;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+
+  .hero-scroll-cue {
+    bottom: calc(32px + 15vh);
+  }
+}
+
+/* ─── Navbar layout ───────────────────────────────────────── */
+.nav-root {
+  padding: 20px 0;
+}
+
+.nav-inner {
+  padding: 0 48px;
+}
+
+@media (max-width: 768px) {
+  .nav-root {
+    padding: 16px 0;
+  }
+
+  .nav-inner {
+    padding: 0 20px;
+  }
+}
+
+/* ─── Floating pills layout ───────────────────────────────── */
+.pill-brands {
+  top: 22%;
+  left: 48px;
+  right: auto;
+}
+
+.pill-rating {
+  top: 18%;
+  left: auto;
+  right: 48px;
+}
+
+.pill-live {
+  top: 55%;
+  left: 48px;
+}
+
+@media (max-width: 768px) {
+  .pill-brands {
+    top: 16%;
+    left: 20px;
+  }
+
+  .pill-rating {
+    top: 24%;
+    left: 20px;
+    right: auto;
+  }
+
+  .pill-live {
+    top: 32%;
+    left: 20px;
+  }
+}

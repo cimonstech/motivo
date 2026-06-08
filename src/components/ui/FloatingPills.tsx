@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const pillStyle: React.CSSProperties = {
   position:       "absolute",
@@ -22,7 +21,6 @@ const pillStyle: React.CSSProperties = {
 };
 
 export function FloatingPills() {
-  const isMobile = useMediaQuery("(max-width: 768px)");
   const ref0 = useRef<HTMLDivElement>(null);
   const ref1 = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLDivElement>(null);
@@ -56,8 +54,8 @@ export function FloatingPills() {
       {/* Top left - client icons + count */}
       <div
         ref={ref0}
-        className="pill"
-        style={{ ...pillStyle, top: isMobile ? "16%" : "22%", left: isMobile ? "20px" : "48px", right: isMobile ? "auto" : undefined }}
+        className="pill pill-brands"
+        style={pillStyle}
       >
         <div style={{ display: "flex", alignItems: "center" }}>
           {[
@@ -93,13 +91,8 @@ export function FloatingPills() {
       {/* Top right - rating (left on mobile) */}
       <div
         ref={ref1}
-        className="pill"
-        style={{
-          ...pillStyle,
-          top: isMobile ? "24%" : "18%",
-          left: isMobile ? "20px" : undefined,
-          right: isMobile ? "auto" : "48px",
-        }}
+        className="pill pill-rating"
+        style={pillStyle}
       >
         <span style={{ color: "#ED1C24", fontSize: "10px" }}>✦</span>
         Top creative practice - Accra
@@ -108,8 +101,8 @@ export function FloatingPills() {
       {/* Middle left - live badge */}
       <div
         ref={ref2}
-        className="pill"
-        style={{ ...pillStyle, top: isMobile ? "32%" : "55%", left: isMobile ? "20px" : "48px" }}
+        className="pill pill-live"
+        style={pillStyle}
       >
         <span style={{ position: "relative", display: "flex", width: "6px", height: "6px" }}>
           <span style={{

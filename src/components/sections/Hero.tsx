@@ -171,38 +171,36 @@ export function Hero() {
         <FloatingPills />
       </div>
 
-      {/* Availability card — within max-width (hidden on mobile) */}
-      {!isMobile && (
-        <div
-          ref={availabilityRef}
-          data-availability-wrapper
-          style={{
-            position: "absolute", inset: 0, zIndex: 30, pointerEvents: "none",
-            display: "flex", justifyContent: "center",
-          }}
-        >
-          <div style={{
-            position: "relative",
-            width: "100%",
-            maxWidth: "1440px",
-            padding: "0 48px",
-          }}>
-            <AvailabilityCard />
-          </div>
+      {/* Availability card — hidden on mobile via CSS to avoid layout flash */}
+      <div
+        ref={availabilityRef}
+        data-availability-wrapper
+        className="desktop-only"
+        style={{
+          position: "absolute", inset: 0, zIndex: 30, pointerEvents: "none",
+          display: "flex", justifyContent: "center",
+        }}
+      >
+        <div style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: "1440px",
+          padding: "0 48px",
+        }}>
+          <AvailabilityCard />
         </div>
-      )}
+      </div>
 
       {/* Headline - constrained (moved up 15% on mobile) */}
       <div
         ref={headlineRef}
+        className="hero-headline"
         style={{
           position:  "absolute",
-          bottom:    isMobile ? "calc(80px + 15vh)" : "96px",
           left:      "50%",
           transform: "translateX(-50%)",
           width:     "100%",
           maxWidth:  "1440px",
-          padding:   isMobile ? "0 20px" : "0 48px",
           zIndex:    40,
         }}
       >
@@ -260,20 +258,16 @@ export function Hero() {
       {/* Stats — left on mobile, right-aligned on desktop; right edge aligns with nav/availability (moved up 15% on mobile) */}
       <div
         ref={statsRef}
-        className="stats-row"
+        className="stats-row hero-stats"
         style={{
-          position:        "absolute",
-          bottom:          isMobile ? "calc(24px + 15vh)" : "32px",
-          left:            "50%",
-          transform:       "translateX(-50%)",
-          width:           "100%",
-          maxWidth:        "1440px",
-          padding:         isMobile ? "0 20px" : "0 48px",
-          display:         "flex",
-          justifyContent:  isMobile ? "flex-start" : "flex-end",
-          alignItems:      "flex-end",
-          gap:             isMobile ? "24px" : "48px",
-          zIndex:          40,
+          position:   "absolute",
+          left:       "50%",
+          transform:  "translateX(-50%)",
+          width:      "100%",
+          maxWidth:   "1440px",
+          display:    "flex",
+          alignItems: "flex-end",
+          zIndex:     40,
         }}
       >
         {[
@@ -311,10 +305,9 @@ export function Hero() {
       {/* Scroll cue (moved up 15% on mobile) */}
       <div
         ref={scrollCueRef}
-        className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="hero-scroll-cue absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         style={{
           zIndex: 40, opacity: 0.4,
-          bottom: isMobile ? "calc(32px + 15vh)" : "32px",
         }}
       >
         <span className="text-[9px] text-white/50 tracking-[0.14em] uppercase">Scroll</span>
