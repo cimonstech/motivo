@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { NAV_LINKS } from "@/lib/constants";
+import { ArrowPill } from "@/components/ui/ArrowPill";
 import { safeNavigate } from "@/lib/safeNavigate";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
@@ -100,23 +101,10 @@ export function Navbar() {
           <span style={{ width: "20px", height: "2px", background: "currentColor", display: "block" }} />
         </button>
       {/* CTA */}
-      <button
-        type="button"
-        onClick={() => safeNavigate("/contact", router)}
-        style={{
-          fontFamily: "var(--font-sans)", fontSize: "12px", fontWeight: 500,
-          color: "#ffffff", padding: "9px 20px", background: "#ED1C24",
-          border: "none", borderRadius: "100px", display: "flex",
-          alignItems: "center", gap: "6px", cursor: "pointer",
-          transition: "background 0.2s ease",
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = "#B5151B")}
-        onMouseLeave={(e) => (e.currentTarget.style.background = "#ED1C24")}
-      >
+      <ArrowPill filled onClick={() => safeNavigate("/contact", router)}>
         <span className="mobile-only">Start</span>
         <span className="desktop-only">Start a project</span>
-        <span style={{ fontSize: "13px" }}>↗</span>
-      </button>
+      </ArrowPill>
       </div>
 
       {/* Mobile menu overlay */}

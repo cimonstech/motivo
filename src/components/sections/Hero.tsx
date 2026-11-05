@@ -7,6 +7,7 @@ import { ScrollTrigger }  from "gsap/ScrollTrigger";
 import { useRouter }      from "next/navigation";
 import { FloatingPills }      from "@/components/ui/FloatingPills";
 import { AvailabilityCard }  from "@/components/ui/AvailabilityCard";
+import { ArrowPill }      from "@/components/ui/ArrowPill";
 import { safeNavigate }   from "@/lib/safeNavigate";
 import { useMediaQuery }  from "@/hooks/useMediaQuery";
 import { ThreeErrorBoundary } from "@/components/ui/ThreeErrorBoundary";
@@ -237,21 +238,12 @@ export function Hero() {
         </div>
         
         <div className="line overflow-hidden mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
-          <button
-            type="button"
-            onClick={() => safeNavigate("/contact", router)}
-            className="text-xs font-medium text-white bg-red border border-red rounded-full px-[calc(1.25rem+7px)] py-[calc(0.625rem+7px)] hover:bg-[#B5151B] hover:border-[#B5151B] transition-colors duration-200 inline-flex items-center gap-1.5"
-          >
+          <ArrowPill filled onClick={() => safeNavigate("/contact", router)}>
             Book a Project Slot
-            <span className="text-[13px] leading-none">↗</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => safeNavigate("/work", router)}
-            className="text-xs font-medium text-white border border-white/20 rounded-full px-[calc(1.25rem+7px)] py-[calc(0.625rem+7px)] hover:border-red transition-all duration-300"
-          >
+          </ArrowPill>
+          <ArrowPill tone="light" filled onClick={() => safeNavigate("/work", router)}>
             View Selected Work
-          </button>
+          </ArrowPill>
         </div>
       </div>
 

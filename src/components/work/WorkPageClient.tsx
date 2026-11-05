@@ -7,6 +7,8 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { gsap }          from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRouter }     from "next/navigation";
+import { ArrowPill }     from "@/components/ui/ArrowPill";
+import { safeNavigate }  from "@/lib/safeNavigate";
 import { projects }      from "@/data/projects";
 import type { Project }  from "@/data/projects";
 import { CATEGORY_LABELS, CATEGORIES } from "@/data/categories";
@@ -572,28 +574,9 @@ export function WorkPageClient({ initialCategory }: Props) {
               </cite>
             </blockquote>
 
-            <a
-              href="/contact"
-              style={{
-                fontFamily:     "var(--font-sans)",
-                fontSize:       "12px",
-                fontWeight:     500,
-                color:          "#ffffff",
-                background:     "#ED1C24",
-                textDecoration: "none",
-                borderRadius:   "100px",
-                padding:        "9px 22px",
-                display:        "inline-flex",
-                alignItems:     "center",
-                gap:            "6px",
-                width:          "fit-content",
-                transition:     "background 0.2s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#B5151B")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#ED1C24")}
-            >
-              Start a project {'>'}
-            </a>
+            <ArrowPill filled onClick={() => safeNavigate("/contact", router)}>
+              Start a project
+            </ArrowPill>
           </div>
 
           {/* Right - orb */}

@@ -4,7 +4,7 @@ import { ServicesDesktop } from "./ServicesDesktop";
 import { ServicesMobile } from "./ServicesMobile";
 import { services } from "@/data/services";
 
-export function ServicesSection() {
+export function ServicesSection({ mobileCloser = false }: { mobileCloser?: boolean }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -37,7 +37,7 @@ export function ServicesSection() {
         </span>
       </div>
       {isMobile ? (
-        <ServicesMobile data={services} />
+        <ServicesMobile data={services} closer={mobileCloser} />
       ) : (
         <ServicesDesktop data={services} />
       )}

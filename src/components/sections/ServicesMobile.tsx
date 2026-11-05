@@ -1,13 +1,14 @@
 "use client";
 
-import { SafeLink } from "@/components/ui/SafeLink";
+import { ArrowPill } from "@/components/ui/ArrowPill";
 import { type Service } from "@/data/services";
 
 interface Props {
   data: Service[];
+  closer?: boolean;
 }
 
-export function ServicesMobile({ data }: Props) {
+export function ServicesMobile({ data, closer = false }: Props) {
   return (
     <div style={{ padding: "24px 20px 40px", background: "#F5F5F0" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
@@ -157,33 +158,47 @@ export function ServicesMobile({ data }: Props) {
               </ul>
 
               {/* CTA button */}
-              <SafeLink
-                href={`/work?cat=${svc.workSlug}`}
-                killScrollTrigger
-                style={{
-                  display:         "flex",
-                  alignItems:      "center",
-                  justifyContent:  "space-between",
-                  width:           "100%",
-                  padding:         "12px 16px",
-                  background:     "rgba(237,28,36,0.1)",
-                  border:         "0.5px solid rgba(237,28,36,0.25)",
-                  borderRadius:   "8px",
-                  fontFamily:     "var(--font-sans)",
-                  fontSize:       "13px",
-                  fontWeight:     600,
-                  color:          "#ED1C24",
-                  textDecoration: "none",
-                  transition:     "background 0.2s ease",
-                }}
-              >
-                <span>See {svc.name.toLowerCase()} work</span>
-                <span>&gt;</span>
-              </SafeLink>
+              <ArrowPill href={`/work?cat=${svc.workSlug}`} fill>
+                See {svc.name.toLowerCase()} work
+              </ArrowPill>
             </div>
           </div>
         ))}
       </div>
+
+      {closer ? (
+        <div style={{ marginTop: "48px", maxWidth: "100%" }}>
+          <p
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 700,
+              fontSize: "clamp(36px, 10vw, 48px)",
+              lineHeight: 1.02,
+              letterSpacing: "-0.035em",
+              color: "#080808",
+              margin: 0,
+            }}
+          >
+            Not just design. We build complete brand experiences.
+          </p>
+          <p
+            style={{
+              marginTop: "18px",
+              fontFamily: "var(--font-sans)",
+              fontSize: "16px",
+              lineHeight: 1.55,
+              color: "rgba(8,8,8,0.55)",
+            }}
+          >
+            Most studios stop at visuals. We go further into execution, production, and real-world impact.
+          </p>
+          <div style={{ marginTop: "28px" }}>
+            <ArrowPill href="/work" filled>
+              See all our work
+            </ArrowPill>
+          </div>
+        </div>
+      ) : null}
 
       <p
         style={{

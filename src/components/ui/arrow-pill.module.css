@@ -1,0 +1,172 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  border: 1px solid #ED1C24;
+  border-radius: 999px;
+  padding: 0.35rem 0.35rem 0.35rem 1.3rem;
+  background: transparent;
+  color: #ED1C24;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  appearance: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.arrow {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: #ED1C24;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  flex: none;
+  transition: transform 0.2s ease;
+}
+
+.arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.pill:hover {
+  background: #ED1C24;
+  color: #ffffff;
+}
+
+.pill:hover .arrow {
+  background: #ffffff;
+  color: #ED1C24;
+  transform: rotate(45deg);
+}
+
+.light {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.light .arrow {
+  background: #ffffff;
+  color: #ED1C24;
+}
+
+.light:hover {
+  background: #ffffff;
+  color: #080808;
+}
+
+.light:hover .arrow {
+  background: #080808;
+  color: #ffffff;
+}
+
+.filled {
+  background: #ED1C24;
+  color: #ffffff;
+  border-color: #ED1C24;
+}
+
+.filled .arrow {
+  background: #ffffff;
+  color: #ED1C24;
+}
+
+.filled.light {
+  background: #ffffff;
+  color: #080808;
+  border-color: #ffffff;
+}
+
+.filled.light .arrow {
+  background: #ED1C24;
+  color: #ffffff;
+}
+
+.filled.light:hover {
+  background: #F3F3EE;
+  color: #080808;
+}
+
+.filled.light:hover .arrow {
+  background: #080808;
+  color: #ffffff;
+  transform: rotate(45deg);
+}
+
+.block,
+.fill {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.grow {
+  flex: 1;
+  justify-content: space-between;
+}
+
+.compact {
+  gap: 0.45rem;
+  padding: 0.2rem 0.2rem 0.2rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.compact .arrow {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+.compact .arrow svg {
+  width: 12px;
+  height: 12px;
+}
+
+.pill:focus-visible {
+  outline: 3px solid #ED1C24;
+  outline-offset: 3px;
+}
+
+.light:focus-visible {
+  outline-color: #F5F5F0;
+}
+
+.pill:disabled {
+  border-color: rgba(8, 8, 8, 0.15);
+  color: rgba(8, 8, 8, 0.35);
+  background: transparent;
+  cursor: default;
+}
+
+.pill:disabled .arrow {
+  background: rgba(8, 8, 8, 0.12);
+  color: rgba(8, 8, 8, 0.35);
+}
+
+.pill:disabled:hover {
+  background: transparent;
+  color: rgba(8, 8, 8, 0.35);
+}
+
+.pill:disabled:hover .arrow {
+  background: rgba(8, 8, 8, 0.12);
+  color: rgba(8, 8, 8, 0.35);
+  transform: none;
+}
+
+@media (min-width: 1024px) {
+  .block {
+    width: auto;
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill,
+  .arrow {
+    transition: none;
+  }
+}

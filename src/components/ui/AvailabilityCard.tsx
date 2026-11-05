@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { ArrowPill } from "@/components/ui/ArrowPill";
 import { safeNavigate } from "@/lib/safeNavigate";
 
 // Update these values manually when availability changes
@@ -117,32 +118,9 @@ export function AvailabilityCard() {
       }} />
 
       {/* CTA */}
-      <button
-        onClick={() => safeNavigate("/contact", router)}
-        style={{
-          width:        "100%",
-          padding:      "10px 0",
-          background:   isFull ? "rgba(8,8,8,0.06)" : "#ED1C24",
-          border:       "none",
-          borderRadius: "100px",
-          fontFamily:   "var(--font-sans)",
-          fontSize:     "12px",
-          fontWeight:   600,
-          color:        isFull ? "rgba(8,8,8,0.4)" : "#ffffff",
-          cursor:       isFull ? "default" : "pointer",
-          transition:   "background 0.2s ease",
-          letterSpacing:"0.02em",
-        }}
-        disabled={isFull}
-        onMouseEnter={(e) => {
-          if (!isFull) (e.currentTarget.style.background = "#B5151B");
-        }}
-        onMouseLeave={(e) => {
-          if (!isFull) (e.currentTarget.style.background = "#ED1C24");
-        }}
-      >
-        {isFull ? "Currently full" : "Secure your spot >"}
-      </button>
+      <ArrowPill fill compact filled onClick={() => safeNavigate("/contact", router)} disabled={isFull}>
+        {isFull ? "Currently full" : "Secure your spot"}
+      </ArrowPill>
     </div>
   );
 }

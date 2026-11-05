@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter }     from "next/navigation";
 import { gsap }          from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowPill }     from "@/components/ui/ArrowPill";
 import { safeNavigate }  from "@/lib/safeNavigate";
 import { type Service }  from "@/data/services";
 
@@ -192,30 +193,11 @@ export function ServicesDesktop({ data }: Props) {
             </p>
 
             {/* Button - width fits content only */}
-            <button
-              onClick={() => safeNavigate("/work", router)}
-              style={{
-                marginTop:      "24px",
-                fontFamily:     "var(--font-sans)",
-                fontSize:       "13px",
-                fontWeight:     500,
-                color:          "#ffffff",
-                background:     "#ED1C24",
-                border:         "none",
-                borderRadius:   "100px",
-                padding:        "10px 22px",
-                cursor:         "pointer",
-                display:        "inline-flex",
-                alignItems:     "center",
-                gap:            "8px",
-                width:          "fit-content",
-                transition:     "background 0.2s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#B5151B")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#ED1C24")}
-            >
-              See all our work {'>'}
-            </button>
+            <div style={{ marginTop: "24px" }}>
+              <ArrowPill filled onClick={() => safeNavigate("/work", router)}>
+                See all our work
+              </ArrowPill>
+            </div>
           </div>
         </div>
       </div>
@@ -352,7 +334,7 @@ function ServiceCard({ service, isActive }: { service: Service; isActive: boolea
           flexDirection: "column",
           gap: "10px",
           overflow: "hidden",
-          maxHeight: isActive ? "200px" : "0px",
+          maxHeight: isActive ? "280px" : "0px",
           opacity: isActive ? 1 : 0,
           transition: "max-height 0.5s cubic-bezier(0.34,1.1,0.64,1), opacity 0.35s ease",
           pointerEvents: isActive ? "auto" : "none",
@@ -370,34 +352,12 @@ function ServiceCard({ service, isActive }: { service: Service; isActive: boolea
             </li>
           ))}
         </ul>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            safeNavigate(`/work?cat=${service.workSlug}`, router);
-          }}
-          style={{
-            width:          "100%",
-            padding:        "10px 16px",
-            background:     "rgba(237,28,36,0.06)",
-            border:         "0.5px solid rgba(237,28,36,0.25)",
-            borderRadius:   "8px",
-            fontFamily:     "var(--font-sans)",
-            fontSize:       "12px",
-            fontWeight:     500,
-            color:          "#ED1C24",
-            cursor:         "pointer",
-            display:        "flex",
-            alignItems:     "center",
-            justifyContent: "space-between",
-            transition:     "background 0.2s ease",
-            textAlign:      "left" as const,
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(237,28,36,0.12)")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(237,28,36,0.06)")}
+        <ArrowPill
+          fill
+          onClick={() => safeNavigate(`/work?cat=${service.workSlug}`, router)}
         >
           See {service.name.toLowerCase()} work
-          <span>&gt;</span>
-        </button>
+        </ArrowPill>
       </div>
     </div>
   );

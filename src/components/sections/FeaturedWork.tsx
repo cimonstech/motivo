@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter }         from "next/navigation";
 import { gsap }              from "gsap";
 import { ScrollTrigger }     from "gsap/ScrollTrigger";
+import { ArrowPill }         from "@/components/ui/ArrowPill";
 import { safeNavigate }      from "@/lib/safeNavigate";
 import { featuredProjects }  from "@/data/projects";
 import { CATEGORY_LABELS }   from "@/data/categories";
@@ -94,22 +95,9 @@ export function FeaturedWork() {
               <span style={{ color: "#ED1C24" }}>built properly.</span>
             </h2>
           </div>
-          <button
-            type="button"
-            onClick={() => safeNavigate("/work", router)}
-            style={{
-              background: "none", border: "none",
-              padding: "12px 20px",
-              fontFamily: "var(--font-sans)", fontSize: "16px", fontWeight: 600,
-              color: "rgba(8,8,8,0.35)", display: "flex",
-              alignItems: "center", gap: "6px", flexShrink: 0,
-              cursor: "pointer",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#080808")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(8,8,8,0.35)")}
-          >
-            View all works <span style={{ color: "#ED1C24" }}>&gt;</span>
-          </button>
+          <ArrowPill onClick={() => safeNavigate("/work", router)}>
+            View all works
+          </ArrowPill>
         </div>
 
         {/* Grid */}

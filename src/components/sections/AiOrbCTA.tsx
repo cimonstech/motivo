@@ -7,6 +7,7 @@ import { gsap }           from "gsap";
 import { ScrollTrigger }  from "gsap/ScrollTrigger";
 import { useGSAP }        from "@gsap/react";
 import { useRouter }      from "next/navigation";
+import { ArrowPill }      from "@/components/ui/ArrowPill";
 
 const OrbCanvas = dynamic(
   () => import("@/components/three/OrbCanvas"),
@@ -223,29 +224,7 @@ export function AiOrbCTA() {
           </p>
 
           <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
-            <button
-              onClick={() => router.push("/contact")}
-              style={{
-                fontFamily:   "var(--font-sans)",
-                fontSize:     "13px",
-                fontWeight:   500,
-                color:        "#ffffff",
-                background:   "#ED1C24",
-                border:       "none",
-                borderRadius: "100px",
-                padding:      "10px 24px",
-                cursor:       "pointer",
-                display:      "inline-flex",
-                alignItems:   "center",
-                gap:          "6px",
-                width:        "fit-content",
-                transition:   "background 0.2s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#B5151B")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#ED1C24")}
-            >
-              Start a project {'>'}
-            </button>
+            <ArrowPill href="/contact" filled>Start a project</ArrowPill>
             <a
               href="https://wa.me/233240639403"
               target="_blank"
