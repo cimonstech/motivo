@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Hero }            from "@/components/sections/Hero";
-import { PositioningStatement } from "@/components/sections/PositioningStatement";
+import { OsHero } from "@/components/os-hero/OsHero";
+import { PositioningFluid } from "@/components/sections/PositioningFluid";
 import { WhyMotivo } from "@/components/sections/WhyMotivo";
 import { ServicesSection } from "@/components/sections/ServicesSection";
-import { FeaturedWork }    from "@/components/sections/FeaturedWork";
-import { ClientStrip }     from "@/components/sections/ClientStrip";
-import { AiOrbCTA }        from "@/components/sections/AiOrbCTA";
+import { FeaturedWork } from "@/components/sections/FeaturedWork";
+import { ClientStrip } from "@/components/sections/ClientStrip";
+import { AiOrbCTA } from "@/components/sections/AiOrbCTA";
 
 export const metadata: Metadata = {
   title:       "Motivo Studio - Brand Identity, Digital & Fabrications in Accra, Ghana",
@@ -22,12 +22,14 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <PositioningStatement />
+      <OsHero />
+      <PositioningFluid />
       <WhyMotivo />
-      <ServicesSection />
+      <ServicesSection mobileCloser />
       <FeaturedWork />
-      <ClientStrip />
+      <div id="clients">
+        <ClientStrip />
+      </div>
       <AiOrbCTA />
     </>
   );

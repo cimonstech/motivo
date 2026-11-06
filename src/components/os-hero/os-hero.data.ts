@@ -6,16 +6,6 @@ export const NEXT_SLOT = "[NEXT SLOT]";
 export const ACCENT = "#ED1C24";
 export const TAG_IDLE = "#8A877E";
 
-export const SCRIMS = [0.18, 0.42, 0.4, 0.12, 0.42] as const;
-
-export const WALLPAPERS = [
-  "/os/wallpapers/wall-1.jpg",
-  "/os/wallpapers/wall-2.jpg",
-  "/os/wallpapers/wall-3.jpg",
-  "/os/wallpapers/wall-4.jpg",
-  "/os/wallpapers/wall-5.jpg",
-] as const;
-
 export const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, "")}`;
 export const MAIL_HREF = `mailto:${EMAIL}`;
 

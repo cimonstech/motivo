@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Motivo OS desktop hero</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#080808}
+a{color:#F5F5F0}a:hover{color:#ffffff}
+.wp{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .9s ease, transform 6s ease}
+.glass{-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%);border:1px solid rgba(255,255,255,0.20);box-shadow:inset 0 1px 0 rgba(255,255,255,0.32),inset 0 -1px 0 rgba(255,255,255,0.06),0 24px 70px rgba(0,0,0,0.45)}
+.glass-soft{-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);border:1px solid rgba(255,255,255,0.18);box-shadow:inset 0 1px 0 rgba(255,255,255,0.28)}
+.icon-btn:hover .icon-label{background:rgba(255,255,255,0.22)}
+.dock-item{transition:transform .15s ease}
+.dock-item:hover{transform:translateY(-4px)}
+.drag-bar:active{cursor:grabbing}
+.thumb:hover{transform:translateY(-2px)}
+</style>
+</helmet>
+<div class="desk" style="width: 1440px; height: 900px; position: relative; overflow: hidden; font-family: 'Inter', sans-serif; color: #F5F5F0; background: #080808">
+
+  <div aria-hidden="true" style="position: absolute; inset: 0">
+    <img class="wp" src="../assets/wallpapers/wall-1.jpg" alt="" style="opacity: {{op0}}">
+    <img class="wp" src="../assets/wallpapers/wall-2.jpg" alt="" style="opacity: {{op1}}">
+    <img class="wp" src="../assets/wallpapers/wall-3.jpg" alt="" style="opacity: {{op2}}">
+    <img class="wp" src="../assets/wallpapers/wall-4.jpg" alt="" style="opacity: {{op3}}">
+    <img class="wp" src="../assets/wallpapers/wall-5.jpg" alt="" style="opacity: {{op4}}">
+    <div style="position: absolute; inset: 0; background: rgba(8,8,8,{{scrim}}); transition: background .9s ease"></div>
+  </div>
+
+  <header class="glass-soft" style="position: absolute; top: 0; left: 0; right: 0; height: 40px; z-index: 40; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: {{barBg}}; border-width: 0 0 1px 0; box-sizing: border-box; font-size: 13px">
+    <nav aria-label="Main" style="display: flex; align-items: center; gap: 22px">
+      <a href="#" aria-label="Motivo home" style="display: flex; align-items: center">
+        <svg width="76" height="20" viewBox="0 0 119.06 31.18" role="img" aria-label="Motivo"><circle fill="{{accent}}" cx="72.08" cy="5.41" r="3.4"></circle><path fill="#fff" d="M41,4.62A11.84,11.84,0,1,0,52.86,16.46,11.84,11.84,0,0,0,41,4.62ZM41,21.7a5.25,5.25,0,1,1,5.24-5.24A5.24,5.24,0,0,1,41,21.7Z"></path><polygon fill="#fff" points="79.73 6.35 90.83 6.35 85.28 20.09 79.73 6.35"></polygon><path fill="#fff" d="M102.71,6.29a11.66,11.66,0,0,0-5.55,1.4L91.39,21A11.72,11.72,0,1,0,102.71,6.29Zm0,16.83A5.12,5.12,0,1,1,107.83,18,5.12,5.12,0,0,1,102.71,23.12Z"></path><path fill="#fff" d="M65.91,6.29H49.84a13.78,13.78,0,0,1,4.38,6.37H65.91Z"></path><path fill="#fff" d="M55.93,2.76h0a6.37,6.37,0,0,1,6.37,6.37V20.3a0,0,0,0,1,0,0H55.93a0,0,0,0,1,0,0V2.76A0,0,0,0,1,55.93,2.76Z"></path><path fill="#fff" d="M62,11.13a9.64,9.64,0,1,0,13.23,9H68.85a3.28,3.28,0,0,1-6.55-.06Z"></path><path fill="#fff" d="M68.84,9.07V20.3h6.38V9.24a4.46,4.46,0,0,1-6.38-.17Z"></path><polygon fill="#fff" points="16.05 23.13 13.54 15.19 20.23 5.5 28.02 5.54 16.05 23.13"></polygon><path fill="#fff" d="M28,28.81h0l0-23.31H21.55l0,16.94A6.38,6.38,0,0,0,28,28.81Z"></path><polygon fill="#fff" points="15.98 23.13 18.49 15.19 11.8 5.5 4.02 5.54 15.98 23.13"></polygon><path fill="#fff" d="M4.07,28.81h0l0-23.31h6.37l0,16.94A6.38,6.38,0,0,1,4.07,28.81Z"></path></svg>
+      </a>
+      <a href="#" style="text-decoration: none; font-weight: 600">Studio</a>
+      <a href="#" style="text-decoration: none; color: rgba(245,245,240,0.82)">Work</a>
+      <a href="#" style="text-decoration: none; color: rgba(245,245,240,0.82)">Services</a>
+      <a href="#" style="text-decoration: none; color: rgba(245,245,240,0.82)">About</a>
+      <a href="#" style="text-decoration: none; color: rgba(245,245,240,0.82)">Contact</a>
+    </nav>
+    <div style="display: flex; align-items: center; gap: 18px; color: rgba(245,245,240,0.82)">
+      <span style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: #3DDC84"></span>Booking: [NEXT SLOT]</span>
+      <span>Accra</span>
+      <span style="color: #F5F5F0; font-weight: 500">{{dateLabel}}  {{timeLabel}}</span>
+    </div>
+  </header>
+
+  <section class="glass" aria-labelledby="hero-title" style="position: absolute; left: 88px; top: 112px; z-index: 10; width: 680px; background: {{glassBg}}; border-radius: 18px; overflow: hidden">
+    <div style="height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid rgba(255,255,255,0.14); font-size: 12px; color: rgba(245,245,240,0.78)">
+      <span style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 10px; height: 10px; background: {{accent}}"></span>readme.txt</span>
+      <span>Motivo Studio · Accra, Ghana</span>
+    </div>
+    <div style="padding: 40px 44px 44px; display: flex; flex-direction: column; gap: 24px">
+      <h1 id="hero-title" style="margin: 0; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 54px; line-height: 1.02; letter-spacing: -0.02em; text-shadow: 0 2px 24px rgba(0,0,0,0.35)">We build brands that look expensive and perform like assets.</h1>
+      <p style="margin: 0; font-size: 17px; line-height: 1.55; color: rgba(245,245,240,0.86); max-width: 540px">A design and production studio turning ideas into brands, digital platforms and physical experiences that command attention.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap">
+        <a href="#" style="display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 22px; background: {{accent}}; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 999px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.35)">Book a Project Slot ↗</a>
+        <a href="#" class="glass-soft" style="display: inline-flex; align-items: center; height: 48px; padding: 0 22px; background: rgba(255,255,255,0.10); color: #F5F5F0; text-decoration: none; font-weight: 500; font-size: 15px; border-radius: 999px">View Selected Work</a>
+      </div>
+      <div style="display: flex; gap: 32px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.14); font-size: 13px; color: rgba(245,245,240,0.78)">
+        <span><strong style="color: #F5F5F0; font-size: 20px; font-family: 'Archivo', sans-serif">40+</strong> brands built</span>
+        <span><strong style="color: #F5F5F0; font-size: 20px; font-family: 'Archivo', sans-serif">4</strong> disciplines, one studio</span>
+      </div>
+    </div>
+  </section>
+
+  <div style="position: absolute; right: 64px; top: 84px; z-index: 5; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 10px; width: 260px">
+    <sc-for list="{{icons}}" as="f" hint-placeholder-count="7">
+      <button type="button" class="icon-btn" onClick="{{ f.pick }}" aria-label="Open {{f.name}}" style="background: transparent; border: 0; padding: 6px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #F5F5F0; font-family: inherit">
+        <sc-if value="{{ f.isFolder }}" hint-placeholder-val="{{ true }}">
+          <svg width="68" height="56" viewBox="0 0 64 52" aria-hidden="true" style="filter: drop-shadow(0 6px 12px rgba(0,0,0,0.45))"><path d="M2 8a4 4 0 0 1 4-4h16l6 6h30a4 4 0 0 1 4 4v32a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z" fill="#3A3934"></path><path d="M2 16a4 4 0 0 1 4-4h52a4 4 0 0 1 4 4v30a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z" fill="#ECEAE2"></path><rect x="8" y="40" width="12" height="3" rx="1.5" fill="{{f.tag}}"></rect></svg>
+        </sc-if>
+        <sc-if value="{{ f.isFile }}" hint-placeholder-val="{{ false }}">
+          <svg width="68" height="56" viewBox="0 0 64 52" aria-hidden="true" style="filter: drop-shadow(0 6px 12px rgba(0,0,0,0.45))"><rect x="4" y="6" width="56" height="40" rx="4" fill="#1C1B19" stroke="rgba(245,245,240,0.35)"></rect><path d="M27 18v16l13-8z" fill="#F5F5F0"></path><rect x="4" y="40" width="56" height="6" fill="{{f.tag}}"></rect></svg>
+        </sc-if>
+        <span class="icon-label glass-soft" style="font-size: 12px; line-height: 1.3; padding: 3px 8px; border-radius: 8px; text-align: center; background: {{f.labelBg}}">{{f.name}}</span>
+      </button>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ hasOpen }}" hint-placeholder-val="{{ false }}">
+    <section class="glass" aria-label="{{win.title}} window" style="position: absolute; left: {{winX}}px; top: {{winY}}px; z-index: 20; width: 560px; background: {{glassBg}}; border-radius: 18px; overflow: hidden">
+      <div class="drag-bar" onPointerDown="{{ dragWin }}" style="height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px; border-bottom: 1px solid rgba(255,255,255,0.14); font-size: 12px; color: rgba(245,245,240,0.82); cursor: grab; touch-action: none; user-select: none">
+        <span style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="width: 10px; height: 10px; background: {{accent}}"></span>Motivo / {{win.title}}</span>
+        <button type="button" onClick="{{ close }}" aria-label="Close window" style="width: 32px; height: 32px; border: 0; background: transparent; color: #F5F5F0; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
+        </button>
+      </div>
+      <div style="padding: 24px; display: flex; flex-direction: column; gap: 18px">
+        <div style="width: 100%; height: 245px; flex-shrink: 0; border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.06); position: relative">
+          <sc-if value="{{ mBranding }}" hint-placeholder-val="{{ true }}"><img src="../assets/projects/branding.jpg" alt="Fidelity Bank brand standards book, business card, envelope and colour swatches" style="width: 100%; height: 100%; object-fit: cover; display: block"></sc-if>
+          <sc-if value="{{ mSoftware }}" hint-placeholder-val="{{ false }}"><img src="../assets/wallpapers/wall-4.jpg" alt="Laptop and monitor showing code on a desk in a dark room" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block"></sc-if>
+          <sc-if value="{{ mDigital }}" hint-placeholder-val="{{ false }}"><img src="../assets/projects/digital.jpg" alt="Chamber of Licensed Gold Buyers membership page shown on a phone" style="width: 100%; height: 100%; object-fit: cover; display: block"></sc-if>
+          <sc-if value="{{ mFab }}" hint-placeholder-val="{{ false }}"><img src="../assets/projects/fabrications.jpg" alt="Three steel-frame chairs with timber seats and backrests" style="width: 100%; height: 100%; object-fit: cover; display: block"></sc-if>
+          <sc-if value="{{ mFidelity }}" hint-placeholder-val="{{ false }}"><img src="../assets/projects/fidelity.jpg" alt="Fidelity Bank case study showing logo sketches, final mark, colours and typography" style="width: 100%; height: 100%; object-fit: cover; display: block"></sc-if>
+          <sc-if value="{{ mRoro }}" hint-placeholder-val="{{ false }}"><video ref="{{ videoRef }}" src="../assets/projects/roro.mp4" autoplay="" muted="" loop="" playsinline="" aria-label="Roro Luxury Fittings website preview" style="width: 100%; height: 100%; object-fit: cover; display: block"></video></sc-if>
+          <sc-if value="{{ mNone }}" hint-placeholder-val="{{ false }}"><div style="position: absolute; inset: 0; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.28); display: flex; align-items: center; justify-content: center; font-size: 13px; color: rgba(245,245,240,0.78)">{{win.placeholder}}</div></sc-if>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <h2 style="margin: 0; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 26px">{{win.title}}</h2>
+          <p style="margin: 0; font-size: 14px; line-height: 1.55; color: rgba(245,245,240,0.86)">{{win.desc}}</p>
+        </div>
+        <div style="display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.14)">
+          <sc-for list="{{win.items}}" as="row" hint-placeholder-count="3">
+            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.10); font-size: 14px"><span>{{row.a}}</span><span style="color: rgba(245,245,240,0.78)">{{row.b}}</span></div>
+          </sc-for>
+        </div>
+        <a href="#" style="align-self: flex-start; font-size: 14px; font-weight: 600; color: #F5F5F0">{{win.cta}} ›</a>
+      </div>
+    </section>
+  </sc-if>
+
+  <div style="position: absolute; left: 20px; bottom: 24px; z-index: 50; display: flex; align-items: center; gap: 10px">
+    <button type="button" class="glass" onClick="{{ nextScene }}" aria-label="Change scene, showing {{sceneNum}} of 5" style="height: 48px; padding: 0 16px 0 14px; border-radius: 999px; background: {{glassBg}}; color: #F5F5F0; font-family: inherit; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 10px; cursor: pointer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-9 9"></path></svg>
+      Change scene
+      <span style="font-weight: 500; color: rgba(245,245,240,0.78)">{{sceneNum}}/5</span>
+    </button>
+    <div class="glass-soft" role="group" aria-label="Pick a scene" style="display: flex; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(255,255,255,0.08)">
+      <button type="button" class="thumb" onClick="{{ pick0 }}" aria-label="Scene 1" style="width: 36px; height: 36px; padding: 0; border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid {{ring0}}; background: #111; transition: transform .15s ease"><img src="../assets/wallpapers/wall-1.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+      <button type="button" class="thumb" onClick="{{ pick1 }}" aria-label="Scene 2" style="width: 36px; height: 36px; padding: 0; border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid {{ring1}}; background: #111; transition: transform .15s ease"><img src="../assets/wallpapers/wall-2.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+      <button type="button" class="thumb" onClick="{{ pick2 }}" aria-label="Scene 3" style="width: 36px; height: 36px; padding: 0; border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid {{ring2}}; background: #111; transition: transform .15s ease"><img src="../assets/wallpapers/wall-3.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+      <button type="button" class="thumb" onClick="{{ pick3 }}" aria-label="Scene 4" style="width: 36px; height: 36px; padding: 0; border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid {{ring3}}; background: #111; transition: transform .15s ease"><img src="../assets/wallpapers/wall-4.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+      <button type="button" class="thumb" onClick="{{ pick4 }}" aria-label="Scene 5" style="width: 36px; height: 36px; padding: 0; border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid {{ring4}}; background: #111; transition: transform .15s ease"><img src="../assets/wallpapers/wall-5.jpg" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block"></button>
+    </div>
+  </div>
+
+  <nav class="glass" aria-label="Dock" style="position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 50; display: flex; align-items: flex-end; gap: 10px; padding: 10px 12px; background: {{glassBg}}; border-radius: 999px">
+    <a href="#" class="dock-item" aria-label="Home" title="Home" style="width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.12); box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; color: #F5F5F0">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>
+    </a>
+    <button type="button" class="dock-item" onClick="{{ openWork }}" aria-label="Our works" title="Our works" style="width: 52px; height: 52px; border-radius: 50%; border: 0; background: rgba(255,255,255,0.12); box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; color: #F5F5F0; cursor: pointer">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"></rect><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"></rect><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"></rect><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"></rect></svg>
+    </button>
+    <a href="#" class="dock-item" aria-label="About" title="About" style="width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.12); box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; color: #F5F5F0">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6M12 7.5v.01"></path></svg>
+    </a>
+    <a href="#" class="dock-item" aria-label="Contact by email" title="Email" style="width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.12); box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; color: #F5F5F0">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3.5 6l8.5 7 8.5-7"></path></svg>
+    </a>
+    <a href="#" class="dock-item" aria-label="Chat on WhatsApp" title="WhatsApp" style="width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.12); box-shadow: inset 0 1px 0 rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; color: #F5F5F0">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.4-4A8 8 0 1 1 8.5 19z"></path></svg>
+    </a>
+    <span aria-hidden="true" style="width: 1px; height: 40px; background: rgba(255,255,255,0.22); margin: 0 4px 6px"></span>
+    <a href="#" class="dock-item" title="Start a project" style="height: 52px; padding: 0 18px; border-radius: 999px; background: {{accent}}; box-shadow: inset 0 1px 0 rgba(255,255,255,0.35); display: flex; align-items: center; gap: 8px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+      Start a project
+    </a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#ED1C24","options":["#ED1C24","#F5F5F0","#3DDC84"]},"glassTint":{"editor":"range","default":0.42,"min":0.15,"max":0.75,"step":0.01,"section":"Glass"},"startScene":{"editor":"enum","default":"1","options":["1","2","3","4","5"]},"startOpen":{"editor":"enum","default":"branding","options":["none","branding","digital","software","fabrications","work","fidelity","roro"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: undefined, scene: undefined, now: new Date(), winX: 600, winY: 96 };
+  }
+  componentDidMount() {
+    this.timer = setInterval(() => this.setState({ now: new Date() }), 30000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+  startDrag(key, width) {
+    return (e) => {
+      if (e.button !== undefined && e.button !== 0) return;
+      if (e.target && e.target.closest && e.target.closest('button')) return;
+      e.preventDefault();
+      const desk = e.currentTarget.closest('.desk');
+      const rect = desk ? desk.getBoundingClientRect() : null;
+      const scale = rect && rect.width ? rect.width / 1440 : 1;
+      const sx = e.clientX;
+      const sy = e.clientY;
+      const ox = this.state[key + 'X'];
+      const oy = this.state[key + 'Y'];
+      const move = (ev) => {
+        const nx = Math.min(Math.max(ox + (ev.clientX - sx) / scale, 0), 1440 - width);
+        const ny = Math.min(Math.max(oy + (ev.clientY - sy) / scale, 40), 900 - 120);
+        this.setState({ [key + 'X']: nx, [key + 'Y']: ny });
+      };
+      const up = () => {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        window.removeEventListener('pointercancel', up);
+      };
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', up);
+      window.addEventListener('pointercancel', up);
+    };
+  }
+  renderVals() {
+    const accent = this.props.accent ?? '#ED1C24';
+    const tint = this.props.glassTint ?? 0.42;
+    const start = this.props.startOpen ?? 'branding';
+    const open = this.state.open === undefined ? (start === 'none' ? null : start) : this.state.open;
+    const scene = this.state.scene === undefined ? Math.max(0, Math.min(4, parseInt(this.props.startScene ?? '1', 10) - 1)) : this.state.scene;
+    const scrims = [0.18, 0.42, 0.40, 0.12, 0.42];
+    const swatches = ['#1d1d1d', '#d9d6cf', '#e8d5b8', '#151a22', '#cfd3d6'];
+    const windows = {
+      branding: { title: 'Branding', desc: 'Logos, visual systems, brand guidelines, print design and campaign direction, built to be unmistakable.', items: [{ a: 'Logo and identity system', b: 'Identity' }, { a: 'Brand guidelines', b: 'System' }, { a: 'Print and collateral', b: 'Print' }], cta: 'See branding work' },
+      digital: { title: 'Digital', desc: 'Websites, web applications, portals and custom digital experiences, engineered for performance.', items: [{ a: 'Marketing websites', b: 'Web' }, { a: 'Web applications', b: 'Product' }, { a: 'Member portals', b: 'Platform' }], cta: 'See digital work' },
+      software: { title: 'Software', desc: 'Custom business systems, dashboards and internal tools built around how your business actually runs.', items: [{ a: 'Custom business systems', b: 'Systems' }, { a: 'Dashboards and admin portals', b: 'Internal tools' }, { a: 'Integrations and automation', b: 'Workflow' }], cta: 'See software work' },
+      fidelity: { title: 'Fidelity Bank Ghana', desc: 'Brand identity and logo development: a modern, confident identity built on clarity, trust and forward movement.', items: [{ a: 'Discipline', b: 'Branding' }, { a: 'Year', b: '2024' }, { a: 'Scope', b: 'Identity and logo development' }], cta: 'View case study' },
+      roro: { title: 'Roro Luxury Fittings', desc: '[Short project summary]', items: [{ a: 'Discipline', b: 'Digital' }, { a: 'Year', b: '2026' }, { a: 'Scope', b: '[Project scope]' }], cta: 'View project' },
+      fabrications: { title: 'Fabrications', desc: '3D signage, environmental branding, reception walls and installations that make brands tangible.', items: [{ a: '3D signage and lettering', b: 'Signage' }, { a: 'Illuminated signs', b: 'Lighting' }, { a: 'Reception branding', b: 'Interiors' }], cta: 'See fabrications work' },
+      work: { title: 'Selected Work', desc: 'Not only imagined, built properly.', items: [{ a: 'Fidelity Bank Ghana', b: 'Branding · 2024' }, { a: 'Roro Luxury Fittings', b: 'Digital · 2026' }, { a: 'Ghana Chamber of Licensed Gold Buyers', b: 'Digital · 2026' }], cta: 'View all works' }
+    };
+    Object.keys(windows).forEach((k) => {
+      windows[k].placeholder = '[' + windows[k].title + ' project image or video]';
+      windows[k].items = windows[k].items.slice(0, 2);
+    });
+    const list = [
+      { id: 'branding', name: 'Branding', kind: 'folder' },
+      { id: 'digital', name: 'Digital', kind: 'folder' },
+      { id: 'software', name: 'Software', kind: 'folder' },
+      { id: 'fabrications', name: 'Fabrications', kind: 'folder' },
+      { id: 'work', name: 'Selected Work', kind: 'folder' },
+      { id: 'fidelity', name: 'Fidelity Bank.mp4', kind: 'file' },
+      { id: 'roro', name: 'Roro Fittings.mp4', kind: 'file' }
+    ];
+    const icons = list.map((f) => ({
+      name: f.name,
+      isFolder: f.kind === 'folder',
+      isFile: f.kind === 'file',
+      tag: open === f.id ? accent : '#8A877E',
+      labelBg: open === f.id && f.kind === 'folder' ? accent : 'rgba(20,20,18,0.45)',
+      pick: () => this.setState({ open: f.id })
+    }));
+    const thumbs = [0, 1, 2, 3, 4].map((i) => ({
+      num: i + 1,
+      swatch: swatches[i],
+      ring: i === scene ? '#F5F5F0' : 'transparent',
+      pick: () => this.setState({ scene: i })
+    }));
+    const now = this.state.now;
+    let timeLabel = '';
+    let dateLabel = '';
+    try {
+      timeLabel = now.toLocaleTimeString('en-GB', { timeZone: 'Africa/Accra', hour: '2-digit', minute: '2-digit' });
+      dateLabel = now.toLocaleDateString('en-GB', { timeZone: 'Africa/Accra', weekday: 'short', day: 'numeric', month: 'short' });
+    } catch (e) {
+      timeLabel = now.toTimeString().slice(0, 5);
+    }
+    return {
+      accent,
+      glassBg: 'rgba(18,18,16,' + tint + ')',
+      barBg: 'rgba(18,18,16,' + Math.max(0.2, tint - 0.1) + ')',
+      op0: scene === 0 ? 1 : 0,
+      op1: scene === 1 ? 1 : 0,
+      op2: scene === 2 ? 1 : 0,
+      op3: scene === 3 ? 1 : 0,
+      op4: scene === 4 ? 1 : 0,
+      scrim: scrims[scene],
+      sceneNum: scene + 1,
+      pick0: thumbs[0].pick, pick1: thumbs[1].pick, pick2: thumbs[2].pick, pick3: thumbs[3].pick, pick4: thumbs[4].pick,
+      ring0: thumbs[0].ring, ring1: thumbs[1].ring, ring2: thumbs[2].ring, ring3: thumbs[3].ring, ring4: thumbs[4].ring,
+      nextScene: () => this.setState({ scene: (scene + 1) % 5 }),
+      icons,
+      hasOpen: !!open,
+      mBranding: open === 'branding',
+      mFab: open === 'fabrications',
+      mDigital: open === 'digital',
+      mSoftware: open === 'software',
+      mFidelity: open === 'fidelity',
+      mRoro: open === 'roro',
+      mNone: ['branding', 'digital', 'fabrications', 'software', 'fidelity', 'roro'].indexOf(open) === -1,
+      videoRef: (el) => { if (el) { el.muted = true; try { const p = el.play(); if (p && p.catch) p.catch(() => {}); } catch (e) {} } },
+      win: open ? windows[open] : windows.branding,
+      close: () => this.setState({ open: null }),
+      openWork: () => this.setState({ open: 'work' }),
+      winX: Math.round(this.state.winX),
+      winY: Math.round(this.state.winY),
+      dragWin: this.startDrag('win', 560),
+      timeLabel,
+      dateLabel
+    };
+  }
+}
+</script>
+</body>
+</html>

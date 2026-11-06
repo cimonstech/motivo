@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Motivo OS mobile hero</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&amp;family=Inter:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#080808}
+a{color:#F5F5F0}a:hover{color:#ffffff}
+.wall{background-color:#080808;background-image:radial-gradient(rgba(245,245,240,0.08) 1px,transparent 1px);background-size:24px 24px}
+</style>
+</helmet>
+<div class="wall" style="width: 390px; height: 844px; position: relative; overflow: hidden; font-family: 'Inter', sans-serif; color: #F5F5F0; box-sizing: border-box">
+
+  <header style="height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid rgba(245,245,240,0.10); background: rgba(8,8,8,0.72)">
+    <a href="#" aria-label="Motivo home" style="display: flex">
+      <svg width="84" height="22" viewBox="0 0 119.06 31.18" role="img" aria-label="Motivo"><circle fill="{{accent}}" cx="72.08" cy="5.41" r="3.4"></circle><path fill="#fff" d="M41,4.62A11.84,11.84,0,1,0,52.86,16.46,11.84,11.84,0,0,0,41,4.62ZM41,21.7a5.25,5.25,0,1,1,5.24-5.24A5.24,5.24,0,0,1,41,21.7Z"></path><polygon fill="#fff" points="79.73 6.35 90.83 6.35 85.28 20.09 79.73 6.35"></polygon><path fill="#fff" d="M102.71,6.29a11.66,11.66,0,0,0-5.55,1.4L91.39,21A11.72,11.72,0,1,0,102.71,6.29Zm0,16.83A5.12,5.12,0,1,1,107.83,18,5.12,5.12,0,0,1,102.71,23.12Z"></path><path fill="#fff" d="M65.91,6.29H49.84a13.78,13.78,0,0,1,4.38,6.37H65.91Z"></path><path fill="#fff" d="M55.93,2.76h0a6.37,6.37,0,0,1,6.37,6.37V20.3a0,0,0,0,1,0,0H55.93a0,0,0,0,1,0,0V2.76A0,0,0,0,1,55.93,2.76Z"></path><path fill="#fff" d="M62,11.13a9.64,9.64,0,1,0,13.23,9H68.85a3.28,3.28,0,0,1-6.55-.06Z"></path><path fill="#fff" d="M68.84,9.07V20.3h6.38V9.24a4.46,4.46,0,0,1-6.38-.17Z"></path><polygon fill="#fff" points="16.05 23.13 13.54 15.19 20.23 5.5 28.02 5.54 16.05 23.13"></polygon><path fill="#fff" d="M28,28.81h0l0-23.31H21.55l0,16.94A6.38,6.38,0,0,0,28,28.81Z"></path><polygon fill="#fff" points="15.98 23.13 18.49 15.19 11.8 5.5 4.02 5.54 15.98 23.13"></polygon><path fill="#fff" d="M4.07,28.81h0l0-23.31h6.37l0,16.94A6.38,6.38,0,0,1,4.07,28.81Z"></path></svg>
+    </a>
+    <span style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(245,245,240,0.72)"><span aria-hidden="true" style="width: 7px; height: 7px; border-radius: 50%; background: #3DDC84"></span>Booking: [NEXT SLOT]</span>
+  </header>
+
+  <section aria-labelledby="m-title" style="margin: 20px 16px 0; background: #111110; border: 1px solid rgba(245,245,240,0.12); border-radius: 12px; overflow: hidden">
+    <div style="height: 34px; display: flex; align-items: center; gap: 8px; padding: 0 14px; border-bottom: 1px solid rgba(245,245,240,0.10); font-size: 11px; color: rgba(245,245,240,0.6)"><span aria-hidden="true" style="width: 8px; height: 8px; background: {{accent}}"></span>readme.txt</div>
+    <div style="padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 14px">
+      <h1 id="m-title" style="margin: 0; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 32px; line-height: 1.04; letter-spacing: -0.02em">We build brands that look expensive and perform like assets.</h1>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: rgba(245,245,240,0.72)">Brands, digital platforms and physical experiences that command attention.</p>
+      <a href="#" style="display: flex; align-items: center; justify-content: center; height: 48px; background: {{accent}}; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 999px">Book a Project Slot ↗</a>
+    </div>
+  </section>
+
+  <div style="margin: 24px 16px 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 8px">
+    <sc-for list="{{apps}}" as="app" hint-placeholder-count="8">
+      <a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; color: #F5F5F0">
+        <svg width="58" height="48" viewBox="0 0 64 52" aria-hidden="true"><path d="M2 8a4 4 0 0 1 4-4h16l6 6h30a4 4 0 0 1 4 4v32a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z" fill="#3A3934"></path><path d="M2 16a4 4 0 0 1 4-4h52a4 4 0 0 1 4 4v30a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z" fill="#ECEAE2"></path><rect x="8" y="40" width="12" height="3" rx="1.5" fill="#8A877E"></rect></svg>
+        <span style="font-size: 11px; text-align: center; line-height: 1.25">{{app.name}}</span>
+      </a>
+    </sc-for>
+  </div>
+
+  <nav aria-label="Dock" style="position: absolute; left: 12px; right: 12px; bottom: 16px; display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(24,24,22,0.86); border: 1px solid rgba(245,245,240,0.12); border-radius: 999px">
+    <a href="#" aria-label="Our works" style="width: 52px; height: 52px; border-radius: 50%; background: #1E1D1A; display: flex; align-items: center; justify-content: center; color: #F5F5F0">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"></rect><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"></rect><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"></rect><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"></rect></svg>
+    </a>
+    <a href="#" aria-label="About" style="width: 52px; height: 52px; border-radius: 50%; background: #1E1D1A; display: flex; align-items: center; justify-content: center; color: #F5F5F0">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6M12 7.5v.01"></path></svg>
+    </a>
+    <a href="#" aria-label="Chat on WhatsApp" style="width: 52px; height: 52px; border-radius: 50%; background: #1E1D1A; display: flex; align-items: center; justify-content: center; color: #F5F5F0">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.4-4A8 8 0 1 1 8.5 19z"></path></svg>
+    </a>
+    <a href="#" style="height: 52px; flex: 1; margin-left: 8px; border-radius: 999px; background: {{accent}}; display: flex; align-items: center; justify-content: center; gap: 6px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px">Start a project</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#ED1C24","options":["#ED1C24","#F5F5F0","#3DDC84"]},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      accent: this.props.accent ?? '#ED1C24',
+      apps: [
+        { name: 'Branding' },
+        { name: 'Digital' },
+        { name: 'Software' },
+        { name: 'Fabrications' },
+        { name: 'Selected Work' },
+        { name: 'About' },
+        { name: 'Clients' },
+        { name: 'Contact' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

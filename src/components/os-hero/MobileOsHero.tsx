@@ -5,22 +5,9 @@ import { ArrowPill } from "@/components/ui/ArrowPill";
 import { MOBILE_TILES, NEXT_SLOT, WHATSAPP_HREF } from "./os-hero.data";
 import { AboutIcon, FolderGlyph, MotivoMark, WhatsAppIcon, WorksIcon } from "./icons";
 import { OsAnchor } from "./OsAnchor";
-import { SceneSwitcher } from "./SceneSwitcher";
 import styles from "./os-hero.module.css";
 
-export function MobileOsHero({
-  scene,
-  wallsReady,
-  onNext,
-  onPick,
-  children,
-}: {
-  scene: number;
-  wallsReady: boolean;
-  onNext: () => void;
-  onPick: (index: number) => void;
-  children: ReactNode;
-}) {
+export function MobileOsHero({ children }: { children: ReactNode }) {
   return (
     <>
       <header className={`${styles.mobileHeader} ${styles.mobileOnly}`}>
@@ -33,13 +20,6 @@ export function MobileOsHero({
         </span>
       </header>
       {children}
-      <SceneSwitcher
-        scene={scene}
-        wallsReady={wallsReady}
-        placement="mobile"
-        onNext={onNext}
-        onPick={onPick}
-      />
       <div className={`${styles.tiles} ${styles.mobileOnly}`}>
         {MOBILE_TILES.map((tile) => (
           <OsAnchor key={tile.name} href={tile.href} className={styles.tile}>
