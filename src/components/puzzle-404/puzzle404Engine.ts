@@ -213,11 +213,15 @@ function buildPiece(holeD: string): string {
 }
 
 const CSS = `
-.${P}-stage{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:28px;align-items:center;user-select:none;-webkit-user-select:none}
-.${P}-boardwrap{position:relative;min-width:0}
+.${P}-stage{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 240px;grid-template-areas:"intro intro" "board tray";gap:28px 28px;align-items:center;user-select:none;-webkit-user-select:none}
+.${P}-intro{grid-area:intro;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px 40px;align-items:end;color:#F5F5F0}
+.${P}-kicker{margin:0 0 12px;font-family:var(--font-sans),ui-sans-serif,system-ui,sans-serif;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:${RED}}
+.${P}-title{margin:0;font-family:var(--font-display),ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:clamp(36px,5.4vw,68px);line-height:1;letter-spacing:-.02em}
+.${P}-lede{margin:0;font-family:var(--font-sans),ui-sans-serif,system-ui,sans-serif;font-size:17px;line-height:1.55;color:rgba(245,245,240,.74);max-width:44ch}
+.${P}-boardwrap{grid-area:board;position:relative;min-width:0}
 .${P}-boardwrap::after{content:'';position:absolute;inset:0;border-radius:4px;box-shadow:0 0 0 2px ${RED},0 0 60px rgba(237,28,36,.45);opacity:0;pointer-events:none}
 .${P}-board{display:block;width:100%;height:auto;border-radius:4px;box-shadow:0 30px 70px rgba(0,0,0,.55),0 2px 0 rgba(255,255,255,.04);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-.${P}-tray{position:relative;align-self:stretch;min-height:180px;border:1px dashed rgba(245,245,240,.2);border-radius:18px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:14px;font:500 12px/1.3 var(--font-sans),ui-sans-serif,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,245,240,.6);text-align:center;transition:opacity .4s ease}
+.${P}-tray{grid-area:tray;position:relative;align-self:stretch;min-height:180px;border:1px dashed rgba(245,245,240,.2);border-radius:18px;display:flex;align-items:flex-end;justify-content:center;padding:12px 10px 14px;font:500 12px/1.3 var(--font-sans),ui-sans-serif,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,245,240,.6);text-align:center;transition:opacity .4s ease}
 .${P}-board .${P}-label{font-family:var(--font-sans),ui-sans-serif,system-ui,sans-serif;font-weight:600;font-size:10.5px;letter-spacing:2.2px;fill:${INK}}
 .${P}-board .${P}-giant{font-family:var(--font-display),ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:236px;letter-spacing:-10px;fill:${INK}}
 .${P}-piece{position:absolute;left:0;top:0;padding:0;margin:0;border:0;background:none;cursor:grab;touch-action:none;will-change:transform;z-index:3;filter:drop-shadow(0 16px 18px rgba(0,0,0,.55));transform-origin:50% 50%;-webkit-tap-highlight-color:transparent}
@@ -240,7 +244,14 @@ const CSS = `
 @keyframes ${P}-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @keyframes ${P}-flash{0%{opacity:0}20%{opacity:1}100%{opacity:0}}
 @keyframes ${P}-pulse{0%,100%{opacity:.15}50%{opacity:.6}}
-@media (max-width:760px){.${P}-stage{grid-template-columns:minmax(0,1fr);gap:20px}.${P}-tray{min-height:150px}}
+@media (max-width:760px){
+  .${P}-stage{grid-template-columns:minmax(0,1fr) minmax(104px,32vw);grid-template-areas:"intro tray" "board board";gap:18px 14px;align-items:start}
+  .${P}-intro{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+  .${P}-title{font-size:clamp(28px,8vw,40px)}
+  .${P}-lede{font-size:15px}
+  .${P}-tray{min-height:124px;align-self:start;align-items:center;justify-content:center;padding:8px 0;border:0;font-size:0;color:transparent}
+}
+
 .${P}-reduced .${P}-piece-svg{animation:none}
 .${P}-reduced.${P}-snapping .${P}-piece{transition:none}
 .${P}-reduced .${P}-boardwrap::after{animation:none}
@@ -253,16 +264,24 @@ export function createPuzzle404(root: HTMLElement, options: Puzzle404Options = {
     options.reducedMotion ?? (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const completeDelay = options.completeDelay ?? 1100;
 
-  if (!document.getElementById(`${P}-style`)) {
-    const style = document.createElement('style');
+  let style = document.getElementById(`${P}-style`) as HTMLStyleElement | null;
+  if (!style) {
+    style = document.createElement("style");
     style.id = `${P}-style`;
-    style.textContent = CSS;
     document.head.appendChild(style);
   }
+  style.textContent = CSS;
 
   const holeD = piecePath(HOLE.c, HOLE.r);
   root.innerHTML = `
-<div class="${P}-stage${reduce ? ` ${P}-reduced` : ''}">
+<div class="${P}-stage${reduce ? ` ${P}-reduced` : ""}">
+  <header class="${P}-intro">
+    <div>
+      <p class="${P}-kicker">Error 404</p>
+      <h1 class="${P}-title">This page is missing a piece.</h1>
+    </div>
+    <p class="${P}-lede">The link you followed doesn't lead anywhere. Drag the loose piece into the gap to finish the puzzle, and we'll take you back to the homepage.</p>
+  </header>
   <div class="${P}-boardwrap">${buildBoard(holeD)}</div>
   <div class="${P}-tray" aria-hidden="true">Drag me into the gap</div>
   <button type="button" class="${P}-piece" aria-label="Missing puzzle piece. Drag it into the gap, or press Enter to place it and go to the homepage.">${buildPiece(holeD)}</button>
